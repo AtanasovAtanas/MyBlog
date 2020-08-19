@@ -6,7 +6,7 @@ import styles from "./index.module.css";
 import Audit from "../audit";
 import ReactHtmlParser from "react-html-parser";
 
-const Post = ({
+const Article = ({
 	index,
 	articleId,
 	title,
@@ -21,7 +21,7 @@ const Post = ({
 	const currentUsername = context.user.username;
 
 	return (
-		<div className={styles.post}>
+		<div className={styles.article}>
 			<h3 className={styles.title}>
 				{articleId ? <Link to={detailsLink}>{title}</Link> : title}
 			</h3>
@@ -48,4 +48,4 @@ const Post = ({
 	);
 };
 
-export default Post;
+export default Article;

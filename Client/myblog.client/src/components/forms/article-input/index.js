@@ -3,7 +3,11 @@ import Editor from "../../editor";
 import Button from "../../button";
 import styles from "./index.module.css";
 
-const PostInputForm = ({ initialTitle, initialContent, handleFormSubmit }) => {
+const ArticleInputForm = ({
+	initialTitle,
+	initialContent,
+	handleFormSubmit,
+}) => {
 	const [model, setModel] = useState({ title: "", content: "" });
 
 	useEffect(() => {
@@ -27,10 +31,6 @@ const PostInputForm = ({ initialTitle, initialContent, handleFormSubmit }) => {
 					})
 				}
 			/>
-			{/* <textarea
-				value={model.content}
-				onChange={(c) => setModel({ ...model, content: c })}
-			/> */}
 			<Editor
 				initialContent={model.content}
 				handleEditorChange={(c) => setModel({ ...model, content: c })}
@@ -40,4 +40,4 @@ const PostInputForm = ({ initialTitle, initialContent, handleFormSubmit }) => {
 	);
 };
 
-export default PostInputForm;
+export default ArticleInputForm;

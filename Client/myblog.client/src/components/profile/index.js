@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./index.module.css";
 
-const Profile = ({ username, postsCount }) => {
+const Profile = ({ username, articlesCount }) => {
 	return (
 		<div>
 			<img
@@ -15,8 +15,8 @@ const Profile = ({ username, postsCount }) => {
 					{username}
 				</p>
 				<p>
-					<span>Posts: </span>
-					{postsCount}
+					<span>Articles: </span>
+					{articlesCount}
 				</p>
 			</div>
 		</div>

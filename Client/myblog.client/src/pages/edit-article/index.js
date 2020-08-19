@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import articlesService from "../../services/articles";
 import PageLayout from "../layout";
-import PostInputForm from "../../components/forms/post-input";
+import ArticleInputForm from "../../components/forms/article-input";
 
-const EditPostPage = () => {
+const EditArticlePage = () => {
 	const [article, setArticle] = useState({});
 	const { id } = useParams();
 	const history = useHistory();
@@ -39,7 +39,7 @@ const EditPostPage = () => {
 
 	return (
 		<PageLayout>
-			<PostInputForm
+			<ArticleInputForm
 				initialTitle={article.title}
 				initialContent={article.content}
 				handleFormSubmit={handleFormSubmit}
@@ -48,4 +48,4 @@ const EditPostPage = () => {
 	);
 };
 
-export default EditPostPage;
+export default EditArticlePage;

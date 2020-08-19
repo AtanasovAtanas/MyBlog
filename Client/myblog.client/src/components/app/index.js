@@ -7,9 +7,9 @@ import UserContext from "../../utils/context";
 import auth from "../../services/auth";
 import Logout from "../logout";
 import ProfilePage from "../../pages/profile";
-import PostDetailsPage from "../../pages/post-details";
-import CreatePostPage from "../../pages/create-post";
-import EditPostPage from "../../pages/edit-post";
+import ArticleDetailsPage from "../../pages/article-details";
+import CreateArticlePage from "../../pages/create-article";
+import EditArticlePage from "../../pages/edit-article";
 
 const App = () => {
 	const [user, setUser] = useState({ username: "", userId: "" });
@@ -47,13 +47,13 @@ const App = () => {
 						<ProfilePage />
 					</Route>
 					<Route exact path="/articles/create">
-						<CreatePostPage />
+						<CreateArticlePage />
 					</Route>
 					<Route exact path="/articles/:id">
-						<PostDetailsPage />
+						<ArticleDetailsPage />
 					</Route>
 					<Route exact path="/articles/edit/:id">
-						<EditPostPage />
+						<EditArticlePage />
 					</Route>
 				</Switch>
 			</Router>

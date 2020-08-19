@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import Posts from "../../components/posts";
+import Articles from "../../components/articles";
 import PageLayout from "../../pages/layout";
 import articlesService from "../../services/articles";
 import Profile from "../../components/profile";
@@ -24,9 +24,9 @@ const ProfilePage = () => {
 		<PageLayout>
 			<Profile
 				username={context.user.username}
-				postsCount={articles.length}
+				articlesCount={articles.length}
 			/>
-			<Posts initialPosts={articles} />
+			<Articles initialArticles={articles} />
 		</PageLayout>
 	);
 };
