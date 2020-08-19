@@ -25,7 +25,9 @@ const Post = ({
 			<h3 className={styles.title}>
 				{articleId ? <Link to={detailsLink}>{title}</Link> : title}
 			</h3>
-			<p className={styles.description}>{ReactHtmlParser(description)}</p>
+			<div className={styles.description}>
+				{ReactHtmlParser(description)}
+			</div>
 			<div className={styles.audit}>
 				{currentUsername === author ? (
 					<Audit

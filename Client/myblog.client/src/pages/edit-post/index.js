@@ -29,11 +29,10 @@ const EditPostPage = () => {
 			content,
 		};
 
-		const articleDetailsLink = `/articles/${id}`;
 		await articlesService.editArticle(
 			id,
 			body,
-			() => history.push(articleDetailsLink),
+			(response) => history.push(`/articles/${response.id}`),
 			(e) => console.log(e)
 		);
 	};

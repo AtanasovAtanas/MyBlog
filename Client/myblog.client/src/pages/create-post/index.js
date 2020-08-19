@@ -17,7 +17,7 @@ const CreatePostPage = () => {
 
 		await articlesService.createArticle(
 			body,
-			(id) => history.push(`/articles/${id}`),
+			(response) => history.push(`/articles/${response.id}`),
 			(e) => console.log(e)
 		);
 	};

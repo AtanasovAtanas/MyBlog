@@ -31,6 +31,8 @@ const LoginPage = () => {
 					username: obj.username,
 				};
 
+				document.cookie = `Bearer=${obj.token}`;
+
 				history.push("/");
 			},
 			() => console.log("failure")

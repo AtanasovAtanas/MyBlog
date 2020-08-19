@@ -13,7 +13,9 @@ const HomePage = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			await articlesService.getAllArticles(
-				(data) => setArticles(data),
+				(data) => {
+					setArticles(data);
+				},
 				(e) => console.log(e)
 			);
 		};
