@@ -1,28 +1,17 @@
 import routes from "./routes";
+import crud from "./crud";
 
 const authenticate = async (url, body, onSuccess, onFailure) => {
-	try {
-		const promise = await fetch(url, {
-			method: "POST",
-			body: JSON.stringify(body),
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
-
-		const response = await promise.json();
-		const authToken = response.token;
-
-		if (authToken) {
-			document.cookie = `Bearer=${authToken}`;
-
-			onSuccess(response);
-		} else {
-			onFailure();
-		}
-	} catch (e) {
-		onFailure(e);
-	}
+	await crud.input(
+		url,
+		"POST",
+		{
+			"Content-Type": "application/json",
+		},
+		body,
+		onSuccess,
+		onFailure
+	);
 };
 
 const login = async (body, onSuccess, onFailure) => {
