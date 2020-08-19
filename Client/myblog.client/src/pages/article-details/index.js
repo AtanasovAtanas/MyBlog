@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import Post from "../../components/post";
+import Article from "../../components/article";
 import articlesService from "../../services/articles";
 import PageLayout from "../layout";
 import styles from "./index.module.css";
 
-const PostDetailsPage = () => {
+const ArticleDetailsPage = () => {
 	const [article, setArticle] = useState({});
 	const { id } = useParams();
 	const history = useHistory();
@@ -35,7 +35,7 @@ const PostDetailsPage = () => {
 	return (
 		<PageLayout>
 			<div className={styles.container}>
-				<Post
+				<Article
 					articleId={id}
 					title={article.title}
 					description={article.content}
@@ -48,4 +48,4 @@ const PostDetailsPage = () => {
 	);
 };
 
-export default PostDetailsPage;
+export default ArticleDetailsPage;

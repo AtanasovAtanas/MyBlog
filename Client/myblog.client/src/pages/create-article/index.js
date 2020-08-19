@@ -1,10 +1,10 @@
 import React from "react";
 import PageLayout from "../layout";
-import PostInputForm from "../../components/forms/post-input";
+import ArticleInputForm from "../../components/forms/article-input";
 import { useHistory } from "react-router-dom";
 import articlesService from "../../services/articles";
 
-const CreatePostPage = () => {
+const CreateArticlePage = () => {
 	const history = useHistory();
 
 	const handleFormSubmit = async (event, title, content) => {
@@ -24,7 +24,7 @@ const CreatePostPage = () => {
 
 	return (
 		<PageLayout>
-			<PostInputForm
+			<ArticleInputForm
 				initialTitle=""
 				initialContent=""
 				handleFormSubmit={handleFormSubmit}
@@ -33,4 +33,4 @@ const CreatePostPage = () => {
 	);
 };
 
-export default CreatePostPage;
+export default CreateArticlePage;
