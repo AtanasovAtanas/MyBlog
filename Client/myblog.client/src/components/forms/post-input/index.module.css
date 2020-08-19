@@ -1,0 +1,19 @@
+.form-styles {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.form-styles input {
+	width: 750px;
+	height: 4vh;
+	margin-bottom: 10px;
+	font-size: large;
+}
+
+.form-styles button {
+	margin-top: 5px;
+}

@@ -1,0 +1,48 @@
+.post {
+	width: 60%;
+	height: auto;
+	border: 1px solid #234465;
+	margin-bottom: 2%;
+	border-radius: 4px;
+}
+
+.description {
+	word-wrap: break-word;
+	padding: 0.5%;
+	margin-bottom: 0.5%;
+	width: 95%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.title {
+	margin-top: 1%;
+	text-align: center;
+	color: #234465;
+	margin-bottom: 0.5%;
+}
+
+.audit {
+	height: auto;
+	text-align: right;
+	margin-bottom: 0.5%;
+}
+
+.audit span {
+	text-align: right;
+	padding-right: 1.5%;
+}
+
+.post img {
+	width: 32px;
+	height: 32px;
+}
+
+.post a:link {
+	text-decoration: none;
+	color: #234465;
+}
+
+.post a:visited {
+	color: #344a61;
+}
