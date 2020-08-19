@@ -10,6 +10,8 @@
     {
         Task<IEnumerable<TModel>> All<TModel>();
 
+        Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId);
+
         Task<int> AddAsync(string title, string content, string userId);
 
         Task<TModel> Details<TModel>(int id);

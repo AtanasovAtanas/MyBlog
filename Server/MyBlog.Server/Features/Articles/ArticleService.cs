@@ -33,6 +33,13 @@
                 .To<TModel>()
                 .ToListAsync();
 
+        public async Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId) =>
+            await this.articleRepository
+                .All()
+                .Where(a => a.AuthorId == userId)
+                .To<TModel>()
+                .ToListAsync();
+
         public async Task<int> AddAsync(
             string title,
             string content,

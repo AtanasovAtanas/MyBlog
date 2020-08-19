@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MyBlog.Server.Features.Articles.Models;
+    using MyBlog.Server.Infrastructure.Extensions;
     using MyBlog.Server.Infrastructure.Services;
 
     using static Infrastructure.WebConstants;
@@ -26,6 +27,19 @@
         [HttpGet]
         public async Task<IEnumerable<ArticleDetailsResponseModel>> All()
             => await this.articleService.All<ArticleDetailsResponseModel>();
+
+        [HttpGet]
+        [Authorize]
+        [Route("Mine")]
+        public async Task<IEnumerable<ArticleDetailsResponseModel>> Mine()
+        {
+            var userId = this.User.GetId();
+
+            var result =
+               await this.articleService.AllByUserId<ArticleDetailsResponseModel>(userId);
+
+            return result;
+        }
 
         [HttpPost]
         [Authorize]
