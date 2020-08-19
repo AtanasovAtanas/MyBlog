@@ -10,7 +10,6 @@ import ProfilePage from "../../pages/profile";
 import PostDetailsPage from "../../pages/post-details";
 import CreatePostPage from "../../pages/create-post";
 import EditPostPage from "../../pages/edit-post";
-import DeleteModal from "../modal";
 
 const App = () => {
 	const [user, setUser] = useState({ username: "", userId: "" });

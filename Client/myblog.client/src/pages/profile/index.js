@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import Posts from "../../components/posts";
-import Post from "../../components/post";
 import PageLayout from "../../pages/layout";
 import articlesService from "../../services/articles";
 import Profile from "../../components/profile";
