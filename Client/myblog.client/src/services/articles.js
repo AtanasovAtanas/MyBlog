@@ -1,9 +1,20 @@
 import routes from "./routes";
 import crud from "./crud";
 
-const getAllArticles = async (onSuccess, onFailure) => {
+const getAllArticles = async (page, onSuccess, onFailure) => {
 	await crud.get(
-		routes.GET_ALL_ARTICLES,
+		routes.GET_ALL_ARTICLES(page),
+		{
+			"Content-Type": "application/json",
+		},
+		onSuccess,
+		onFailure
+	);
+};
+
+const getArticlesCount = async (onSuccess, onFailure) => {
+	await crud.get(
+		routes.GET_ALL_ARTICLES_COUNT,
 		{
 			"Content-Type": "application/json",
 		},
@@ -73,6 +84,7 @@ const deleteArticle = async (id, onSuccess, onFailure) => {
 
 export default {
 	getAllArticles,
+	getArticlesCount,
 	getAllArticlesByCurrentUser,
 	getArticleById,
 	createArticle,
