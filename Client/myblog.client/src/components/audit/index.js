@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon as FontAwesome } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import DeleteModal from "../modal";
@@ -9,6 +9,8 @@ const Audit = ({ index, articleId, title, handler }) => {
 
 	const [isOpen, setIsOpen] = useState(false);
 	const toggleModal = () => setIsOpen(!isOpen);
+
+	const location = useLocation();
 
 	const cancelHandler = () => {
 		toggleModal();
@@ -22,7 +24,10 @@ const Audit = ({ index, articleId, title, handler }) => {
 			</span>
 			<span>
 				<FontAwesome icon={faTrash} />
-				<Link to="#" onClick={toggleModal}>
+				<Link
+					to={`${location.pathname}${location.search}`}
+					onClick={() => toggleModal()}
+				>
 					Delete
 				</Link>
 				<DeleteModal
