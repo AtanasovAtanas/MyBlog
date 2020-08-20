@@ -2,14 +2,19 @@ import React, { useState } from "react";
 import styles from "./index.module.css";
 import { Link } from "react-router-dom";
 
-const Pagination = ({ articlesPerPage, totalAricles, onClickHandler }) => {
+const Pagination = ({
+	articlesPerPage,
+	totalAricles,
+	baseUrl,
+	onClickHandler,
+}) => {
 	const [activePage, setActivePage] = useState(1);
 
 	const numberOfPages = Math.ceil(totalAricles / articlesPerPage);
 	const pages = Array.from(Array(numberOfPages).keys());
 
 	const linkToUrl = (page) => {
-		return `/?page=${page}`;
+		return `/${baseUrl ? baseUrl : ""}?page=${page}`;
 	};
 
 	return (

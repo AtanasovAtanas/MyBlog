@@ -23,10 +23,23 @@ const getArticlesCount = async (onSuccess, onFailure) => {
 	);
 };
 
-const getAllArticlesByCurrentUser = async (onSuccess, onFailure) => {
+const getAllArticlesByCurrentUser = async (page, onSuccess, onFailure) => {
 	const cookie = document.cookie.split("=");
 	await crud.get(
-		routes.GET_ALL_ARTICLES_BY_CURRENT_USER,
+		routes.GET_ALL_ARTICLES_BY_CURRENT_USER(page),
+		{
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${cookie[1]}`,
+		},
+		onSuccess,
+		onFailure
+	);
+};
+
+const getArticlesCountByCurrentUser = async (onSuccess, onFailure) => {
+	const cookie = document.cookie.split("=");
+	await crud.get(
+		routes.GET_ALL_ARTICLES_COUNT_BY_CURRENT_USER,
 		{
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${cookie[1]}`,
@@ -86,6 +99,7 @@ export default {
 	getAllArticles,
 	getArticlesCount,
 	getAllArticlesByCurrentUser,
+	getArticlesCountByCurrentUser,
 	getArticleById,
 	createArticle,
 	editArticle,
