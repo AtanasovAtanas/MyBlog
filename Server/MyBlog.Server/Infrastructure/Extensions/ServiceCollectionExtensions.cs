@@ -15,6 +15,7 @@
     using MyBlog.Server.Data.Repositories.Contracts;
     using MyBlog.Server.Features.Articles;
     using MyBlog.Server.Features.Identity;
+    using MyBlog.Server.Features.Votes;
     using MyBlog.Server.Infrastructure.Filters;
     using MyBlog.Server.Infrastructure.Services;
 
@@ -80,7 +81,6 @@
             return services;
         }
 
-        // TODO: Register services
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
             => services
                 .AddScoped(
@@ -91,7 +91,8 @@
                     typeof(EfRepository<>))
                 .AddScoped<ICurrentUserService, CurrentUserService>()
                 .AddTransient<IIdentityService, IdentityService>()
-                .AddTransient<IArticleService, ArticleService>();
+                .AddTransient<IArticleService, ArticleService>()
+                .AddTransient<IVotesService, VotesService>();
 
         public static IServiceCollection AddSwagger(this IServiceCollection services)
             => services.AddSwaggerGen(c =>
