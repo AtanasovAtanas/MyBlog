@@ -8,7 +8,7 @@
 
     public interface IArticleService
     {
-        Task<IEnumerable<TModel>> All<TModel>();
+        Task<IEnumerable<TModel>> All<TModel>(int page);
 
         Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId);
 
@@ -19,5 +19,7 @@
         Task<Result> Update(int id, string title, string content, string userId);
 
         Task<Result> Delete(int id, string userId);
+
+        Task<int> AllArticlesCount();
     }
 }

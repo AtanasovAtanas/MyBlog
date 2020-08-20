@@ -25,8 +25,15 @@
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ArticleDetailsResponseModel>> All()
-            => await this.articleService.All<ArticleDetailsResponseModel>();
+        public async Task<IEnumerable<ArticleDetailsResponseModel>> All([FromQuery] int? page)
+        {
+            page ??= 1;
+
+            var articles =
+                await this.articleService.All<ArticleDetailsResponseModel>(page.Value);
+
+            return articles;
+        }
 
         [HttpGet]
         [Authorize]
@@ -99,5 +106,10 @@
 
             return this.Ok();
         }
+
+        [HttpGet]
+        [Route("Count")]
+        public async Task<int> GetArticlesCount() =>
+            await this.articleService.AllArticlesCount();
     }
 }
