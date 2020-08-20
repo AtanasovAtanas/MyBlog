@@ -5,6 +5,7 @@ import moment from "moment";
 import styles from "./index.module.css";
 import Audit from "../audit";
 import ReactHtmlParser from "react-html-parser";
+import Vote from "../vote";
 
 const Article = ({
 	index,
@@ -13,6 +14,7 @@ const Article = ({
 	description,
 	author,
 	createdOn,
+	initialVotes,
 	deleteHandler,
 }) => {
 	const detailsLink = `/articles/${articleId}`;
@@ -29,6 +31,7 @@ const Article = ({
 				{ReactHtmlParser(description)}
 			</div>
 			<div className={styles.audit}>
+				<Vote initialVotes={initialVotes} articleId={articleId} />
 				{currentUsername === author ? (
 					<Audit
 						index={index}
