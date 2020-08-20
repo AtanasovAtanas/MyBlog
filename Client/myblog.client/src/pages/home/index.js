@@ -39,16 +39,16 @@ const HomePage = () => {
 
 	return (
 		<PageLayout>
-			<Pagination
-				articlesPerPage="5"
-				totalAricles={articlesCount}
-				onClickHandler={fetchArticles}
-			/>
 			{context.user.userId ? (
 				<Link to="/articles/create" className={styles.submit}>
 					Create article
 				</Link>
 			) : null}
+			<Pagination
+				articlesPerPage="5"
+				totalAricles={articlesCount}
+				onClickHandler={fetchArticles}
+			/>
 			<Articles initialArticles={articles} />
 		</PageLayout>
 	);
