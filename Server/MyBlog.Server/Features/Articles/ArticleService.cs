@@ -36,10 +36,13 @@
                 .To<TModel>()
                 .ToListAsync();
 
-        public async Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId) =>
+        public async Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId, int page) =>
             await this.articleRepository
                 .All()
                 .Where(a => a.AuthorId == userId)
+                .OrderByDescending(a => a.CreatedOn)
+                .Skip((page - 1) * ArticlesPerPage)
+                .Take(ArticlesPerPage)
                 .To<TModel>()
                 .ToListAsync();
 
@@ -109,6 +112,12 @@
         }
 
         public async Task<int> AllArticlesCount()
-            => await this.articleRepository.All().CountAsync();
+            => await this.articleRepository.AllAsNoTracking().CountAsync();
+
+        public async Task<int> AllArticlesCountByUserId(string userId) =>
+            await this.articleRepository
+                .AllAsNoTracking()
+                .Where(a => a.AuthorId == userId)
+                .CountAsync();
     }
 }

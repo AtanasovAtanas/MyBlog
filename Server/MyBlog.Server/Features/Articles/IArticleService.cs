@@ -10,7 +10,7 @@
     {
         Task<IEnumerable<TModel>> All<TModel>(int page);
 
-        Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId);
+        Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId, int page);
 
         Task<int> AddAsync(string title, string content, string userId);
 
@@ -21,5 +21,7 @@
         Task<Result> Delete(int id, string userId);
 
         Task<int> AllArticlesCount();
+
+        Task<int> AllArticlesCountByUserId(string userId);
     }
 }
