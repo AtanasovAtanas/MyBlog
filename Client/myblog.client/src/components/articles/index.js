@@ -18,7 +18,6 @@ const Articles = ({ initialArticles }) => {
 		await articlesService.deleteArticle(
 			articleId,
 			() => {
-				console.log(index);
 				setArticles(articles.filter((v, i) => i !== index));
 				helper();
 			},

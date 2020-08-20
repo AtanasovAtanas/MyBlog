@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MyBlog.Server.Features.Articles.Models;
+    using MyBlog.Server.Infrastructure;
     using MyBlog.Server.Infrastructure.Extensions;
     using MyBlog.Server.Infrastructure.Services;
 
@@ -25,18 +26,26 @@
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ArticleDetailsResponseModel>> All()
-            => await this.articleService.All<ArticleDetailsResponseModel>();
+        public async Task<IEnumerable<ArticleDetailsResponseModel>> All([FromQuery] int? page)
+        {
+            page ??= 1;
+
+            var articles =
+                await this.articleService.All<ArticleDetailsResponseModel>(page.Value);
+
+            return articles;
+        }
 
         [HttpGet]
         [Authorize]
-        [Route("Mine")]
-        public async Task<IEnumerable<ArticleDetailsResponseModel>> Mine()
+        [Route(WebConstants.Mine)]
+        public async Task<IEnumerable<ArticleDetailsResponseModel>> Mine([FromQuery] int? page)
         {
+            page ??= 1;
             var userId = this.User.GetId();
 
             var result =
-               await this.articleService.AllByUserId<ArticleDetailsResponseModel>(userId);
+               await this.articleService.AllByUserId<ArticleDetailsResponseModel>(userId, page.Value);
 
             return result;
         }
@@ -99,5 +108,16 @@
 
             return this.Ok();
         }
+
+        [HttpGet]
+        [Route(Count)]
+        public async Task<int> GetArticlesCount() =>
+            await this.articleService.AllArticlesCount();
+
+        [HttpGet]
+        [Authorize]
+        [Route("Mine/Count")]
+        public async Task<int> GetArticlesCountByCurrentUser() =>
+            await this.articleService.AllArticlesCountByUserId(this.User.GetId());
     }
 }

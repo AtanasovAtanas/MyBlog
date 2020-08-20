@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
 
     using Ganss.XSS;
-
     using Microsoft.EntityFrameworkCore;
     using MyBlog.Server.Data.Models;
     using MyBlog.Server.Data.Repositories.Contracts;
@@ -13,6 +12,7 @@
     using MyBlog.Server.Infrastructure.Mapping;
     using MyBlog.Server.Infrastructure.Services;
 
+    using static ArticlesConstants;
     using static ErrorMessages.Articles;
 
     public class ArticleService : IArticleService
@@ -27,16 +27,22 @@
             this.htmlSanitizer = new HtmlSanitizer();
         }
 
-        public async Task<IEnumerable<TModel>> All<TModel>() =>
+        public async Task<IEnumerable<TModel>> All<TModel>(int page) =>
             await this.articleRepository
                 .All()
+                .OrderByDescending(a => a.CreatedOn)
+                .Skip((page - 1) * ArticlesPerPage)
+                .Take(ArticlesPerPage)
                 .To<TModel>()
                 .ToListAsync();
 
-        public async Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId) =>
+        public async Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId, int page) =>
             await this.articleRepository
                 .All()
                 .Where(a => a.AuthorId == userId)
+                .OrderByDescending(a => a.CreatedOn)
+                .Skip((page - 1) * ArticlesPerPage)
+                .Take(ArticlesPerPage)
                 .To<TModel>()
                 .ToListAsync();
 
@@ -104,5 +110,14 @@
 
             return true;
         }
+
+        public async Task<int> AllArticlesCount()
+            => await this.articleRepository.AllAsNoTracking().CountAsync();
+
+        public async Task<int> AllArticlesCountByUserId(string userId) =>
+            await this.articleRepository
+                .AllAsNoTracking()
+                .Where(a => a.AuthorId == userId)
+                .CountAsync();
     }
 }

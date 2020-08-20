@@ -1,9 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Security.Claims;
-using MyBlog.Server.Infrastructure.Extensions;
-
-namespace MyBlog.Server.Features.Identity
+﻿namespace MyBlog.Server.Features.Identity
 {
     using System.Threading.Tasks;
 
@@ -13,6 +8,7 @@ namespace MyBlog.Server.Features.Identity
     using Microsoft.Extensions.Options;
     using MyBlog.Server.Data.Models;
     using MyBlog.Server.Features.Identity.Models;
+    using MyBlog.Server.Infrastructure.Extensions;
 
     public class IdentityController : ApiController
     {

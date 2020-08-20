@@ -2,6 +2,12 @@
 {
     public class Result
     {
+        public bool Succeeded { get; private set; }
+
+        public bool Failure => !this.Succeeded;
+
+        public string Error { get; private set; }
+
         public static implicit operator Result(bool succeeded)
             => new Result { Succeeded = succeeded };
 
@@ -11,11 +17,5 @@
                 Succeeded = false,
                 Error = error,
             };
-
-        public bool Succeeded { get; private set; }
-
-        public bool Failure => !this.Succeeded;
-
-        public string Error { get; private set; }
     }
 }

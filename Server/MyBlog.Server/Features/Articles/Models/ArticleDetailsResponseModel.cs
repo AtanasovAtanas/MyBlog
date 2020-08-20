@@ -1,6 +1,7 @@
 ﻿namespace MyBlog.Server.Features.Articles.Models
 {
     using System;
+
     using MyBlog.Server.Data.Models;
     using MyBlog.Server.Infrastructure.Mapping;
 
