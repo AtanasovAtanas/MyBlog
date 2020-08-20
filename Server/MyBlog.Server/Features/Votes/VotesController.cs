@@ -21,20 +21,27 @@
 
         [HttpGet]
         [Route(Id)]
-        public int GetVotes(int articleId) =>
-            this.votesService.GetVotes(articleId);
+        public InputVoteResponseModel GetVotes(int id)
+        {
+            var votesCount = this.votesService.GetVotes(articleId: id);
+
+            return new InputVoteResponseModel { VotesCount = votesCount };
+        }
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<VoteResponseModel>> VoteAsync(VoteRequestModel model)
+        public async Task<ActionResult<InputVoteResponseModel>> VoteAsync(VoteRequestModel model)
         {
             var userId = this.User.GetId();
 
             await this.votesService.VoteAsync(model.ArticleId, userId, model.VoteType);
 
-            var votesCount = this.GetVotes(model.ArticleId);
-
-            return new VoteResponseModel { VotesCount = votesCount };
+            return this.GetVotes(model.ArticleId);
         }
+
+        [HttpGet]
+        public async Task<ActionResult<UserVoteTypeResponseModel>> GetUserVoteType(
+            [FromQuery] int articleId) =>
+            await this.votesService.GetUserVoteType(articleId, this.User?.GetId());
     }
 }

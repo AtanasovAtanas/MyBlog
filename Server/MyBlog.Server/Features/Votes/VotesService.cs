@@ -6,6 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using MyBlog.Server.Data.Models;
     using MyBlog.Server.Data.Repositories.Contracts;
+    using MyBlog.Server.Features.Votes.Models;
 
     public class VotesService : IVotesService
     {
@@ -48,6 +49,18 @@
                 this.votesRepository.Update(vote);
                 await this.votesRepository.SaveChangesAsync();
             }
+        }
+
+        public async Task<UserVoteTypeResponseModel> GetUserVoteType(int articleId, string userId)
+        {
+            var vote = await this.votesRepository
+                .All()
+                .FirstOrDefaultAsync(
+                    v => v.ArticleId == articleId && v.UserId == userId);
+
+            var result = vote?.Type ?? VoteType.Neutral;
+
+            return new UserVoteTypeResponseModel { VoteType = (int)result };
         }
     }
 }
