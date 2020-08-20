@@ -37,12 +37,11 @@ const input = async (url, method, headers, body, onSuccess, onFailure) => {
 
 const remove = async (url, onSuccess, onFailure) => {
 	try {
-		const cookie = document.cookie.split("=");
 		const response = await fetch(url, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${cookie[1]}`,
+				Authorization: document.cookie.replace("=", " "),
 			},
 		});
 

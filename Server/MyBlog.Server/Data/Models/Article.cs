@@ -1,5 +1,6 @@
 ﻿namespace MyBlog.Server.Data.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using MyBlog.Server.Data.Models.Base;
@@ -8,6 +9,11 @@
 
     public class Article : DeletableEntity
     {
+        public Article()
+        {
+            this.Votes = new HashSet<Vote>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -22,5 +28,7 @@
         public string AuthorId { get; set; }
 
         public virtual User Author { get; set; }
+
+        public virtual IEnumerable<Vote> Votes { get; set; }
     }
 }

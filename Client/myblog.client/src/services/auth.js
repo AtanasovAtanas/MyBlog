@@ -24,22 +24,11 @@ const register = async (body, onSuccess, onFailure) => {
 
 const getIdentityDetails = async (onSuccess, onFailure) => {
 	try {
-		const cookie = document.cookie.split("=");
-
-		if (
-			!cookie ||
-			cookie.length < 2 ||
-			cookie[0] !== "Bearer" ||
-			!cookie[1]
-		) {
-			return;
-		}
-
 		const promise = await fetch(routes.GET_IDENTITY_DETAILS, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${cookie[1]}`,
+				Authorization: document.cookie.replace("=", " "),
 			},
 		});
 
