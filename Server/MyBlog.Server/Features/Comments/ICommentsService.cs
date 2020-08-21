@@ -8,7 +8,6 @@
 
     public interface ICommentsService
     {
-
         Task<IEnumerable<TModel>> GetAllRepliesByCommentId<TModel>(int commentId);
 
         Task<int> CreateAsync(int articleId, int? parentId, string content, string authorId);
