@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MyBlog.Server.Features.Articles.Models;
+    using MyBlog.Server.Features.Comments.Models;
     using MyBlog.Server.Infrastructure;
     using MyBlog.Server.Infrastructure.Extensions;
     using MyBlog.Server.Infrastructure.Services;
@@ -119,5 +120,10 @@
         [Route("Mine/Count")]
         public async Task<int> GetArticlesCountByCurrentUser() =>
             await this.articleService.AllArticlesCountByUserId(this.User.GetId());
+
+        [HttpGet]
+        [Route("{ArticleId}/Comments")]
+        public async Task<IEnumerable<ListCommentModel>> GetCommentByArticle([FromRoute] int articleId)
+            => await this.articleService.GetAllCommentsByArticleId<ListCommentModel>(articleId);
     }
 }
