@@ -1,37 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 import PageLayout from "../layout";
 import ArticleInputForm from "../../components/forms/article-input";
-import { useHistory, Redirect } from "react-router-dom";
-import articlesService from "../../services/articles";
-import UserContext from "../../utils/context";
+import { Redirect } from "react-router-dom";
+import getCurrentCookie from "../../utils/cookieHelper";
 
 const CreateArticlePage = () => {
-	const history = useHistory();
-	const context = useContext(UserContext);
-
-	const handleFormSubmit = async (event, title, content) => {
-		event.preventDefault();
-
-		const body = {
-			title,
-			content,
-		};
-
-		await articlesService.createArticle(
-			body,
-			(response) => history.push(`/articles/${response.id}`),
-			() => console.log()
-		);
-	};
-
 	return (
 		<React.Fragment>
-			{context.user.username ? (
+			{getCurrentCookie() ? (
 				<PageLayout>
 					<ArticleInputForm
+						mode="create"
 						initialTitle=""
 						initialContent=""
-						handleFormSubmit={handleFormSubmit}
 					/>
 				</PageLayout>
 			) : (
