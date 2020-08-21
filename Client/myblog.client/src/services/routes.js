@@ -17,6 +17,8 @@ const routes = {
 	POST_VOTE_TO_ARTICLE_ID: BASE_URL + "/Votes",
 	GET_USER_VOTE_TYPE_BY_ARTICLE_ID: (id) =>
 		BASE_URL + `/Votes?articleId=${id}`,
+	GET_COMMENTS_BY_ARTICLE_ID: (articleId) =>
+		BASE_URL + `/Articles/${articleId}/Comments`,
 };
 
 export default routes;

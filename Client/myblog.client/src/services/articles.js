@@ -58,6 +58,17 @@ const getArticleById = async (id, onSuccess, onFailure) => {
 	);
 };
 
+const getCommentsByArticleId = async (id, onSuccess, onFailure) => {
+	await crud.get(
+		routes.GET_COMMENTS_BY_ARTICLE_ID(id),
+		{
+			"Content-Type": "application/json",
+		},
+		onSuccess,
+		onFailure
+	);
+};
+
 const createArticle = async (body, onSuccess, onFailure) => {
 	await crud.input(
 		routes.CREATE_ARTICLE,
@@ -96,6 +107,7 @@ export default {
 	getAllArticlesByCurrentUser,
 	getArticlesCountByCurrentUser,
 	getArticleById,
+	getCommentsByArticleId,
 	createArticle,
 	editArticle,
 	deleteArticle,
