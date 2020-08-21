@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import PageLayout from "../layout";
 import ArticleInputForm from "../../components/forms/article-input";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import articlesService from "../../services/articles";
+import UserContext from "../../utils/context";
 
 const CreateArticlePage = () => {
 	const history = useHistory();
+	const context = useContext(UserContext);
 
 	const handleFormSubmit = async (event, title, content) => {
 		event.preventDefault();
@@ -18,18 +20,24 @@ const CreateArticlePage = () => {
 		await articlesService.createArticle(
 			body,
 			(response) => history.push(`/articles/${response.id}`),
-			(e) => console.log(e)
+			() => console.log()
 		);
 	};
 
 	return (
-		<PageLayout>
-			<ArticleInputForm
-				initialTitle=""
-				initialContent=""
-				handleFormSubmit={handleFormSubmit}
-			/>
-		</PageLayout>
+		<React.Fragment>
+			{context.user.username ? (
+				<PageLayout>
+					<ArticleInputForm
+						initialTitle=""
+						initialContent=""
+						handleFormSubmit={handleFormSubmit}
+					/>
+				</PageLayout>
+			) : (
+				<Redirect to="/login" />
+			)}
+		</React.Fragment>
 	);
 };
 
