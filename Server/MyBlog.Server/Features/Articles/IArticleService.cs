@@ -12,6 +12,8 @@
 
         Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId, int page);
 
+        Task<IEnumerable<TModel>> GetAllCommentsByArticleId<TModel>(int articleId);
+
         Task<int> AddAsync(string title, string content, string userId);
 
         Task<TModel> Details<TModel>(int id);
