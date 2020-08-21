@@ -20,7 +20,7 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<CreateCommentResponseModel>> CreateComment(
+        public async Task<ActionResult<InputCommentResponseModel>> CreateComment(
             CreateCommentRequestModel inputModel)
         {
             var userId = this.User.GetId();
@@ -31,13 +31,13 @@
                 inputModel.Content,
                 userId);
 
-            return new CreateCommentResponseModel { CommentId = commentId };
+            return new InputCommentResponseModel { CommentId = commentId };
         }
 
         [HttpPut]
         [Authorize]
         [Route(Id)]
-        public async Task<ActionResult<CreateCommentResponseModel>> UpdateComment(
+        public async Task<ActionResult<InputCommentResponseModel>> UpdateComment(
             int id,
             UpdateCommentRequestModel inputModel)
         {
@@ -53,7 +53,7 @@
                 return this.BadRequest(result.Error);
             }
 
-            return new CreateCommentResponseModel { CommentId = id };
+            return new InputCommentResponseModel { CommentId = id };
         }
 
         [HttpDelete]
