@@ -36,7 +36,6 @@ const getAllArticlesByCurrentUser = async (page, onSuccess, onFailure) => {
 };
 
 const getArticlesCountByCurrentUser = async (onSuccess, onFailure) => {
-	const cookie = document.cookie.split("=");
 	await crud.get(
 		routes.GET_ALL_ARTICLES_COUNT_BY_CURRENT_USER,
 		{

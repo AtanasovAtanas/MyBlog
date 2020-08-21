@@ -2,3 +2,12 @@
 	text-align: center;
 	margin-bottom: 1.5%;
 }
+
+.error {
+	text-align: center;
+	color: #ff0000;
+	font-weight: bold;
+	font-size: large;
+	margin-top: 0.5%;
+	margin-bottom: 0.5%;
+}

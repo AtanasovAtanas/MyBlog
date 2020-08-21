@@ -23,24 +23,24 @@ const register = async (body, onSuccess, onFailure) => {
 };
 
 const getIdentityDetails = async (onSuccess, onFailure) => {
-	try {
-		const promise = await fetch(routes.GET_IDENTITY_DETAILS, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: document.cookie.replace("=", " "),
-			},
-		});
+	const cookieParts = document.cookie.split("=");
+	const cookieHeader = cookieParts[0];
+	const cookieValue = cookieParts[1];
 
-		const tokenObj = await promise.json();
-		if (tokenObj) {
-			onSuccess(tokenObj);
-		} else {
-			onFailure();
-		}
-	} catch (e) {
-		onFailure(e);
+	if (cookieParts.length !== 2 || cookieHeader !== "Bearer" || !cookieValue) {
+		onFailure();
+		return;
 	}
+
+	await crud.get(
+		routes.GET_IDENTITY_DETAILS,
+		{
+			"Content-Type": "application/json",
+			Authorization: document.cookie.replace("=", " "),
+		},
+		onSuccess,
+		onFailure
+	);
 };
 
 const auth = {

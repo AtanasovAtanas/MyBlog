@@ -17,3 +17,12 @@
 .form-styles button {
 	margin-top: 5px;
 }
+
+.error {
+	text-align: center;
+	color: #ff0000;
+	font-weight: bold;
+	font-size: large;
+	margin-top: 0.5%;
+	margin-bottom: 0.5%;
+}

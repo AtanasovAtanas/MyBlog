@@ -25,10 +25,10 @@ const input = async (url, method, headers, body, onSuccess, onFailure) => {
 		});
 
 		const response = await promise.json();
-		if (response) {
+		if (promise.ok) {
 			onSuccess(response);
 		} else {
-			onFailure();
+			onFailure(response);
 		}
 	} catch (e) {
 		onFailure(e);
