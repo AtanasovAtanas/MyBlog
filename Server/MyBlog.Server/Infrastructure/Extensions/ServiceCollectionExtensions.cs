@@ -14,6 +14,7 @@
     using MyBlog.Server.Data.Repositories;
     using MyBlog.Server.Data.Repositories.Contracts;
     using MyBlog.Server.Features.Articles;
+    using MyBlog.Server.Features.Comments;
     using MyBlog.Server.Features.Identity;
     using MyBlog.Server.Features.Votes;
     using MyBlog.Server.Infrastructure.Filters;
@@ -93,7 +94,8 @@
                 .AddScoped<ICurrentUserService, CurrentUserService>()
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<IArticleService, ArticleService>()
-                .AddTransient<IVotesService, VotesService>();
+                .AddTransient<IVotesService, VotesService>()
+                .AddTransient<ICommentsService, CommentsService>();
 
         public static IServiceCollection AddSwagger(this IServiceCollection services)
             => services.AddSwaggerGen(c =>
