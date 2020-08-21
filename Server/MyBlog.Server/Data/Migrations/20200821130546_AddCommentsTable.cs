@@ -1,7 +1,7 @@
 ﻿namespace MyBlog.Server.Data.Migrations
 {
     using System;
-    
+
     using Microsoft.EntityFrameworkCore.Migrations;
 
     public partial class AddCommentsTable : Migration
