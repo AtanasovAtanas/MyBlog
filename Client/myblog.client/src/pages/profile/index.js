@@ -43,12 +43,14 @@ const ProfilePage = () => {
 				username={context.user.username}
 				articlesCount={articlesCount}
 			/>
-			<Pagination
-				articlesPerPage="5"
-				totalAricles={articlesCount}
-				baseUrl="profile/"
-				onClickHandler={fetchArticles}
-			/>
+			{articles.length > 0 ? (
+				<Pagination
+					articlesPerPage="5"
+					totalAricles={articlesCount}
+					baseUrl="profile/"
+					onClickHandler={fetchArticles}
+				/>
+			) : null}
 			<Articles initialArticles={articles} />
 		</PageLayout>
 	);
