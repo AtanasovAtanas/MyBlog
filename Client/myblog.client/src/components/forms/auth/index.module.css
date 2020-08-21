@@ -5,8 +5,9 @@
 
 .error {
 	text-align: center;
+	color: #ff0000;
 	font-weight: bold;
-	color: red;
-	margin-top: 1%;
-	margin-bottom: 1%;
+	font-size: large;
+	margin-top: 0.5%;
+	margin-bottom: 0.5%;
 }

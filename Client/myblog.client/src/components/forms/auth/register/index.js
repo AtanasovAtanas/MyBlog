@@ -19,14 +19,12 @@ const Register = () => {
 	const validate = (email, password, rePassword) => {
 		const validationErrors = [];
 
-		// email
 		if (
-			!RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/).test(email)
+			!RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/).test(email)
 		) {
 			validationErrors.push("Invalid email!");
 		}
 
-		// password and repassword should match
 		if (password !== rePassword) {
 			validationErrors.push("Password and re-password don't match!");
 		}
