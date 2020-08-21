@@ -24,11 +24,11 @@ const input = async (url, method, headers, body, onSuccess, onFailure) => {
 			headers: headers,
 		});
 
+		const response = await promise.json();
 		if (promise.ok) {
-			const response = await promise.json();
 			onSuccess(response);
 		} else {
-			onFailure();
+			onFailure(response);
 		}
 	} catch (e) {
 		onFailure(e);
