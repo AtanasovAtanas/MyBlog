@@ -20,7 +20,7 @@ const App = () => {
 				(obj) => {
 					setUser({ userId: obj.userId, username: obj.username });
 				},
-				(e) => console.log(e)
+				() => console.log()
 			);
 		};
 
