@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import Article from "../../components/article";
+import Comment from "../../components/comment";
 import articlesService from "../../services/articles";
 import PageLayout from "../layout";
 import styles from "./index.module.css";
 
 const ArticleDetailsPage = () => {
 	const [article, setArticle] = useState({});
+	const [comments, setComments] = useState([]);
 	const { id } = useParams();
 	const history = useHistory();
 
@@ -14,9 +16,13 @@ const ArticleDetailsPage = () => {
 		const fetchData = async () => {
 			await articlesService.getArticleById(
 				id,
-				(data) => {
-					setArticle(data);
-				},
+				(data) => setArticle(data),
+				() => console.log()
+			);
+
+			await articlesService.getCommentsByArticleId(
+				id,
+				(data) => setComments(data),
 				() => console.log()
 			);
 		};
@@ -45,6 +51,16 @@ const ArticleDetailsPage = () => {
 					commentsCount={article.commentsCount}
 					deleteHandler={deleteHandler}
 				/>
+				<h4>Comments:</h4>
+				<div>
+					{comments.map((comment) => (
+						<Comment
+							content={comment.content}
+							author={comment.authorUsername}
+							createdOn={comment.createdOn}
+						/>
+					))}
+				</div>
 			</div>
 		</PageLayout>
 	);
