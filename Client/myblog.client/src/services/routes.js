@@ -19,6 +19,8 @@ const routes = {
 		BASE_URL + `/Votes?articleId=${id}`,
 	GET_COMMENTS_BY_ARTICLE_ID: (articleId) =>
 		BASE_URL + `/Articles/${articleId}/Comments`,
+	GET_REPLIES_BY_COMMENT_ID: (commentId) =>
+		BASE_URL + `/Comments/${commentId}`,
 };
 
 export default routes;
