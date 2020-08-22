@@ -29,6 +29,7 @@
             return await this.commentsRepository
                 .All()
                 .Where(c => c.Id == commentId)
+                .SelectMany(c => c.Replies)
                 .To<TModel>()
                 .ToListAsync();
         }
