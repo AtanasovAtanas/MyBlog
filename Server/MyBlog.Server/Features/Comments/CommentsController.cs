@@ -1,5 +1,6 @@
 ﻿namespace MyBlog.Server.Features.Comments
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -18,10 +19,19 @@
             this.commentsService = commentsService;
         }
 
+        [HttpGet]
+        [Route(Id)]
+        public async Task<IEnumerable<ListCommentModel>> GetRepliesByComment([FromRoute] int id)
+        {
+            var result = await this.commentsService.GetAllRepliesByCommentId<ListCommentModel>(id);
+
+            return result;
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<InputCommentResponseModel>> CreateComment(
-            CreateCommentRequestModel inputModel)
+            [FromBody] CreateCommentRequestModel inputModel)
         {
             var userId = this.User.GetId();
 
@@ -38,8 +48,8 @@
         [Authorize]
         [Route(Id)]
         public async Task<ActionResult<InputCommentResponseModel>> UpdateComment(
-            int id,
-            UpdateCommentRequestModel inputModel)
+            [FromRoute] int id,
+            [FromBody] UpdateCommentRequestModel inputModel)
         {
             var userId = this.User.GetId();
 
@@ -59,7 +69,7 @@
         [HttpDelete]
         [Authorize]
         [Route(Id)]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete([FromRoute] int id)
         {
             var userId = this.User.GetId();
 

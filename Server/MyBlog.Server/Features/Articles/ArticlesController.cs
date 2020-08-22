@@ -53,7 +53,8 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<InputArticleResponseModel>> Create(InputArticleRequestModel inputModel)
+        public async Task<ActionResult<InputArticleResponseModel>> Create(
+            [FromBody] InputArticleRequestModel inputModel)
         {
             var userId = this.currentUser.GetId();
 
@@ -67,15 +68,15 @@
 
         [HttpGet]
         [Route(Id)]
-        public async Task<ArticleDetailsResponseModel> Details(int id)
+        public async Task<ArticleDetailsResponseModel> Details([FromRoute] int id)
             => await this.articleService.Details<ArticleDetailsResponseModel>(id);
 
         [HttpPut]
         [Authorize]
         [Route(Id)]
         public async Task<ActionResult<InputArticleResponseModel>> Update(
-            int id,
-            InputArticleRequestModel inputModel)
+            [FromRoute] int id,
+            [FromBody] InputArticleRequestModel inputModel)
         {
             var userId = this.currentUser.GetId();
 
@@ -96,7 +97,7 @@
         [HttpDelete]
         [Authorize]
         [Route(Id)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var userId = this.currentUser.GetId();
 
