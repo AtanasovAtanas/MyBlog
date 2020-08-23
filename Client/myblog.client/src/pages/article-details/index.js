@@ -51,8 +51,7 @@ const ArticleDetailsPage = () => {
 					commentsCount={article.commentsCount}
 					deleteHandler={deleteHandler}
 				/>
-				<h4>Comments:</h4>
-				<div>
+				<div className={styles.comments}>
 					{comments.map((comment) => (
 						<Comment
 							key={comment.id}
@@ -60,7 +59,6 @@ const ArticleDetailsPage = () => {
 							content={comment.content}
 							author={comment.authorUsername}
 							createdOn={comment.createdOn}
-							repliesCount={comment.repliesCount}
 						/>
 					))}
 				</div>
