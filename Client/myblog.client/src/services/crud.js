@@ -41,7 +41,7 @@ const remove = async (url, onSuccess, onFailure) => {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: document.cookie.replace("=", " "),
+				Authorization: getCurrentCookie(),
 			},
 		});
 

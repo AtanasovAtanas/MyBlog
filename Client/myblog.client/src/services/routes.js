@@ -21,6 +21,7 @@ const routes = {
 		BASE_URL + `/Articles/${articleId}/Comments`,
 	GET_REPLIES_BY_COMMENT_ID: (commentId) =>
 		BASE_URL + `/Comments/${commentId}`,
+	POST_COMMENT: BASE_URL + "/Comments",
 };
 
 export default routes;

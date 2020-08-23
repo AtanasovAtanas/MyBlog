@@ -1,5 +1,5 @@
 const getCurrentCookie = () => {
-	return document.cookie.split("=")[1];
+	return document.cookie.replace("Bearer=", "Bearer ");
 };
 
 export default getCurrentCookie;
