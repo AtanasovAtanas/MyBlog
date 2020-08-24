@@ -12,6 +12,8 @@ const CommentForm = ({ formSubmitHandler, buttonText }) => {
 				event.preventDefault();
 
 				formSubmitHandler(content);
+
+				setContent("");
 			}}
 		>
 			<div>
