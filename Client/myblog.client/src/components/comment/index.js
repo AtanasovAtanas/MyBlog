@@ -78,7 +78,7 @@ const Comment = ({ id, articleId, content, author, createdOn }) => {
 							{context.user.username === author ? (
 								<Actions
 									title="your comment"
-									handler={deleteHandler}
+									deleteHandler={deleteHandler}
 								/>
 							) : null}
 						</div>
@@ -90,20 +90,7 @@ const Comment = ({ id, articleId, content, author, createdOn }) => {
 							}
 							buttonText="Add reply"
 						/>
-					) : // <form className={styles["reply-form"]}>
-					// 	<div>
-					// 		<textarea
-					// 			value={newReplyContent}
-					// 			onChange={(event) =>
-					// 				setNewReplyContent(event.target.value)
-					// 			}
-					// 		/>
-					// 	</div>
-					// 	<Link to="#" onClick={addReplyHandler}>
-					// 		Add Reply
-					// 	</Link>
-					// </form>
-					null}
+					) : null}
 					<div className={styles.comments}>
 						{replies.map((reply) => (
 							<Comment

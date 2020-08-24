@@ -65,7 +65,7 @@ const Article = ({
 							<Actions
 								articleId={articleId}
 								title={title}
-								handler={deleteHandler}
+								deleteHandler={deleteHandler}
 							/>
 						) : null}
 						<span>
