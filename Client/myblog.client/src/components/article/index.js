@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import UserContext from "../../utils/context";
 import moment from "moment";
 import styles from "./index.module.css";
@@ -26,10 +26,13 @@ const Article = ({
 	const context = useContext(UserContext);
 	const currentUsername = context.user.username;
 
+	const history = useHistory();
+
 	const deleteHandler = async () => {
 		await articlesService.deleteArticle(
 			articleId,
 			() => {
+				history.push("/");
 				setIsDeleted(true);
 			},
 			(e) => console.log(e)
