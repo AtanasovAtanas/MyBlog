@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styles from "./index.module.css";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import commentsService from "../../services/comments";
 import Actions from "../actions";
+import UserContext from "../../utils/context";
 
 const Comment = ({ id, articleId, content, author, createdOn }) => {
 	const [replies, setReplies] = useState([]);
@@ -12,6 +13,8 @@ const Comment = ({ id, articleId, content, author, createdOn }) => {
 	const toggle = () => setShow(!show);
 
 	const [isDeleted, setIsDeleted] = useState(false);
+
+	const context = useContext(UserContext);
 
 	useEffect(() => {
 		const fetchReplies = async () => {
@@ -72,10 +75,12 @@ const Comment = ({ id, articleId, content, author, createdOn }) => {
 							>
 								Reply
 							</Link>
-							<Actions
-								title="your comment"
-								handler={deleteHandler}
-							/>
+							{context.user.username === author ? (
+								<Actions
+									title="your comment"
+									handler={deleteHandler}
+								/>
+							) : null}
 						</div>
 					</div>
 					{show ? (
