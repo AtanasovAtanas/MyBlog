@@ -27,6 +27,20 @@ const postReply = async (body, onSuccess, onFailure) => {
 	);
 };
 
+const udpateComment = async (id, body, onSuccess, onFailure) => {
+	await crud.input(
+		routes.UPDATE_COMMENT_BY_ID(id),
+		"PUT",
+		{
+			"Content-Type": "application/json",
+			Authorization: getCurrentCookie(),
+		},
+		body,
+		onSuccess,
+		onFailure
+	);
+};
+
 const deleteComment = async (id, onSuccess, onFailure) => {
 	await crud.remove(routes.DELETE_COMMENT_BY_ID(id), onSuccess, onFailure);
 };
@@ -35,4 +49,5 @@ export default {
 	getRepliesByCommentId,
 	postReply,
 	deleteComment,
+	udpateComment,
 };
