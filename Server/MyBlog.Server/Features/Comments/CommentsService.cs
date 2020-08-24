@@ -83,7 +83,6 @@
         public async Task<Result> Delete(int commentId, string authorId)
         {
             var comment = await this.commentsRepository.GetByIdAsync(commentId);
-
             if (comment == null)
             {
                 return "You can't delete a non-existing comment.";
@@ -94,10 +93,28 @@
                 return "Only the author can delete its comment.";
             }
 
+            await this.RemoveChildren(comment.Id);
+
             this.commentsRepository.Delete(comment);
+
             await this.commentsRepository.SaveChangesAsync();
 
             return true;
+        }
+
+        private async Task RemoveChildren(int commentId)
+        {
+            var children = await this.commentsRepository
+                .All()
+                .Where(c => c.ParentId == commentId)
+                .ToListAsync();
+
+            foreach (var child in children)
+            {
+                await this.RemoveChildren(child.Id);
+
+                this.commentsRepository.Delete(child);
+            }
         }
     }
 }
