@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Article from "../../components/article";
 import Comment from "../../components/comment";
+import CommentForm from "../../components/forms/comment";
 import articlesService from "../../services/articles";
+import commentsService from "../../services/comments";
 import PageLayout from "../layout";
 import styles from "./index.module.css";
 
@@ -10,7 +12,6 @@ const ArticleDetailsPage = () => {
 	const [article, setArticle] = useState({});
 	const [comments, setComments] = useState([]);
 	const { id } = useParams();
-	const history = useHistory();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -30,11 +31,17 @@ const ArticleDetailsPage = () => {
 		fetchData();
 	}, [id]);
 
-	const deleteHandler = async () => {
-		await articlesService.deleteArticle(
-			id,
-			() => history.push("/"),
-			(e) => console.log(e)
+	const addCommentHandler = async (content) => {
+		const body = {
+			articleId: Number(id),
+			parentId: null,
+			content: content,
+		};
+
+		await commentsService.postReply(
+			body,
+			(response) => setComments([...comments, response]),
+			() => console.log("failed to reply")
 		);
 	};
 
@@ -49,7 +56,10 @@ const ArticleDetailsPage = () => {
 					createdOn={article.createdOn}
 					initialVotes={article.votes}
 					commentsCount={article.commentsCount}
-					deleteHandler={deleteHandler}
+				/>
+				<CommentForm
+					formSubmitHandler={addCommentHandler}
+					buttonText="Add comment"
 				/>
 				<div className={styles.comments}>
 					{comments.map((comment) => (

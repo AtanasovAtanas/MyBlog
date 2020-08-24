@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import commentsService from "../../services/comments";
 import Actions from "../actions";
 import UserContext from "../../utils/context";
+import CommentForm from "../forms/comment";
 
 const Comment = ({ id, articleId, content, author, createdOn }) => {
 	const [replies, setReplies] = useState([]);
-	const [newReplyContent, setNewReplyContent] = useState("");
 	const [show, setShow] = useState(false);
 	const toggle = () => setShow(!show);
 
@@ -28,11 +28,11 @@ const Comment = ({ id, articleId, content, author, createdOn }) => {
 		fetchReplies();
 	}, [id]);
 
-	const addReplyHandler = async () => {
+	const addReplyHandler = async (replyContent) => {
 		const body = {
 			articleId: articleId,
 			parentId: id,
-			content: newReplyContent,
+			content: replyContent,
 		};
 
 		await commentsService.postReply(
@@ -84,20 +84,26 @@ const Comment = ({ id, articleId, content, author, createdOn }) => {
 						</div>
 					</div>
 					{show ? (
-						<form className={styles["reply-form"]}>
-							<div>
-								<textarea
-									value={newReplyContent}
-									onChange={(event) =>
-										setNewReplyContent(event.target.value)
-									}
-								/>
-							</div>
-							<Link to="#" onClick={addReplyHandler}>
-								Add Reply
-							</Link>
-						</form>
-					) : null}
+						<CommentForm
+							formSubmitHandler={(content) =>
+								addReplyHandler(content)
+							}
+							buttonText="Add reply"
+						/>
+					) : // <form className={styles["reply-form"]}>
+					// 	<div>
+					// 		<textarea
+					// 			value={newReplyContent}
+					// 			onChange={(event) =>
+					// 				setNewReplyContent(event.target.value)
+					// 			}
+					// 		/>
+					// 	</div>
+					// 	<Link to="#" onClick={addReplyHandler}>
+					// 		Add Reply
+					// 	</Link>
+					// </form>
+					null}
 					<div className={styles.comments}>
 						{replies.map((reply) => (
 							<Comment
