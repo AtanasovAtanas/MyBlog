@@ -28,8 +28,12 @@
             configuration.CreateMap<Article, ArticleDetailsResponseModel>()
                 .ForMember(x => x.Votes, options =>
                 {
-                    options.MapFrom(p => p.Votes.Sum(v => (int)v.Type));
-                });
+                    options.MapFrom(a => a.Votes.Sum(v => (int)v.Type));
+                })
+                .ForMember(x => x.CommentsCount, options =>
+                  {
+                      options.MapFrom(a => a.Comments.Count(c => !c.IsDeleted));
+                  });
         }
     }
 }
