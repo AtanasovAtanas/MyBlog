@@ -124,7 +124,7 @@
 
         [HttpGet]
         [Route("{ArticleId}/Comments")]
-        public async Task<IEnumerable<ListCommentModel>> GetCommentByArticle([FromRoute] int articleId)
-            => await this.articleService.GetAllCommentsByArticleId<ListCommentModel>(articleId);
+        public async Task<IEnumerable<CommentListingModel>> GetCommentByArticle([FromRoute] int articleId)
+            => await this.articleService.GetAllCommentsByArticleId<CommentListingModel>(articleId);
     }
 }

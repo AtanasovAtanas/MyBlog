@@ -21,27 +21,25 @@
 
         [HttpGet]
         [Route(Id)]
-        public async Task<IEnumerable<ListCommentModel>> GetRepliesByComment([FromRoute] int id)
+        public async Task<IEnumerable<CommentListingModel>> GetRepliesByComment([FromRoute] int id)
         {
-            var result = await this.commentsService.GetAllRepliesByCommentId<ListCommentModel>(id);
+            var result = await this.commentsService.GetAllRepliesByCommentId<CommentListingModel>(id);
 
             return result;
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<InputCommentResponseModel>> CreateComment(
+        public async Task<ActionResult<CommentListingModel>> CreateComment(
             [FromBody] CreateCommentRequestModel inputModel)
         {
-            var userId = this.User.GetId();
-
             var commentId = await this.commentsService.CreateAsync(
-                inputModel.ArticleId,
-                inputModel.ParentId,
-                inputModel.Content,
-                userId);
+                   inputModel.ArticleId,
+                   inputModel.ParentId,
+                   inputModel.Content,
+                   this.User.GetId());
 
-            return new InputCommentResponseModel { CommentId = commentId };
+            return await this.commentsService.GetById<CommentListingModel>(commentId);
         }
 
         [HttpPut]

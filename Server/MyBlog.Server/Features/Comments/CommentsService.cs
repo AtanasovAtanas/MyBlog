@@ -34,6 +34,13 @@
                 .ToListAsync();
         }
 
+        public async Task<TModel> GetById<TModel>(int commentId) =>
+            await this.commentsRepository
+                .All()
+                .Where(c => c.Id == commentId)
+                .To<TModel>()
+                .FirstOrDefaultAsync();
+
         public async Task<int> CreateAsync(int articleId, int? parentId, string content, string authorId)
         {
             var comment = new Comment

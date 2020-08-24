@@ -10,6 +10,8 @@
     {
         Task<IEnumerable<TModel>> GetAllRepliesByCommentId<TModel>(int commentId);
 
+        Task<TModel> GetById<TModel>(int commentId);
+
         Task<int> CreateAsync(int articleId, int? parentId, string content, string authorId);
 
         Task<Result> Update(int commentId, string authorId, string content);
