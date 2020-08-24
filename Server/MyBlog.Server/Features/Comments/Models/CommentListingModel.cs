@@ -5,7 +5,7 @@
     using MyBlog.Server.Data.Models;
     using MyBlog.Server.Infrastructure.Mapping;
 
-    public class ListCommentModel : IMapFrom<Comment>
+    public class CommentListingModel : IMapFrom<Comment>
     {
         public int Id { get; set; }
 
