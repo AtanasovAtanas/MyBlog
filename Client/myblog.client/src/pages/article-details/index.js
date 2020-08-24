@@ -55,6 +55,7 @@ const ArticleDetailsPage = () => {
 					{comments.map((comment) => (
 						<Comment
 							key={comment.id}
+							articleId={Number(id)}
 							id={comment.id}
 							content={comment.content}
 							author={comment.authorUsername}

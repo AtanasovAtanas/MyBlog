@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import ReactHtmlParser from "react-html-parser";
 import styles from "./index.module.css";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import commentsService from "../../services/comments";
 
-const Comment = ({ id, content, author, createdOn }) => {
+const Comment = ({ id, articleId, content, author, createdOn }) => {
 	const [replies, setReplies] = useState([]);
+	const [newReplyContent, setNewReplyContent] = useState("");
 	const [show, setShow] = useState(false);
 	const toggle = () => setShow(!show);
 
@@ -22,6 +22,23 @@ const Comment = ({ id, content, author, createdOn }) => {
 		fetchReplies();
 	}, [id]);
 
+	const addReplyHandler = async () => {
+		const body = {
+			articleId: articleId,
+			parentId: id,
+			content: newReplyContent,
+		};
+
+		await commentsService.postReply(
+			body,
+			(response) => {
+				setReplies([...replies, response]);
+				toggle();
+			},
+			() => console.log("failed to reply")
+		);
+	};
+
 	return (
 		<div className={styles.comment}>
 			<div className={styles.content}>
@@ -33,9 +50,9 @@ const Comment = ({ id, content, author, createdOn }) => {
 						{moment(createdOn).format("LLL")}
 					</span>
 				</div>
-				<div className={styles.text}>{ReactHtmlParser(content)}</div>
+				<div className={styles.text}>{content}</div>
 				<div className={styles.actions}>
-					<Link to="#" onClick={toggle} class={styles.reply}>
+					<Link to="#" onClick={toggle} className={styles.reply}>
 						Reply
 					</Link>
 				</div>
@@ -43,14 +60,23 @@ const Comment = ({ id, content, author, createdOn }) => {
 			{show ? (
 				<form className={styles["reply-form"]}>
 					<div>
-						<textarea></textarea>
+						<textarea
+							value={newReplyContent}
+							onChange={(event) =>
+								setNewReplyContent(event.target.value)
+							}
+						/>
 					</div>
-					<div>Add Reply</div>
+					<Link to="#" onClick={addReplyHandler}>
+						Add Reply
+					</Link>
 				</form>
 			) : null}
 			<div className={styles.comments}>
 				{replies.map((reply) => (
 					<Comment
+						key={reply.id}
+						articleId={articleId}
 						id={reply.id}
 						content={reply.content}
 						author={reply.authorUsername}

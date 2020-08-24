@@ -23,6 +23,21 @@
 	word-wrap: break-word;
 }
 
+.comment .reply-form a {
+	text-decoration: none;
+	display: block;
+	background: #234465;
+	color: #fff;
+	padding: 10px;
+	width: fit-content;
+	border-radius: 5px;
+	border: none;
+	border: 2px solid white;
+	cursor: pointer;
+	font-size: small;
+	margin-bottom: 5px;
+}
+
 .comment:first-child {
 	margin-top: 0em;
 	padding-top: 0em;
