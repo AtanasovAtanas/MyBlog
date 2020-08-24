@@ -51,7 +51,7 @@
                 .All()
                 .Where(a => a.Id == articleId)
                 .SelectMany(a => a.Comments)
-                .Where(c => c.ParentId == null)
+                .Where(c => c.ParentId == null && !c.IsDeleted)
                 .To<TModel>()
                 .ToListAsync();
 

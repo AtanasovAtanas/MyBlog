@@ -30,6 +30,7 @@
                 .All()
                 .Where(c => c.Id == commentId)
                 .SelectMany(c => c.Replies)
+                .Where(r => !r.IsDeleted)
                 .To<TModel>()
                 .ToListAsync();
         }
