@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import UserContext from "../../utils/context";
 import moment from "moment";
 import styles from "./index.module.css";
-import Audit from "../audit";
+import Actions from "../actions";
 import ReactHtmlParser from "react-html-parser";
 import Vote from "../vote";
 import { FontAwesomeIcon as FontAwesome } from "@fortawesome/react-fontawesome";
@@ -42,7 +42,7 @@ const Article = ({
 				</span>
 				<Vote initialVotes={initialVotes} articleId={articleId} />
 				{currentUsername === author ? (
-					<Audit
+					<Actions
 						index={index}
 						articleId={articleId}
 						title={title}
