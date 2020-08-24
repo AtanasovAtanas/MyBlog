@@ -1,5 +1,6 @@
 import crud from "./crud";
 import routes from "./routes";
+import getCurrentCookie from "../utils/cookieHelper";
 
 const getVotes = async (articleId, onSuccess, onFailure) => {
 	await crud.get(

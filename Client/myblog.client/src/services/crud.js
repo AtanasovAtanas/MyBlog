@@ -1,3 +1,5 @@
+import getCurrentCookie from "../utils/cookieHelper";
+
 const get = async (url, headers, onSuccess, onFailure) => {
 	try {
 		const promise = await fetch(url, {
