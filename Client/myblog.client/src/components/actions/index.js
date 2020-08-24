@@ -4,7 +4,7 @@ import { FontAwesomeIcon as FontAwesome } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import DeleteModal from "../modal";
 
-const Actions = ({ index, articleId, title, handler }) => {
+const Actions = ({ articleId, title, handler }) => {
 	const editLink = `/articles/edit/${articleId}`;
 
 	const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +32,10 @@ const Actions = ({ index, articleId, title, handler }) => {
 				title="WARNING"
 				text={`Are you sure you want to delete ${title}?`}
 				actionButtonText="Delete"
-				actionHandler={() => handler(articleId, toggleModal, index)}
+				actionHandler={() => {
+					handler();
+					toggleModal();
+				}}
 				cancelHandler={cancelHandler}
 			/>
 		</React.Fragment>
