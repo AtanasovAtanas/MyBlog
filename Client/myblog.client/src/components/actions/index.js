@@ -4,7 +4,7 @@ import { FontAwesomeIcon as FontAwesome } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import DeleteModal from "../modal";
 
-const Actions = ({ articleId, title, deleteHandler }) => {
+const Actions = ({ articleId, title, deleteHandler, editHandler }) => {
 	const editLink = articleId ? `/articles/edit/${articleId}` : "#";
 
 	const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +19,13 @@ const Actions = ({ articleId, title, deleteHandler }) => {
 	return (
 		<React.Fragment>
 			<FontAwesome icon={faEdit} />
-			<Link to={editLink}>Edit</Link>
+			{editHandler ? (
+				<Link to={editLink} onClick={editHandler}>
+					Edit
+				</Link>
+			) : (
+				<Link to={editLink}>Edit</Link>
+			)}
 			<FontAwesome icon={faTrash} />
 			<Link
 				to={`${location.pathname}${location.search}`}

@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../button";
 import styles from "./index.module.css";
 
-const CommentForm = ({ formSubmitHandler, buttonText }) => {
+const CommentForm = ({ text, formSubmitHandler, buttonText }) => {
 	const [content, setContent] = useState("");
+
+	useEffect(() => {
+		setContent(text);
+	}, [text]);
 
 	return (
 		<form

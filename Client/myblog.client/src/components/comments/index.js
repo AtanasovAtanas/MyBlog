@@ -48,7 +48,7 @@ const Comments = () => {
 						key={comment.id}
 						articleId={Number(id)}
 						id={comment.id}
-						content={comment.content}
+						initialContent={comment.content}
 						author={comment.authorUsername}
 						createdOn={comment.createdOn}
 					/>

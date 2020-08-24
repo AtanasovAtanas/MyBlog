@@ -7,12 +7,14 @@ import Actions from "../actions";
 import UserContext from "../../utils/context";
 import CommentForm from "../forms/comment";
 
-const Comment = ({ id, articleId, content, author, createdOn }) => {
+const Comment = ({ id, articleId, initialContent, author, createdOn }) => {
 	const [replies, setReplies] = useState([]);
+	const [isDeleted, setIsDeleted] = useState(false);
+	const [isEdit, setIsEdit] = useState(false);
+	const [content, setContent] = useState("");
+
 	const [show, setShow] = useState(false);
 	const toggle = () => setShow(!show);
-
-	const [isDeleted, setIsDeleted] = useState(false);
 
 	const context = useContext(UserContext);
 
@@ -26,7 +28,8 @@ const Comment = ({ id, articleId, content, author, createdOn }) => {
 		};
 
 		fetchReplies();
-	}, [id]);
+		setContent(initialContent);
+	}, [id, initialContent]);
 
 	const addReplyHandler = async (replyContent) => {
 		const body = {
@@ -53,6 +56,18 @@ const Comment = ({ id, articleId, content, author, createdOn }) => {
 		);
 	};
 
+	const editHandler = async (updatedContent) => {
+		await commentsService.udpateComment(
+			id,
+			{ content: updatedContent },
+			() => {
+				setContent(updatedContent);
+				setIsEdit(!isEdit);
+			},
+			() => console.log("update procedure has failed")
+		);
+	};
+
 	return (
 		<React.Fragment>
 			{isDeleted ? null : (
@@ -66,7 +81,15 @@ const Comment = ({ id, articleId, content, author, createdOn }) => {
 								{moment(createdOn).format("LLL")}
 							</span>
 						</div>
-						<div className={styles.text}>{content}</div>
+						{isEdit ? (
+							<CommentForm
+								text={content}
+								buttonText="Edit"
+								formSubmitHandler={editHandler}
+							/>
+						) : (
+							<div className={styles.text}>{content}</div>
+						)}
 						<div className={styles.actions}>
 							<Link
 								to="#"
@@ -79,6 +102,7 @@ const Comment = ({ id, articleId, content, author, createdOn }) => {
 								<Actions
 									title="your comment"
 									deleteHandler={deleteHandler}
+									editHandler={() => setIsEdit(!isEdit)}
 								/>
 							) : null}
 						</div>
@@ -97,7 +121,7 @@ const Comment = ({ id, articleId, content, author, createdOn }) => {
 								key={reply.id}
 								articleId={articleId}
 								id={reply.id}
-								content={reply.content}
+								initialContent={reply.content}
 								author={reply.authorUsername}
 								createdOn={reply.createdOn}
 							/>
