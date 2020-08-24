@@ -1,36 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Article from "../../components/article";
 import articlesService from "../../services/articles";
 import PageLayout from "../layout";
 import styles from "./index.module.css";
+import Comments from "../../components/comments";
 
 const ArticleDetailsPage = () => {
 	const [article, setArticle] = useState({});
 	const { id } = useParams();
-	const history = useHistory();
 
 	useEffect(() => {
 		const fetchData = async () => {
 			await articlesService.getArticleById(
 				id,
-				(data) => {
-					setArticle(data);
-				},
+				(data) => setArticle(data),
 				() => console.log()
 			);
 		};
 
 		fetchData();
 	}, [id]);
-
-	const deleteHandler = async () => {
-		await articlesService.deleteArticle(
-			id,
-			() => history.push("/"),
-			(e) => console.log(e)
-		);
-	};
 
 	return (
 		<PageLayout>
@@ -42,8 +32,9 @@ const ArticleDetailsPage = () => {
 					author={article.authorUsername}
 					createdOn={article.createdOn}
 					initialVotes={article.votes}
-					deleteHandler={deleteHandler}
+					commentsCount={article.commentsCount}
 				/>
+				<Comments />
 			</div>
 		</PageLayout>
 	);

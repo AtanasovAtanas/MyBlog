@@ -1,0 +1,12 @@
+.comments {
+	margin: 1.5em 0em;
+	max-width: 60%;
+}
+
+.comments:first-child {
+	margin-top: 0em;
+}
+
+.comments:last-child {
+	margin-bottom: 0em;
+}

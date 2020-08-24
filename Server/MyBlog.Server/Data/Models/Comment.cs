@@ -5,33 +5,32 @@
 
     using MyBlog.Server.Data.Models.Base;
 
-    using static Validation.Articles;
-
-    public class Article : DeletableEntity
+    public class Comment : DeletableEntity
     {
-        public Article()
+        public Comment()
         {
-            this.Votes = new HashSet<Vote>();
-            this.Comments = new HashSet<Comment>();
+            this.Replies = new HashSet<Comment>();
         }
 
         [Key]
         public int Id { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        [MaxLength(TitleMaxLength)]
-        public string Title { get; set; }
-
-        [Required(AllowEmptyStrings = false)]
         public string Content { get; set; }
+
+        public int? ParentId { get; set; }
+
+        public virtual Comment Parent { get; set; }
 
         [Required]
         public string AuthorId { get; set; }
 
         public virtual User Author { get; set; }
 
-        public virtual IEnumerable<Vote> Votes { get; set; }
+        public int ArticleId { get; set; }
 
-        public virtual IEnumerable<Comment> Comments { get; set; }
+        public virtual Article Article { get; set; }
+
+        public virtual IEnumerable<Comment> Replies { get; set; }
     }
 }

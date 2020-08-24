@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MyBlog.Server.Features.Articles.Models;
+    using MyBlog.Server.Features.Comments.Models;
     using MyBlog.Server.Infrastructure;
     using MyBlog.Server.Infrastructure.Extensions;
     using MyBlog.Server.Infrastructure.Services;
@@ -52,7 +53,8 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<InputArticleResponseModel>> Create(InputArticleRequestModel inputModel)
+        public async Task<ActionResult<InputArticleResponseModel>> Create(
+            [FromBody] InputArticleRequestModel inputModel)
         {
             var userId = this.currentUser.GetId();
 
@@ -66,15 +68,15 @@
 
         [HttpGet]
         [Route(Id)]
-        public async Task<ArticleDetailsResponseModel> Details(int id)
+        public async Task<ArticleDetailsResponseModel> Details([FromRoute] int id)
             => await this.articleService.Details<ArticleDetailsResponseModel>(id);
 
         [HttpPut]
         [Authorize]
         [Route(Id)]
         public async Task<ActionResult<InputArticleResponseModel>> Update(
-            int id,
-            InputArticleRequestModel inputModel)
+            [FromRoute] int id,
+            [FromBody] InputArticleRequestModel inputModel)
         {
             var userId = this.currentUser.GetId();
 
@@ -95,7 +97,7 @@
         [HttpDelete]
         [Authorize]
         [Route(Id)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var userId = this.currentUser.GetId();
 
@@ -119,5 +121,10 @@
         [Route("Mine/Count")]
         public async Task<int> GetArticlesCountByCurrentUser() =>
             await this.articleService.AllArticlesCountByUserId(this.User.GetId());
+
+        [HttpGet]
+        [Route("{ArticleId}/Comments")]
+        public async Task<IEnumerable<CommentListingModel>> GetCommentByArticle([FromRoute] int articleId)
+            => await this.articleService.GetAllCommentsByArticleId<CommentListingModel>(articleId);
     }
 }

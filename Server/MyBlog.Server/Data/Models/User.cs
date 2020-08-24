@@ -11,6 +11,7 @@
         public User()
         {
             this.Articles = new HashSet<Article>();
+            this.Comments = new HashSet<Comment>();
         }
 
         public DateTime CreatedOn { get; set; }
@@ -20,5 +21,7 @@
         public string ModifiedBy { get; set; }
 
         public virtual IEnumerable<Article> Articles { get; set; }
+
+        public virtual IEnumerable<Comment> Comments { get; set; }
     }
 }

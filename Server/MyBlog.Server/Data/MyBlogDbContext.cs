@@ -26,6 +26,8 @@
 
         public DbSet<Vote> Votes { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
+
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             this.ApplyAuditInformation();
@@ -45,6 +47,8 @@
             builder.ApplyConfiguration(new ArticleConfiguration());
 
             builder.ApplyConfiguration(new VoteConfiguration());
+
+            builder.ApplyConfiguration(new CommentConfiguration());
 
             base.OnModelCreating(builder);
         }

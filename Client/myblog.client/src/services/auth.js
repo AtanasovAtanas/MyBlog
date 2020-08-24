@@ -36,7 +36,7 @@ const getIdentityDetails = async (onSuccess, onFailure) => {
 		routes.GET_IDENTITY_DETAILS,
 		{
 			"Content-Type": "application/json",
-			Authorization: document.cookie.replace("=", " "),
+			Authorization: `Bearer ${cookieValue}`,
 		},
 		onSuccess,
 		onFailure

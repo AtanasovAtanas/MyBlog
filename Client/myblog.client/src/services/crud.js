@@ -1,3 +1,5 @@
+import getCurrentCookie from "../utils/cookieHelper";
+
 const get = async (url, headers, onSuccess, onFailure) => {
 	try {
 		const promise = await fetch(url, {
@@ -41,7 +43,7 @@ const remove = async (url, onSuccess, onFailure) => {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: document.cookie.replace("=", " "),
+				Authorization: getCurrentCookie(),
 			},
 		});
 

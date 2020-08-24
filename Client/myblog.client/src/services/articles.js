@@ -1,5 +1,6 @@
 import routes from "./routes";
 import crud from "./crud";
+import getCurrentCookie from "../utils/cookieHelper";
 
 const getAllArticles = async (page, onSuccess, onFailure) => {
 	await crud.get(
@@ -28,7 +29,7 @@ const getAllArticlesByCurrentUser = async (page, onSuccess, onFailure) => {
 		routes.GET_ALL_ARTICLES_BY_CURRENT_USER(page),
 		{
 			"Content-Type": "application/json",
-			Authorization: document.cookie.replace("=", " "),
+			Authorization: getCurrentCookie(),
 		},
 		onSuccess,
 		onFailure
@@ -40,7 +41,7 @@ const getArticlesCountByCurrentUser = async (onSuccess, onFailure) => {
 		routes.GET_ALL_ARTICLES_COUNT_BY_CURRENT_USER,
 		{
 			"Content-Type": "application/json",
-			Authorization: document.cookie.replace("=", " "),
+			Authorization: getCurrentCookie(),
 		},
 		onSuccess,
 		onFailure
@@ -58,13 +59,24 @@ const getArticleById = async (id, onSuccess, onFailure) => {
 	);
 };
 
+const getCommentsByArticleId = async (id, onSuccess, onFailure) => {
+	await crud.get(
+		routes.GET_COMMENTS_BY_ARTICLE_ID(id),
+		{
+			"Content-Type": "application/json",
+		},
+		onSuccess,
+		onFailure
+	);
+};
+
 const createArticle = async (body, onSuccess, onFailure) => {
 	await crud.input(
 		routes.CREATE_ARTICLE,
 		"POST",
 		{
 			"Content-Type": "application/json",
-			Authorization: document.cookie.replace("=", " "),
+			Authorization: getCurrentCookie(),
 		},
 		body,
 		onSuccess,
@@ -78,7 +90,7 @@ const editArticle = async (id, body, onSuccess, onFailure) => {
 		"PUT",
 		{
 			"Content-Type": "application/json",
-			Authorization: document.cookie.replace("=", " "),
+			Authorization: getCurrentCookie(),
 		},
 		body,
 		onSuccess,
@@ -96,6 +108,7 @@ export default {
 	getAllArticlesByCurrentUser,
 	getArticlesCountByCurrentUser,
 	getArticleById,
+	getCommentsByArticleId,
 	createArticle,
 	editArticle,
 	deleteArticle,
