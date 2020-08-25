@@ -46,12 +46,12 @@ const HomePage = () => {
 			) : null}
 			{articles.length > 0 ? (
 				<Pagination
-					articlesPerPage="5"
+					articlesPerPage={5}
 					totalAricles={articlesCount}
 					onClickHandler={fetchArticles}
 				/>
 			) : null}
-			<Articles initialArticles={articles} />
+			<Articles articles={articles} />
 		</PageLayout>
 	);
 };

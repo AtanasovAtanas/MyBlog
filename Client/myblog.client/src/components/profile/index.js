@@ -10,14 +10,8 @@ const Profile = ({ username, articlesCount }) => {
 				className={styles["profile-img"]}
 			/>
 			<div className={styles["personal-info"]}>
-				<p>
-					<span>Username: </span>
-					{username}
-				</p>
-				<p>
-					<span>Articles: </span>
-					{articlesCount}
-				</p>
+				<p>Username: {username}</p>
+				<p>Articles: {articlesCount}</p>
 			</div>
 		</div>
 	);

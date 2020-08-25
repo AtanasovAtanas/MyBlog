@@ -34,7 +34,7 @@ const ArticleDetailsPage = () => {
 					initialVotes={article.votes}
 					commentsCount={article.commentsCount}
 				/>
-				<Comments />
+				<Comments articleId={id} />
 			</div>
 		</PageLayout>
 	);
