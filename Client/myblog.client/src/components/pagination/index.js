@@ -15,7 +15,8 @@ const Pagination = ({
 	const location = useLocation();
 
 	useEffect(() => {
-		const page = Number(location.search.split("=").pop());
+		const params = new URLSearchParams(location.search);
+		const page = Number(params.get("page"));
 		setActivePage(page ? page : 1);
 	}, [location]);
 
@@ -30,7 +31,6 @@ const Pagination = ({
 				onClick={() => {
 					const nextPage = activePage <= 1 ? 1 : activePage - 1;
 					onClickHandler(nextPage);
-					setActivePage(nextPage);
 				}}
 				className={activePage === 1 ? styles.disabled : ""}
 			>
@@ -43,7 +43,6 @@ const Pagination = ({
 					onClick={() => {
 						const nextPage = page + 1;
 						onClickHandler(nextPage);
-						setActivePage(nextPage);
 					}}
 					className={page + 1 === activePage ? styles.active : ""}
 				>
@@ -63,7 +62,6 @@ const Pagination = ({
 							: activePage + 1;
 
 					onClickHandler(nextPage);
-					setActivePage(nextPage);
 				}}
 				className={activePage === numberOfPages ? styles.disabled : ""}
 			>
