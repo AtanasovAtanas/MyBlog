@@ -51,7 +51,7 @@ const HomePage = () => {
 					onClickHandler={fetchArticles}
 				/>
 			) : null}
-			<Articles initialArticles={articles} />
+			<Articles articles={articles} />
 		</PageLayout>
 	);
 };

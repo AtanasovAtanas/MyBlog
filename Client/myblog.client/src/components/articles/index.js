@@ -1,21 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Article from "../article";
 import styles from "./index.module.css";
 
-const Articles = ({ initialArticles }) => {
-	const [articles, setArticles] = useState([]);
-
-	useEffect(() => {
-		const loadArticles = () => {
-			setArticles(initialArticles);
-		};
-
-		loadArticles();
-	}, [initialArticles]);
-
+const Articles = ({ articles }) => {
 	return (
 		<div className={styles.articles}>
-			{articles.map((article, index) => (
+			{articles.map((article) => (
 				<Article
 					key={article.id}
 					articleId={article.id}
