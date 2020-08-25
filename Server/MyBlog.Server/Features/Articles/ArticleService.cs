@@ -27,24 +27,40 @@
             this.htmlSanitizer = new HtmlSanitizer();
         }
 
-        public async Task<IEnumerable<TModel>> All<TModel>(int page) =>
-            await this.articleRepository
-                .All()
-                .OrderByDescending(a => a.CreatedOn)
-                .Skip((page - 1) * ArticlesPerPage)
-                .Take(ArticlesPerPage)
-                .To<TModel>()
-                .ToListAsync();
+        public async Task<IEnumerable<TModel>> All<TModel>(int page, string filter)
+        {
+            var query = this.articleRepository.All();
 
-        public async Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId, int page) =>
-            await this.articleRepository
-                .All()
-                .Where(a => a.AuthorId == userId)
-                .OrderByDescending(a => a.CreatedOn)
+            if (!string.IsNullOrEmpty(filter))
+            {
+                query = query.Where(a => a.Title.Contains(filter) || a.Content.Contains(filter));
+            }
+
+            return await query
                 .Skip((page - 1) * ArticlesPerPage)
                 .Take(ArticlesPerPage)
                 .To<TModel>()
                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId, int page, string filter)
+        {
+            var query = this.articleRepository
+                .All()
+                .Where(a => a.AuthorId == userId);
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                query = query.Where(a => a.Title.Contains(filter) || a.Content.Contains(filter));
+            }
+
+            return await query
+                   .OrderByDescending(a => a.CreatedOn)
+                   .Skip((page - 1) * ArticlesPerPage)
+                   .Take(ArticlesPerPage)
+                   .To<TModel>()
+                   .ToListAsync();
+        }
 
         public async Task<IEnumerable<TModel>> GetAllCommentsByArticleId<TModel>(int articleId)
             => await this.articleRepository
