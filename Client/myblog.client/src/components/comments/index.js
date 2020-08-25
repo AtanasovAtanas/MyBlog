@@ -2,29 +2,30 @@ import React, { useState, useEffect } from "react";
 import Comment from "../comment";
 import CommentForm from "../forms/comment";
 import styles from "./index.module.css";
-import { useParams } from "react-router-dom";
 import articlesService from "../../services/articles";
 import commentsService from "../../services/comments";
 
-const Comments = () => {
+const Comments = ({ articleId }) => {
 	const [comments, setComments] = useState([]);
-	const { id } = useParams();
 
 	useEffect(() => {
 		const loadComments = async () => {
 			await articlesService.getCommentsByArticleId(
-				id,
+				articleId,
 				(data) => setComments(data),
-				() => console.log(`failed fetching comments by article ${id}`)
+				() =>
+					console.log(
+						`failed fetching comments by article ${articleId}`
+					)
 			);
 		};
 
 		loadComments();
-	}, [id]);
+	}, [articleId]);
 
 	const addCommentHandler = async (content) => {
 		const body = {
-			articleId: Number(id),
+			articleId: Number(articleId),
 			parentId: null,
 			content: content,
 		};
@@ -46,7 +47,7 @@ const Comments = () => {
 				{comments.map((comment) => (
 					<Comment
 						key={comment.id}
-						articleId={Number(id)}
+						articleId={Number(articleId)}
 						id={comment.id}
 						initialContent={comment.content}
 						author={comment.authorUsername}
