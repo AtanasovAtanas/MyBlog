@@ -4,9 +4,12 @@ namespace MyBlog.Server
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using MyBlog.Server.Data;
+    using MyBlog.Server.Data.Seeding;
     using MyBlog.Server.Infrastructure.Extensions;
     using MyBlog.Server.Infrastructure.Mapping;
 
@@ -30,6 +33,21 @@ namespace MyBlog.Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                using (var serviceScope = app.ApplicationServices.CreateScope())
+                {
+                    var dbContext = serviceScope
+                        .ServiceProvider
+                        .GetRequiredService<MyBlogDbContext>();
+
+                    dbContext.Database.EnsureDeleted();
+                    dbContext.Database.Migrate();
+
+                    new ApplicationDbContextSeeder()
+                        .SeedAsync(dbContext, serviceScope.ServiceProvider)
+                        .GetAwaiter()
+                        .GetResult();
+                }
             }
 
             AutoMapperConfig.RegisterMappings(typeof(Program).GetTypeInfo().Assembly);
