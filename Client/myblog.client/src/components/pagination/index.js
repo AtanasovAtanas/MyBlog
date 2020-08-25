@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./index.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Pagination = ({
 	articlesPerPage,
@@ -9,9 +9,15 @@ const Pagination = ({
 	onClickHandler,
 }) => {
 	const [activePage, setActivePage] = useState(1);
-
 	const numberOfPages = Math.ceil(totalAricles / articlesPerPage);
 	const pages = Array.from(Array(numberOfPages).keys());
+
+	const location = useLocation();
+
+	useEffect(() => {
+		const page = Number(location.search.split("=").pop());
+		setActivePage(page ? page : 1);
+	}, [location]);
 
 	const linkToUrl = (page) => {
 		return `/${baseUrl ? baseUrl : ""}?page=${page}`;
