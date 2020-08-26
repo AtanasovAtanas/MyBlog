@@ -14,19 +14,16 @@ const ProfilePage = () => {
 
 	const location = useLocation();
 
-	const fetchArticles = async (page) => {
-		await articlesService.getAllArticlesByCurrentUser(
-			page,
-			(data) => setArticles(data),
-			(e) => console.log(e)
-		);
-	};
-
 	useEffect(() => {
 		const fetchData = async () => {
 			const params = new URLSearchParams(location.search);
 			const page = params.get("page");
-			await fetchArticles(page);
+
+			await articlesService.getAllArticlesByCurrentUser(
+				page,
+				(data) => setArticles(data),
+				(e) => console.log(e)
+			);
 
 			await articlesService.getArticlesCountByCurrentUser(
 				(data) => setArticlesCount(data),
@@ -48,7 +45,6 @@ const ProfilePage = () => {
 					articlesPerPage="5"
 					totalAricles={articlesCount}
 					baseUrl="profile/"
-					onClickHandler={fetchArticles}
 				/>
 			) : null}
 			<Articles articles={articles} />

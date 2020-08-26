@@ -6,6 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import styles from "../../components/button/index.module.css";
 import UserContext from "../../utils/context";
 import Pagination from "../../components/pagination";
+import getQueryParameter from "../../utils/queryParser";
 
 const HomePage = () => {
 	const [articles, setArticles] = useState([]);
@@ -14,31 +15,26 @@ const HomePage = () => {
 	const context = useContext(UserContext);
 	const location = useLocation();
 
-	const fetchArticles = async (page, filter) => {
-		await articlesService.getAllArticles(
-			(data) => setArticles(data),
-			(e) => console.log(e),
-			page,
-			filter
-		);
-
-		await articlesService.getArticlesCount(
-			(data) => setArticlesCount(data),
-			(e) => console.log(e),
-			filter
-		);
-	};
-
 	useEffect(() => {
-		const fetchData = async () => {
-			const params = new URLSearchParams(location.search);
-			const page = params.get("page");
-			const filter = params.get("filter");
+		const fetchArticles = async () => {
+			const filter = getQueryParameter(location.search, "filter");
+			const page = getQueryParameter(location.search, "page");
 
-			await fetchArticles(page, filter);
+			await articlesService.getAllArticles(
+				(data) => setArticles(data),
+				(e) => console.log(e),
+				page,
+				filter
+			);
+
+			await articlesService.getArticlesCount(
+				(data) => setArticlesCount(data),
+				(e) => console.log(e),
+				filter
+			);
 		};
 
-		fetchData();
+		fetchArticles();
 	}, [location.search]);
 
 	return (
@@ -49,11 +45,7 @@ const HomePage = () => {
 				</Link>
 			) : null}
 			{articles.length > 0 ? (
-				<Pagination
-					articlesPerPage={5}
-					totalAricles={articlesCount}
-					onClickHandler={fetchArticles}
-				/>
+				<Pagination articlesPerPage={5} totalAricles={articlesCount} />
 			) : null}
 			<Articles articles={articles} />
 		</PageLayout>
