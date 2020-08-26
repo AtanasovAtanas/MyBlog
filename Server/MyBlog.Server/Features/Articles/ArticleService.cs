@@ -136,8 +136,17 @@
             return true;
         }
 
-        public async Task<int> AllArticlesCount()
-            => await this.articleRepository.AllAsNoTracking().CountAsync();
+        public async Task<int> AllArticlesCount(string filter)
+        {
+            var query = this.articleRepository.AllAsNoTracking();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                query = query.Where(a => a.Title.Contains(filter) || a.Content.Contains(filter));
+            }
+
+            return await query.CountAsync();
+        }
 
         public async Task<int> AllArticlesCountByUserId(string userId) =>
             await this.articleRepository

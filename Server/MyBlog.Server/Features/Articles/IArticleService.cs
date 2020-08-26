@@ -22,7 +22,7 @@
 
         Task<Result> Delete(int id, string userId);
 
-        Task<int> AllArticlesCount();
+        Task<int> AllArticlesCount(string filter);
 
         Task<int> AllArticlesCountByUserId(string userId);
     }

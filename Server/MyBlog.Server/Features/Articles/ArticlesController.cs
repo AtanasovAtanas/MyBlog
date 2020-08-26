@@ -116,8 +116,8 @@
 
         [HttpGet]
         [Route(Count)]
-        public async Task<int> GetArticlesCount() =>
-            await this.articleService.AllArticlesCount();
+        public async Task<int> GetArticlesCount([FromQuery] string filter) =>
+            await this.articleService.AllArticlesCount(filter);
 
         [HttpGet]
         [Authorize]
