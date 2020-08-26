@@ -8,9 +8,9 @@
 
     public interface IArticleService
     {
-        Task<IEnumerable<TModel>> All<TModel>(int page);
+        Task<IEnumerable<TModel>> All<TModel>(int page, string filter);
 
-        Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId, int page);
+        Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId, int page, string filter);
 
         Task<IEnumerable<TModel>> GetAllCommentsByArticleId<TModel>(int articleId);
 
@@ -22,7 +22,7 @@
 
         Task<Result> Delete(int id, string userId);
 
-        Task<int> AllArticlesCount();
+        Task<int> AllArticlesCount(string filter);
 
         Task<int> AllArticlesCountByUserId(string userId);
     }

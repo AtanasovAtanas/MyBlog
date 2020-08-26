@@ -27,12 +27,14 @@
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ArticleDetailsResponseModel>> All([FromQuery] int? page)
+        public async Task<IEnumerable<ArticleDetailsResponseModel>> All(
+            [FromQuery] int? page,
+            [FromQuery] string filter)
         {
             page ??= 1;
 
             var articles =
-                await this.articleService.All<ArticleDetailsResponseModel>(page.Value);
+                await this.articleService.All<ArticleDetailsResponseModel>(page.Value, filter);
 
             return articles;
         }
@@ -40,13 +42,14 @@
         [HttpGet]
         [Authorize]
         [Route(WebConstants.Mine)]
-        public async Task<IEnumerable<ArticleDetailsResponseModel>> Mine([FromQuery] int? page)
+        public async Task<IEnumerable<ArticleDetailsResponseModel>> Mine(
+            [FromQuery] int? page, [FromQuery] string filter)
         {
             page ??= 1;
             var userId = this.User.GetId();
 
             var result =
-               await this.articleService.AllByUserId<ArticleDetailsResponseModel>(userId, page.Value);
+               await this.articleService.AllByUserId<ArticleDetailsResponseModel>(userId, page.Value, filter);
 
             return result;
         }
@@ -113,8 +116,8 @@
 
         [HttpGet]
         [Route(Count)]
-        public async Task<int> GetArticlesCount() =>
-            await this.articleService.AllArticlesCount();
+        public async Task<int> GetArticlesCount([FromQuery] string filter) =>
+            await this.articleService.AllArticlesCount(filter);
 
         [HttpGet]
         [Authorize]
