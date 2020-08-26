@@ -9,6 +9,8 @@ const Pagination = ({
 	onClickHandler,
 }) => {
 	const [activePage, setActivePage] = useState(1);
+	const [filter, setFilter] = useState("");
+
 	const numberOfPages = Math.ceil(totalAricles / articlesPerPage);
 	const pages = Array.from(Array(numberOfPages).keys());
 
@@ -17,11 +19,21 @@ const Pagination = ({
 	useEffect(() => {
 		const params = new URLSearchParams(location.search);
 		const page = Number(params.get("page"));
+		const filterQuery = Number(params.get("filter"));
+
+		setFilter(filterQuery);
 		setActivePage(page ? page : 1);
 	}, [location]);
 
 	const linkToUrl = (page) => {
-		return `/${baseUrl ? baseUrl : ""}?page=${page}`;
+		let result = `/${baseUrl ? baseUrl : ""}`;
+
+		if (filter) {
+			result = result + `?filter=${filter}&`;
+		}
+
+		result = result + `?page=${page}`;
+		return result;
 	};
 
 	return (
@@ -30,7 +42,7 @@ const Pagination = ({
 				to={linkToUrl(activePage <= 1 ? 1 : activePage - 1)}
 				onClick={() => {
 					const nextPage = activePage <= 1 ? 1 : activePage - 1;
-					onClickHandler(nextPage);
+					onClickHandler(nextPage, filter);
 				}}
 				className={activePage === 1 ? styles.disabled : ""}
 			>
@@ -42,7 +54,7 @@ const Pagination = ({
 					to={linkToUrl(page + 1)}
 					onClick={() => {
 						const nextPage = page + 1;
-						onClickHandler(nextPage);
+						onClickHandler(nextPage, filter);
 					}}
 					className={page + 1 === activePage ? styles.active : ""}
 				>
@@ -61,7 +73,7 @@ const Pagination = ({
 							? numberOfPages
 							: activePage + 1;
 
-					onClickHandler(nextPage);
+					onClickHandler(nextPage, filter);
 				}}
 				className={activePage === numberOfPages ? styles.disabled : ""}
 			>

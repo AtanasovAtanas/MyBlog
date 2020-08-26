@@ -14,11 +14,18 @@ const HomePage = () => {
 	const context = useContext(UserContext);
 	const location = useLocation();
 
-	const fetchArticles = async (page) => {
+	const fetchArticles = async (page, filter) => {
 		await articlesService.getAllArticles(
-			page,
 			(data) => setArticles(data),
-			(e) => console.log(e)
+			(e) => console.log(e),
+			page,
+			filter
+		);
+
+		await articlesService.getArticlesCount(
+			(data) => setArticlesCount(data),
+			(e) => console.log(e),
+			filter
 		);
 	};
 
@@ -26,12 +33,9 @@ const HomePage = () => {
 		const fetchData = async () => {
 			const params = new URLSearchParams(location.search);
 			const page = params.get("page");
-			await fetchArticles(page);
+			const filter = params.get("filter");
 
-			await articlesService.getArticlesCount(
-				(data) => setArticlesCount(data),
-				(e) => console.log(e)
-			);
+			await fetchArticles(page, filter);
 		};
 
 		fetchData();

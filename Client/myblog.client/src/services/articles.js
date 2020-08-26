@@ -2,9 +2,9 @@ import routes from "./routes";
 import crud from "./crud";
 import getCurrentCookie from "../utils/cookieHelper";
 
-const getAllArticles = async (page, onSuccess, onFailure) => {
+const getAllArticles = async (onSuccess, onFailure, page, filter) => {
 	await crud.get(
-		routes.GET_ALL_ARTICLES(page),
+		routes.GET_ALL_ARTICLES(page, filter),
 		{
 			"Content-Type": "application/json",
 		},
@@ -13,9 +13,9 @@ const getAllArticles = async (page, onSuccess, onFailure) => {
 	);
 };
 
-const getArticlesCount = async (onSuccess, onFailure) => {
+const getArticlesCount = async (onSuccess, onFailure, filter) => {
 	await crud.get(
-		routes.GET_ALL_ARTICLES_COUNT,
+		routes.GET_ALL_ARTICLES_COUNT(filter),
 		{
 			"Content-Type": "application/json",
 		},
