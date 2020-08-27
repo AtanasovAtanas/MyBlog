@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import NavbarListItem from "./list-item";
 import styles from "./index.module.css";
 import getNavItems from "../../utils/navigation";

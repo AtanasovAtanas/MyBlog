@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import PageLayout from "../layout";
 import categoriesService from "../../services/categories";
 import Categories from "../../components/categories";
