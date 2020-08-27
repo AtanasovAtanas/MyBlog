@@ -6,10 +6,13 @@
 
     public class InputArticleRequestModel
     {
-        [Required(AllowEmptyStrings = false)]
+        [Required]
         [MaxLength(TitleMaxLength)]
+        [MinLength(TitleMinLength)]
         public string Title { get; set; }
 
+        [Required]
+        [MinLength(ContentMinLength)]
         public string Content { get; set; }
     }
 }

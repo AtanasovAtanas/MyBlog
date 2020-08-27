@@ -9,6 +9,7 @@
     using MyBlog.Server.Data.Models;
     using MyBlog.Server.Data.Repositories.Contracts;
     using MyBlog.Server.Features.Articles.Models;
+    using MyBlog.Server.Features.Categories;
     using MyBlog.Server.Infrastructure.Mapping;
     using MyBlog.Server.Infrastructure.Services;
 
@@ -19,10 +20,14 @@
     {
         private readonly HtmlSanitizer htmlSanitizer;
         private readonly IDeletableEntityRepository<Article> articleRepository;
+        private readonly ICategoriesService categoriesService;
 
-        public ArticleService(IDeletableEntityRepository<Article> articleRepository)
+        public ArticleService(
+            IDeletableEntityRepository<Article> articleRepository,
+            ICategoriesService categoriesService)
         {
             this.articleRepository = articleRepository;
+            this.categoriesService = categoriesService;
 
             this.htmlSanitizer = new HtmlSanitizer();
         }
@@ -74,13 +79,17 @@
         public async Task<int> AddAsync(
             string title,
             string content,
+            string categoryName,
             string userId)
         {
+            var categoryId = await this.categoriesService.GetIdByName(categoryName);
+
             var article = new Article
             {
                 Title = title,
                 Content = this.htmlSanitizer.Sanitize(content),
                 AuthorId = userId,
+                CategoryId = categoryId,
             };
 
             await this.articleRepository.AddAsync(article);

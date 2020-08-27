@@ -10,5 +10,7 @@
         Task<IEnumerable<TModel>> AllByName<TModel>(string categoryName, int page, string filter);
 
         Task<int> CountByName(string categoryName, string filter);
+
+        Task<int> GetIdByName(string categoryName);
     }
 }

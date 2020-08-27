@@ -57,13 +57,14 @@
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<InputArticleResponseModel>> Create(
-            [FromBody] InputArticleRequestModel inputModel)
+            [FromBody] CreateArticleRequestModel inputModel)
         {
             var userId = this.currentUser.GetId();
 
             var articleId = await this.articleService.AddAsync(
                    inputModel.Title,
                    inputModel.Content,
+                   inputModel.CategoryName,
                    userId);
 
             return new InputArticleResponseModel { Id = articleId };

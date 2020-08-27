@@ -1,4 +1,6 @@
-﻿namespace MyBlog.Server.Features.Categories
+﻿using System;
+
+namespace MyBlog.Server.Features.Categories
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -45,9 +47,9 @@
             }
 
             return await query
+                .OrderByDescending(a => a.CreatedOn)
                 .Skip((page - 1) * ArticlesPerPage)
                 .Take(ArticlesPerPage)
-                .OrderByDescending(a => a.CreatedOn)
                 .To<TModel>()
                 .ToListAsync();
         }
@@ -69,5 +71,16 @@
 
             return await query.CountAsync();
         }
+
+        public async Task<int> GetIdByName(string categoryName) =>
+            await this.categoriesRepository
+                .All()
+                .Where(c =>
+                    string.Equals(
+                        c.Title,
+                        categoryName,
+                        StringComparison.CurrentCultureIgnoreCase))
+                .Select(c => c.Id)
+                .FirstOrDefaultAsync();
     }
 }
