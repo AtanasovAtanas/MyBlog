@@ -34,7 +34,8 @@
             var query = this.categoriesRepository
                 .All()
                 .Where(c => c.Title == categoryName)
-                .SelectMany(c => c.Articles);
+                .SelectMany(c => c.Articles)
+                .Where(a => !a.IsDeleted);
 
             if (!string.IsNullOrEmpty(filter))
             {
@@ -56,7 +57,8 @@
             var query = this.categoriesRepository
                 .All()
                 .Where(a => a.Title == categoryName)
-                .SelectMany(c => c.Articles);
+                .SelectMany(c => c.Articles)
+                .Where(a => !a.IsDeleted);
 
             if (!string.IsNullOrEmpty(filter))
             {
