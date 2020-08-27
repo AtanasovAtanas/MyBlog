@@ -13,6 +13,10 @@
                 .WithOne(a => a.Category)
                 .HasForeignKey(a => a.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasIndex(c => c.Title)
+                .IsUnique(true);
         }
     }
 }

@@ -54,6 +54,8 @@
 
             builder.ApplyConfiguration(new CommentConfiguration());
 
+            builder.ApplyConfiguration(new CategoryConfiguration());
+
             base.OnModelCreating(builder);
         }
 
