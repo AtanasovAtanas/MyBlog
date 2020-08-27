@@ -48,6 +48,7 @@ const routes = {
 	POST_COMMENT: BASE_URL + "/Comments",
 	DELETE_COMMENT_BY_ID: (id) => BASE_URL + `/Comments/${id}`,
 	UPDATE_COMMENT_BY_ID: (id) => BASE_URL + `/Comments/${id}`,
+	GET_CATEGORIES: BASE_URL + "/Categories",
 };
 
 export default routes;
