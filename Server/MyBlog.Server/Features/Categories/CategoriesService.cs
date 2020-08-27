@@ -74,11 +74,7 @@
         public async Task<int> GetIdByName(string categoryName) =>
             await this.categoriesRepository
                 .All()
-                .Where(c =>
-                    string.Equals(
-                        c.Title,
-                        categoryName,
-                        StringComparison.CurrentCultureIgnoreCase))
+                .Where(c => c.Title.ToLower() == categoryName.ToLower())
                 .Select(c => c.Id)
                 .FirstOrDefaultAsync();
     }
