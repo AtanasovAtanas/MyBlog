@@ -10,6 +10,7 @@ import ProfilePage from "../../pages/profile";
 import ArticleDetailsPage from "../../pages/article-details";
 import CreateArticlePage from "../../pages/create-article";
 import EditArticlePage from "../../pages/edit-article";
+import ArticlesByCategory from "../../pages/articles-by-category";
 
 const App = () => {
 	const [user, setUser] = useState({ username: "", userId: "" });
@@ -45,6 +46,9 @@ const App = () => {
 					</Route>
 					<Route exact path="/profile">
 						<ProfilePage />
+					</Route>
+					<Route exact path="/:categoryName/articles">
+						<ArticlesByCategory />
 					</Route>
 					<Route exact path="/articles/create">
 						<CreateArticlePage />

@@ -24,6 +24,30 @@ const getAllArticlesCount = (filter) => {
 	return url;
 };
 
+const getArticlesByCategoryName = (categoryName, page, filter) => {
+	let url = BASE_URL + "/Categories/" + categoryName;
+
+	if (page) {
+		url = url + `?page=${page}&`;
+	}
+
+	if (filter) {
+		url = url + `?filter=${filter}`;
+	}
+
+	return url;
+};
+
+const getArticlesCountByCategoryName = (categoryName, filter) => {
+	let url = BASE_URL + `/Categories/${categoryName}/Articles/Count`;
+
+	if (filter) {
+		url = url + `?filter=${filter}`;
+	}
+
+	return url;
+};
+
 const routes = {
 	GET_ALL_ARTICLES: (page, filter) => getAllArticles(page, filter),
 	GET_ALL_ARTICLES_COUNT: (filter) => getAllArticlesCount(filter),
@@ -49,6 +73,10 @@ const routes = {
 	DELETE_COMMENT_BY_ID: (id) => BASE_URL + `/Comments/${id}`,
 	UPDATE_COMMENT_BY_ID: (id) => BASE_URL + `/Comments/${id}`,
 	GET_CATEGORIES: BASE_URL + "/Categories",
+	GET_ARTICLES_BY_CATEGORY_NAME: (categoryName, page, filter) =>
+		getArticlesByCategoryName(categoryName, page, filter),
+	GET_ARTICLES_COUNT_BY_CATEGORY_NAME: (categoryName, filter) =>
+		getArticlesCountByCategoryName(categoryName, filter),
 };
 
 export default routes;

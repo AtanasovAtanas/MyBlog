@@ -11,13 +11,13 @@ const Categories = ({ categories }) => {
 	return (
 		<Container>
 			<Row>
-				{categories.map((category) => (
-					<Col>
+				{categories.map((category, index) => (
+					<Col key={index}>
 						<Card className={styles.card}>
 							<Card.Img variant="top" src={category.imageUrl} />
 							<Card.Body>
 								<Card.Title>
-									<Link to="#">
+									<Link to={`/${category.title}/Articles`}>
 										{category.title} (
 										{category.articlesCount})
 									</Link>
