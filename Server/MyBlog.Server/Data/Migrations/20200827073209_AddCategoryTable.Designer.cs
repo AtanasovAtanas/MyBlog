@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBlog.Server.Data;
 
 namespace MyBlog.Server.Data.Migrations
 {
     [DbContext(typeof(MyBlogDbContext))]
-    partial class MyBlogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200827073209_AddCategoryTable")]
+    partial class AddCategoryTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,10 +222,6 @@ namespace MyBlog.Server.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -235,13 +233,10 @@ namespace MyBlog.Server.Data.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(15)")
-                        .HasMaxLength(15);
+                        .HasColumnType("nvarchar(5)")
+                        .HasMaxLength(5);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Title")
-                        .IsUnique();
 
                     b.ToTable("Categories");
                 });
@@ -467,7 +462,7 @@ namespace MyBlog.Server.Data.Migrations
                     b.HasOne("MyBlog.Server.Data.Models.Category", "Category")
                         .WithMany("Articles")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

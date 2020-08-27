@@ -28,6 +28,8 @@
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             this.ApplyAuditInformation();
@@ -35,7 +37,9 @@
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+        public override Task<int> SaveChangesAsync(
+            bool acceptAllChangesOnSuccess,
+            CancellationToken cancellationToken = default)
         {
             this.ApplyAuditInformation();
 
@@ -49,6 +53,8 @@
             builder.ApplyConfiguration(new VoteConfiguration());
 
             builder.ApplyConfiguration(new CommentConfiguration());
+
+            builder.ApplyConfiguration(new CategoryConfiguration());
 
             base.OnModelCreating(builder);
         }

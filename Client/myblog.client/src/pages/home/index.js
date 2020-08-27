@@ -1,53 +1,25 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import PageLayout from "../layout";
-import Articles from "../../components/articles";
-import articlesService from "../../services/articles";
-import { Link, useLocation } from "react-router-dom";
-import styles from "../../components/button/index.module.css";
-import UserContext from "../../utils/context";
-import Pagination from "../../components/pagination";
-import getQueryParameter from "../../utils/queryParser";
+import categoriesService from "../../services/categories";
+import Categories from "../../components/categories";
 
 const HomePage = () => {
-	const [articles, setArticles] = useState([]);
-	const [articlesCount, setArticlesCount] = useState(0);
-
-	const context = useContext(UserContext);
-	const location = useLocation();
+	const [categories, setCategories] = useState([]);
 
 	useEffect(() => {
-		const fetchArticles = async () => {
-			const filter = getQueryParameter(location.search, "filter");
-			const page = getQueryParameter(location.search, "page");
-
-			await articlesService.getAllArticles(
-				(data) => setArticles(data),
-				(e) => console.log(e),
-				page,
-				filter
-			);
-
-			await articlesService.getArticlesCount(
-				(data) => setArticlesCount(data),
-				(e) => console.log(e),
-				filter
+		const fetchData = async () => {
+			await categoriesService.getCategories(
+				(response) => setCategories(response),
+				() => console.log("failed fetching categories")
 			);
 		};
 
-		fetchArticles();
-	}, [location.search]);
+		fetchData();
+	}, []);
 
 	return (
 		<PageLayout>
-			{context.user.userId ? (
-				<Link to="/articles/create" className={styles.submit}>
-					Create article
-				</Link>
-			) : null}
-			{articles.length > 0 ? (
-				<Pagination articlesPerPage={5} totalAricles={articlesCount} />
-			) : null}
-			<Articles articles={articles} />
+			<Categories categories={categories} />
 		</PageLayout>
 	);
 };

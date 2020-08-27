@@ -12,6 +12,12 @@
 	<ItemGroup>
 	  <Compile Remove="Data\Migrations\20200821130418_AddCommentsTable.cs" />
 	  <Compile Remove="Data\Migrations\20200821130418_AddCommentsTable.Designer.cs" />
+	  <Compile Remove="Data\Migrations\20200827072857_AddCategoryTable.cs" />
+	  <Compile Remove="Data\Migrations\20200827072857_AddCategoryTable.Designer.cs" />
+	  <Compile Remove="Data\Migrations\20200827073722_CategoryAddUniqueConstraint.cs" />
+	  <Compile Remove="Data\Migrations\20200827073722_CategoryAddUniqueConstraint.Designer.cs" />
+	  <Compile Remove="Data\Migrations\20200827082000_AddCategoryImageColumn.cs" />
+	  <Compile Remove="Data\Migrations\20200827082000_AddCategoryImageColumn.Designer.cs" />
 	</ItemGroup>
 	<ItemGroup>
         <AdditionalFiles Include="..\stylecop.json" />
