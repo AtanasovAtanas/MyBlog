@@ -23,6 +23,10 @@
         [Required(AllowEmptyStrings = false)]
         public string Description { get; set; }
 
+        [Required]
+        [MinLength(10)]
+        public string ImageUrl { get; set; }
+
         public virtual IEnumerable<Article> Articles { get; set; }
     }
 }
