@@ -14,6 +14,7 @@
     using MyBlog.Server.Data.Repositories;
     using MyBlog.Server.Data.Repositories.Contracts;
     using MyBlog.Server.Features.Articles;
+    using MyBlog.Server.Features.Categories;
     using MyBlog.Server.Features.Comments;
     using MyBlog.Server.Features.Identity;
     using MyBlog.Server.Features.Votes;
@@ -86,8 +87,8 @@
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
             => services
                 .AddScoped(
-                typeof(IDeletableEntityRepository<>),
-                typeof(EfDeletableEntityRepository<>))
+                    typeof(IDeletableEntityRepository<>),
+                    typeof(EfDeletableEntityRepository<>))
                 .AddScoped(
                     typeof(IRepository<>),
                     typeof(EfRepository<>))
@@ -95,7 +96,8 @@
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<IArticleService, ArticleService>()
                 .AddTransient<IVotesService, VotesService>()
-                .AddTransient<ICommentsService, CommentsService>();
+                .AddTransient<ICommentsService, CommentsService>()
+                .AddTransient<ICategoriesService, CategoriesService>();
 
         public static IServiceCollection AddSwagger(this IServiceCollection services)
             => services.AddSwaggerGen(c =>
