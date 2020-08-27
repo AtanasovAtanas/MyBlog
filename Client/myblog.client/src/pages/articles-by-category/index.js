@@ -46,12 +46,16 @@ const ArticlesByCategory = () => {
 	return (
 		<PageLayout>
 			{context.user.userId ? (
-				<Link to="/articles/create" className={styles.submit}>
+				<Link to="Articles/Create" className={styles.submit}>
 					Create article
 				</Link>
 			) : null}
 			{articles.length > 0 ? (
-				<Pagination articlesPerPage={5} totalAricles={articlesCount} />
+				<Pagination
+					articlesPerPage={5}
+					totalAricles={articlesCount}
+					baseUrl={`${categoryName}/Articles`}
+				/>
 			) : null}
 			<Articles articles={articles} />
 		</PageLayout>

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import Editor from "../../editor";
 import Button from "../../button";
 import styles from "./index.module.css";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import articlesService from "../../../services/articles";
 
 const ArticleInputForm = ({ initialTitle, initialContent, mode }) => {
 	const [model, setModel] = useState({ title: "", content: "" });
+
+	const { categoryName } = useParams();
 
 	const history = useHistory();
 	const location = useLocation();
@@ -18,7 +20,6 @@ const ArticleInputForm = ({ initialTitle, initialContent, mode }) => {
 	const [errors, setErrors] = useState([]);
 
 	const validate = (title, content) => {
-		console.log();
 		const validationErrors = [];
 
 		if (!title) {
@@ -52,6 +53,7 @@ const ArticleInputForm = ({ initialTitle, initialContent, mode }) => {
 		};
 
 		if (mode === "create") {
+			body.categoryName = categoryName;
 			await articlesService.createArticle(
 				body,
 				(response) => history.push(`/articles/${response.id}`),

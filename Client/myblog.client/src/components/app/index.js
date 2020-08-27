@@ -50,7 +50,7 @@ const App = () => {
 					<Route exact path="/:categoryName/articles">
 						<ArticlesByCategory />
 					</Route>
-					<Route exact path="/articles/create">
+					<Route exact path="/:categoryName/articles/create">
 						<CreateArticlePage />
 					</Route>
 					<Route exact path="/articles/:id">
