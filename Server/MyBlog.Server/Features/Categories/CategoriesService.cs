@@ -50,5 +50,22 @@
                 .To<TModel>()
                 .ToListAsync();
         }
+
+        public async Task<int> CountByName(string categoryName, string filter)
+        {
+            var query = this.categoriesRepository
+                .All()
+                .Where(a => a.Title == categoryName)
+                .SelectMany(c => c.Articles);
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                query = query.Where(a =>
+                    a.Title.Contains(filter) ||
+                    a.Content.Contains(filter));
+            }
+
+            return await query.CountAsync();
+        }
     }
 }

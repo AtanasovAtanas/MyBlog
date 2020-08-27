@@ -37,5 +37,16 @@
                  page.Value,
                  filter);
         }
+
+        [HttpGet]
+        [Route("{CategoryName}/Articles/Count")]
+        public async Task<CountByNameResponseModel> CountByName(
+            [FromRoute] string categoryName,
+            [FromQuery] string filter)
+        {
+            var count = await this.categoriesService.CountByName(categoryName, filter);
+
+            return new CountByNameResponseModel { Count = count };
+        }
     }
 }
