@@ -17,7 +17,7 @@
 
         [Required]
         [MaxLength(15, ErrorMessage = "Title can't be longer than 15 symbols")]
-        [StringLength(5, ErrorMessage = "Title must be at least 5 characters long")]
+        [MinLength(5, ErrorMessage = "Title must be at least 5 characters long")]
         public string Title { get; set; }
 
         [Required(AllowEmptyStrings = false)]
