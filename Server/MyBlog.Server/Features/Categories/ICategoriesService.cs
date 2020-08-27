@@ -3,10 +3,10 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using MyBlog.Server.Features.Categories.Models;
-
     public interface ICategoriesService
     {
         Task<IEnumerable<TModel>> All<TModel>();
+
+        Task<IEnumerable<TModel>> AllByName<TModel>(string categoryName, int page, string filter);
     }
 }
