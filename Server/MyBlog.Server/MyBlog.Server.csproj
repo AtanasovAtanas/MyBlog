@@ -12,6 +12,8 @@
 	<ItemGroup>
 	  <Compile Remove="Data\Migrations\20200821130418_AddCommentsTable.cs" />
 	  <Compile Remove="Data\Migrations\20200821130418_AddCommentsTable.Designer.cs" />
+	  <Compile Remove="Data\Migrations\20200827072857_AddCategoryTable.cs" />
+	  <Compile Remove="Data\Migrations\20200827072857_AddCategoryTable.Designer.cs" />
 	</ItemGroup>
 	<ItemGroup>
         <AdditionalFiles Include="..\stylecop.json" />

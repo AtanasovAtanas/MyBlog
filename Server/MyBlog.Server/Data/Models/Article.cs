@@ -30,6 +30,11 @@
 
         public virtual User Author { get; set; }
 
+        [Required]
+        public int CategoryId { get; set; }
+
+        public virtual Category Category { get; set; }
+
         public virtual IEnumerable<Vote> Votes { get; set; }
 
         public virtual IEnumerable<Comment> Comments { get; set; }
