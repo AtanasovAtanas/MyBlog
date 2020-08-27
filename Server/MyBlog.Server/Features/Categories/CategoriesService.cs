@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace MyBlog.Server.Features.Categories
+﻿namespace MyBlog.Server.Features.Categories
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
