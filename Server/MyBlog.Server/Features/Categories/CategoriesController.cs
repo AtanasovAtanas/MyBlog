@@ -22,7 +22,7 @@
 
         [HttpGet]
         [Route("{CategoryName}")]
-        public async Task<IEnumerable<ArticleDetailsResponseModel>> AllByName(
+        public async Task<IEnumerable<ArticleSummaryDetailsResponseModel>> AllByName(
             [FromRoute] string categoryName,
             [FromQuery] int? page,
             [FromQuery] string filter)
@@ -32,7 +32,7 @@
                 page = 1;
             }
 
-            return await this.categoriesService.AllByName<ArticleDetailsResponseModel>(
+            return await this.categoriesService.AllByName<ArticleSummaryDetailsResponseModel>(
                  categoryName,
                  page.Value,
                  filter);
