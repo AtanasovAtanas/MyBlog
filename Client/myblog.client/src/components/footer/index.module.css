@@ -1,6 +1,7 @@
 .footer {
 	background-color: #234465;
 	margin-top: auto;
+	padding-left: 5px;
 }
 
 .footer img {
@@ -16,9 +17,10 @@
 
 .copyright {
 	color: #ffffff;
-	font-size: small;
+	font-size: 14px;
 }
 
 .social {
+	padding-left: 10%;
 	margin: 0 auto;
 }
