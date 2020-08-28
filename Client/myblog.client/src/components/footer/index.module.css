@@ -1,0 +1,26 @@
+.footer {
+	background-color: #234465;
+	margin-top: auto;
+	padding-left: 5px;
+}
+
+.footer img {
+	margin-right: 0.5%;
+}
+
+.footer a {
+	color: #ffffff;
+	text-decoration: none;
+	font-size: large;
+	margin-right: 15px;
+}
+
+.copyright {
+	color: #ffffff;
+	font-size: 14px;
+}
+
+.social {
+	padding-left: 10%;
+	margin: 0 auto;
+}
