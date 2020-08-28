@@ -1,10 +1,10 @@
-import routes from "./routes";
+import { CommentRoutes } from "./routes";
 import crud from "./crud";
 import getCurrentCookie from "../utils/cookieHelper";
 
 const getRepliesByCommentId = async (id, onSuccess, onFailure) => {
 	await crud.get(
-		routes.GET_REPLIES_BY_COMMENT_ID(id),
+		CommentRoutes.GET_REPLIES_BY_COMMENT_ID(id),
 		{
 			"Content-Type": "application/json",
 		},
@@ -15,7 +15,7 @@ const getRepliesByCommentId = async (id, onSuccess, onFailure) => {
 
 const postReply = async (body, onSuccess, onFailure) => {
 	await crud.input(
-		routes.POST_COMMENT,
+		CommentRoutes.POST_COMMENT,
 		"POST",
 		{
 			"Content-Type": "application/json",
@@ -29,7 +29,7 @@ const postReply = async (body, onSuccess, onFailure) => {
 
 const udpateComment = async (id, body, onSuccess, onFailure) => {
 	await crud.input(
-		routes.UPDATE_COMMENT_BY_ID(id),
+		CommentRoutes.UPDATE_COMMENT_BY_ID(id),
 		"PUT",
 		{
 			"Content-Type": "application/json",
@@ -42,7 +42,11 @@ const udpateComment = async (id, body, onSuccess, onFailure) => {
 };
 
 const deleteComment = async (id, onSuccess, onFailure) => {
-	await crud.remove(routes.DELETE_COMMENT_BY_ID(id), onSuccess, onFailure);
+	await crud.remove(
+		CommentRoutes.DELETE_COMMENT_BY_ID(id),
+		onSuccess,
+		onFailure
+	);
 };
 
 export default {

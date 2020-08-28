@@ -1,4 +1,4 @@
-import routes from "./routes";
+import { IdentityRoutes } from "./routes";
 import crud from "./crud";
 
 const authenticate = async (url, body, onSuccess, onFailure) => {
@@ -15,11 +15,11 @@ const authenticate = async (url, body, onSuccess, onFailure) => {
 };
 
 const login = async (body, onSuccess, onFailure) => {
-	await authenticate(routes.LOGIN, body, onSuccess, onFailure);
+	await authenticate(IdentityRoutes.LOGIN, body, onSuccess, onFailure);
 };
 
 const register = async (body, onSuccess, onFailure) => {
-	await authenticate(routes.REGISTER, body, onSuccess, onFailure);
+	await authenticate(IdentityRoutes.REGISTER, body, onSuccess, onFailure);
 };
 
 const getIdentityDetails = async (onSuccess, onFailure) => {
@@ -33,7 +33,7 @@ const getIdentityDetails = async (onSuccess, onFailure) => {
 	}
 
 	await crud.get(
-		routes.GET_IDENTITY_DETAILS,
+		IdentityRoutes.GET_IDENTITY_DETAILS,
 		{
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${cookieValue}`,

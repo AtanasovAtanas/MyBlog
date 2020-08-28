@@ -1,9 +1,9 @@
 import crud from "./crud";
-import routes from "./routes";
+import { CategoryRoutes } from "./routes";
 
 const getCategories = async (onSuccess, onFailure) => {
 	await crud.get(
-		routes.GET_CATEGORIES,
+		CategoryRoutes.GET_CATEGORIES,
 		{
 			"Content-Type": "application/json",
 		},
@@ -20,7 +20,11 @@ const getArticlesByCategoryName = async (
 	filter
 ) => {
 	await crud.get(
-		routes.GET_ARTICLES_BY_CATEGORY_NAME(categoryName, page, filter),
+		CategoryRoutes.GET_ARTICLES_BY_CATEGORY_NAME(
+			categoryName,
+			page,
+			filter
+		),
 		{
 			"Content-Type": "application/json",
 		},
@@ -36,7 +40,10 @@ const getArticlesCountByCategoryName = async (
 	filter
 ) => {
 	await crud.get(
-		routes.GET_ARTICLES_COUNT_BY_CATEGORY_NAME(categoryName, filter),
+		CategoryRoutes.GET_ARTICLES_COUNT_BY_CATEGORY_NAME(
+			categoryName,
+			filter
+		),
 		{
 			"Content-Type": "application/json",
 		},

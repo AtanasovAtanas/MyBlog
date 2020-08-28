@@ -24,13 +24,13 @@ const getArticlesCountByCategoryName = (categoryName, filter) => {
 	return url;
 };
 
-const identityRoutes = {
+export const IdentityRoutes = {
 	LOGIN: BASE_URL + "/Identity/Login",
 	REGISTER: BASE_URL + "/Identity/Register",
 	GET_IDENTITY_DETAILS: BASE_URL + "/Identity/",
 };
 
-const articleRoutes = {
+export const ArticleRoutes = {
 	GET_ARTICLE_BY_ID: (id) => BASE_URL + `/Articles/${id}`,
 	GET_ALL_ARTICLES_BY_CURRENT_USER: (page) =>
 		BASE_URL + `/Articles/Mine?page=${page ? page : 1}`,
@@ -40,14 +40,14 @@ const articleRoutes = {
 	DELETE_ARTICLE_BY_ID: (id) => BASE_URL + `/Articles/${id}`,
 };
 
-const voteRoutes = {
+export const VoteRoutes = {
 	GET_VOTES_BY_ARTICLE_ID: (id) => BASE_URL + `/Votes/${id}`,
 	POST_VOTE_TO_ARTICLE_ID: BASE_URL + "/Votes",
 	GET_USER_VOTE_TYPE_BY_ARTICLE_ID: (id) =>
 		BASE_URL + `/Votes?articleId=${id}`,
 };
 
-const commentRoutes = {
+export const CommentRoutes = {
 	GET_COMMENTS_BY_ARTICLE_ID: (articleId) =>
 		BASE_URL + `/Articles/${articleId}/Comments`,
 	GET_REPLIES_BY_COMMENT_ID: (commentId) =>
@@ -57,18 +57,10 @@ const commentRoutes = {
 	UPDATE_COMMENT_BY_ID: (id) => BASE_URL + `/Comments/${id}`,
 };
 
-const categoryRoutes = {
+export const CategoryRoutes = {
 	GET_CATEGORIES: BASE_URL + "/Categories",
 	GET_ARTICLES_BY_CATEGORY_NAME: (categoryName, page, filter) =>
 		getArticlesByCategoryName(categoryName, page, filter),
 	GET_ARTICLES_COUNT_BY_CATEGORY_NAME: (categoryName, filter) =>
 		getArticlesCountByCategoryName(categoryName, filter),
-};
-
-export default {
-	IdentityRoutes: identityRoutes,
-	ArticleRoutes: articleRoutes,
-	VoteRoutes: voteRoutes,
-	CommentRoutes: commentRoutes,
-	CategoryRoutes: categoryRoutes,
 };
