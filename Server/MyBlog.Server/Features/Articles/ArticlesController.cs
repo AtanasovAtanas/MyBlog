@@ -27,19 +27,6 @@
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ArticleDetailsResponseModel>> All(
-            [FromQuery] int? page,
-            [FromQuery] string filter)
-        {
-            page ??= 1;
-
-            var articles =
-                await this.articleService.All<ArticleDetailsResponseModel>(page.Value, filter);
-
-            return articles;
-        }
-
-        [HttpGet]
         [Authorize]
         [Route(WebConstants.Mine)]
         public async Task<IEnumerable<ArticleDetailsResponseModel>> Mine(
@@ -114,11 +101,6 @@
 
             return this.Ok();
         }
-
-        [HttpGet]
-        [Route(Count)]
-        public async Task<int> GetArticlesCount([FromQuery] string filter) =>
-            await this.articleService.AllArticlesCount(filter);
 
         [HttpGet]
         [Authorize]

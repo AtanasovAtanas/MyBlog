@@ -1,29 +1,5 @@
 const BASE_URL = "https://localhost:5001";
 
-const getAllArticles = (page, filter) => {
-	let url = BASE_URL + "/Articles";
-
-	if (page) {
-		url = url + `?page=${page}&`;
-	}
-
-	if (filter) {
-		url = url + `?filter=${filter}`;
-	}
-
-	return url;
-};
-
-const getAllArticlesCount = (filter) => {
-	let url = BASE_URL + "/Articles/Count";
-
-	if (filter) {
-		url = url + `?filter=${filter}`;
-	}
-
-	return url;
-};
-
 const getArticlesByCategoryName = (categoryName, page, filter) => {
 	let url = BASE_URL + "/Categories/" + categoryName;
 
@@ -49,8 +25,6 @@ const getArticlesCountByCategoryName = (categoryName, filter) => {
 };
 
 const routes = {
-	GET_ALL_ARTICLES: (page, filter) => getAllArticles(page, filter),
-	GET_ALL_ARTICLES_COUNT: (filter) => getAllArticlesCount(filter),
 	GET_ALL_ARTICLES_BY_CURRENT_USER: (page) =>
 		BASE_URL + `/Articles/Mine?page=${page ? page : 1}`,
 	GET_ALL_ARTICLES_COUNT_BY_CURRENT_USER: BASE_URL + "/Articles/Mine/Count",
