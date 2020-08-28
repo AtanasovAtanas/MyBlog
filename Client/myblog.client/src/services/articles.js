@@ -2,28 +2,6 @@ import routes from "./routes";
 import crud from "./crud";
 import getCurrentCookie from "../utils/cookieHelper";
 
-const getAllArticles = async (onSuccess, onFailure, page, filter) => {
-	await crud.get(
-		routes.GET_ALL_ARTICLES(page, filter),
-		{
-			"Content-Type": "application/json",
-		},
-		onSuccess,
-		onFailure
-	);
-};
-
-const getArticlesCount = async (onSuccess, onFailure, filter) => {
-	await crud.get(
-		routes.GET_ALL_ARTICLES_COUNT(filter),
-		{
-			"Content-Type": "application/json",
-		},
-		onSuccess,
-		onFailure
-	);
-};
-
 const getAllArticlesByCurrentUser = async (page, onSuccess, onFailure) => {
 	await crud.get(
 		routes.GET_ALL_ARTICLES_BY_CURRENT_USER(page),
@@ -103,8 +81,6 @@ const deleteArticle = async (id, onSuccess, onFailure) => {
 };
 
 export default {
-	getAllArticles,
-	getArticlesCount,
 	getAllArticlesByCurrentUser,
 	getArticlesCountByCurrentUser,
 	getArticleById,
