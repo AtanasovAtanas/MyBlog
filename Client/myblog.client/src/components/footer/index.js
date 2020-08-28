@@ -20,7 +20,7 @@ const Footer = () => {
 				height="30"
 				className="d-inline-block align-top"
 			/>
-			<Link to="/">My blog</Link>
+			<Link to="/">My Blog</Link>
 			<div className={styles.social}>
 				<span>
 					<Link to="#">
