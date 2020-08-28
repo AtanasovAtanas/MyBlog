@@ -32,22 +32,6 @@
             this.htmlSanitizer = new HtmlSanitizer();
         }
 
-        public async Task<IEnumerable<TModel>> All<TModel>(int page, string filter)
-        {
-            var query = this.articleRepository.All();
-
-            if (!string.IsNullOrEmpty(filter))
-            {
-                query = query.Where(a => a.Title.Contains(filter) || a.Content.Contains(filter));
-            }
-
-            return await query
-                .Skip((page - 1) * ArticlesPerPage)
-                .Take(ArticlesPerPage)
-                .To<TModel>()
-                .ToListAsync();
-        }
-
         public async Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId, int page, string filter)
         {
             var query = this.articleRepository
@@ -143,18 +127,6 @@
             await this.articleRepository.SaveChangesAsync();
 
             return true;
-        }
-
-        public async Task<int> AllArticlesCount(string filter)
-        {
-            var query = this.articleRepository.AllAsNoTracking();
-
-            if (!string.IsNullOrEmpty(filter))
-            {
-                query = query.Where(a => a.Title.Contains(filter) || a.Content.Contains(filter));
-            }
-
-            return await query.CountAsync();
         }
 
         public async Task<int> AllArticlesCountByUserId(string userId) =>
