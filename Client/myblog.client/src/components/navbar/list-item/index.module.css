@@ -25,3 +25,8 @@
 	border-bottom: 2px solid #ffa000;
 	font-weight: bold;
 }
+
+.navigation-list-item a:hover {
+	color: white;
+	text-decoration: none;
+}
