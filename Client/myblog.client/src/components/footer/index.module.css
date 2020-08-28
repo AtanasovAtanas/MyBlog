@@ -1,0 +1,22 @@
+.footer {
+	background-color: #234465;
+}
+
+.footer img {
+	margin-right: 0.5%;
+}
+
+.footer a {
+	color: #ffffff;
+	text-decoration: none;
+	font-size: large;
+}
+
+.copyright {
+	color: #ffffff;
+	font-size: small;
+}
+
+.social {
+	margin: 0 auto;
+}
