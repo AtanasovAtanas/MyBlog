@@ -22,21 +22,15 @@ const Footer = () => {
 			/>
 			<Link to="/">My Blog</Link>
 			<div className={styles.social}>
-				<span>
-					<Link to="#">
-						<FontAwesome icon={faFacebook} size="lg" />
-					</Link>
-				</span>
-				<span>
-					<Link to="#">
-						<FontAwesome icon={faInstagram} size="lg" />
-					</Link>
-				</span>
-				<span>
-					<Link to="#">
-						<FontAwesome icon={faTwitter} size="lg" />
-					</Link>
-				</span>
+				<Link to="#">
+					<FontAwesome icon={faFacebook} size="2x" />
+				</Link>
+				<Link to="#">
+					<FontAwesome icon={faInstagram} size="2x" />
+				</Link>
+				<Link to="#">
+					<FontAwesome icon={faTwitter} size="2x" />
+				</Link>
 			</div>
 			<div className={styles.copyright}>
 				&copy; 2020 My Blog. All rights reserved.
