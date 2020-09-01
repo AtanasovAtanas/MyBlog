@@ -17,13 +17,15 @@ const getArticlesByCategoryName = async (
 	onFailure,
 	categoryName,
 	page,
-	filter
+	filter,
+	sortBy
 ) => {
 	await crud.get(
 		CategoryRoutes.GET_ARTICLES_BY_CATEGORY_NAME(
 			categoryName,
 			page,
-			filter
+			filter,
+			sortBy
 		),
 		{
 			"Content-Type": "application/json",

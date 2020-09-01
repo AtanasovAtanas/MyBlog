@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
 import PageLayout from "../layout";
 import Articles from "../../components/articles";
-import categoriesService from "../../services/categories";
-import { Link, useLocation, useParams } from "react-router-dom";
-import styles from "../../components/button/index.module.css";
-import UserContext from "../../utils/context";
+import SortingDropdown from "../../components/sorting-dropdown";
 import Pagination from "../../components/pagination";
+import UserContext from "../../utils/context";
+import categoriesService from "../../services/categories";
 import getQueryParameter from "../../utils/queryParser";
+import styles from "../../components/button/index.module.css";
 
 const ArticlesByCategory = () => {
 	const [articles, setArticles] = useState([]);
@@ -20,13 +21,15 @@ const ArticlesByCategory = () => {
 		const fetchArticles = async () => {
 			const filter = getQueryParameter(search, "filter");
 			const page = getQueryParameter(search, "page");
+			const sortBy = getQueryParameter(search, "sortBy");
 
 			await categoriesService.getArticlesByCategoryName(
 				(data) => setArticles(data),
 				() => console.log("failed fetching articles by category name"),
 				categoryName,
 				page,
-				filter
+				filter,
+				sortBy
 			);
 
 			await categoriesService.getArticlesCountByCategoryName(
@@ -45,6 +48,7 @@ const ArticlesByCategory = () => {
 
 	return (
 		<PageLayout>
+			<SortingDropdown />
 			{context.user.userId ? (
 				<Link to="Articles/Create" className={styles.submit}>
 					Create article
