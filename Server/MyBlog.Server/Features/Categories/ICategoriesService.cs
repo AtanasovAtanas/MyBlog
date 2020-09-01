@@ -7,7 +7,8 @@
     {
         Task<IEnumerable<TModel>> All<TModel>();
 
-        Task<IEnumerable<TModel>> AllByName<TModel>(string categoryName, int page, string filter);
+        Task<IEnumerable<TModel>> AllByName<TModel>(
+            string categoryName, int page, string filter, string sortBy);
 
         Task<int> CountByName(string categoryName, string filter);
 
