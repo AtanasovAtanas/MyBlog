@@ -1,4 +1,6 @@
-﻿namespace MyBlog.Server.Features.Articles
+﻿using MyBlog.Server.Infrastructure.Extensions;
+
+namespace MyBlog.Server.Features.Articles
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -45,8 +47,7 @@
 
             return await query
                    .OrderByDescending(a => a.CreatedOn)
-                   .Skip((page - 1) * ArticlesPerPage)
-                   .Take(ArticlesPerPage)
+                   .Page(page, ArticlesPerPage)
                    .To<TModel>()
                    .ToListAsync();
         }

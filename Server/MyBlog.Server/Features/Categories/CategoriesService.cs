@@ -7,6 +7,7 @@
     using Microsoft.EntityFrameworkCore;
     using MyBlog.Server.Data.Models;
     using MyBlog.Server.Data.Repositories.Contracts;
+    using MyBlog.Server.Infrastructure.Extensions;
     using MyBlog.Server.Infrastructure.Mapping;
 
     using static Constants;
@@ -64,8 +65,7 @@
             }
 
             return await query
-                .Skip((page - 1) * ArticlesPerPage)
-                .Take(ArticlesPerPage)
+                .Page(page, ArticlesPerPage)
                 .To<TModel>()
                 .ToListAsync();
         }
