@@ -32,9 +32,6 @@ const SortingDropdown = () => {
 			<Dropdown.Item onClick={(event) => handleClick(event, "comments")}>
 				Comments
 			</Dropdown.Item>
-			<Dropdown.Item onClick={(event) => handleClick(event, "votes")}>
-				Votes
-			</Dropdown.Item>
 		</DropdownButton>
 	);
 };
