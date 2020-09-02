@@ -17,17 +17,17 @@
     using static ArticlesConstants;
     using static ErrorMessages.Articles;
 
-    public class ArticleService : IArticleService
+    public class ArticlesService : IArticlesService
     {
         private readonly HtmlSanitizer htmlSanitizer;
-        private readonly IDeletableEntityRepository<Article> articleRepository;
+        private readonly IDeletableEntityRepository<Article> articlesRepository;
         private readonly ICategoriesService categoriesService;
 
-        public ArticleService(
-            IDeletableEntityRepository<Article> articleRepository,
+        public ArticlesService(
+            IDeletableEntityRepository<Article> articlesRepository,
             ICategoriesService categoriesService)
         {
-            this.articleRepository = articleRepository;
+            this.articlesRepository = articlesRepository;
             this.categoriesService = categoriesService;
 
             this.htmlSanitizer = new HtmlSanitizer();
@@ -35,7 +35,7 @@
 
         public async Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId, int page, string filter)
         {
-            var query = this.articleRepository
+            var query = this.articlesRepository
                 .All()
                 .Where(a => a.AuthorId == userId);
 
@@ -52,7 +52,7 @@
         }
 
         public async Task<IEnumerable<TModel>> GetAllCommentsByArticleId<TModel>(int articleId)
-            => await this.articleRepository
+            => await this.articlesRepository
                 .All()
                 .Where(a => a.Id == articleId)
                 .SelectMany(a => a.Comments)
@@ -76,14 +76,14 @@
                 CategoryId = categoryId,
             };
 
-            await this.articleRepository.AddAsync(article);
-            await this.articleRepository.SaveChangesAsync();
+            await this.articlesRepository.AddAsync(article);
+            await this.articlesRepository.SaveChangesAsync();
 
             return article.Id;
         }
 
         public async Task<TModel> Details<TModel>(int id)
-            => await this.articleRepository
+            => await this.articlesRepository
             .All()
             .Where(a => a.Id == id)
             .To<TModel>()
@@ -95,7 +95,7 @@
             string content,
             string userId)
         {
-            var article = await this.articleRepository.GetByIdAsync(id);
+            var article = await this.articlesRepository.GetByIdAsync(id);
 
             if (article.AuthorId != userId)
             {
@@ -105,8 +105,8 @@
             article.Title = title;
             article.Content = this.htmlSanitizer.Sanitize(content);
 
-            this.articleRepository.Update(article);
-            await this.articleRepository.SaveChangesAsync();
+            this.articlesRepository.Update(article);
+            await this.articlesRepository.SaveChangesAsync();
 
             return true;
         }
@@ -115,22 +115,22 @@
             int id,
             string userId)
         {
-            var article = await this.articleRepository.GetByIdAsync(id);
+            var article = await this.articlesRepository.GetByIdAsync(id);
 
             if (article.AuthorId != userId)
             {
                 return InvalidDeletionByNonAuthor;
             }
 
-            this.articleRepository.Delete(article);
+            this.articlesRepository.Delete(article);
 
-            await this.articleRepository.SaveChangesAsync();
+            await this.articlesRepository.SaveChangesAsync();
 
             return true;
         }
 
         public async Task<int> AllArticlesCountByUserId(string userId) =>
-            await this.articleRepository
+            await this.articlesRepository
                 .AllAsNoTracking()
                 .Where(a => a.AuthorId == userId)
                 .CountAsync();

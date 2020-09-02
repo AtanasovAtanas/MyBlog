@@ -94,7 +94,7 @@
                     typeof(EfRepository<>))
                 .AddScoped<ICurrentUserService, CurrentUserService>()
                 .AddTransient<IIdentityService, IdentityService>()
-                .AddTransient<IArticleService, ArticleService>()
+                .AddTransient<IArticlesService, ArticlesService>()
                 .AddTransient<IVotesService, VotesService>()
                 .AddTransient<ICommentsService, CommentsService>()
                 .AddTransient<ICategoriesService, CategoriesService>();

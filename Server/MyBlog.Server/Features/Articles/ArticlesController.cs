@@ -15,14 +15,14 @@
 
     public class ArticlesController : ApiController
     {
-        private readonly IArticleService articleService;
+        private readonly IArticlesService articlesService;
         private readonly ICurrentUserService currentUser;
 
         public ArticlesController(
-            IArticleService articleService,
+            IArticlesService articlesService,
             ICurrentUserService currentUser)
         {
-            this.articleService = articleService;
+            this.articlesService = articlesService;
             this.currentUser = currentUser;
         }
 
@@ -36,7 +36,7 @@
             var userId = this.User.GetId();
 
             var result =
-               await this.articleService.AllByUserId<ArticleSummaryDetailsResponseModel>(userId, page.Value, filter);
+               await this.articlesService.AllByUserId<ArticleSummaryDetailsResponseModel>(userId, page.Value, filter);
 
             return result;
         }
@@ -48,7 +48,7 @@
         {
             var userId = this.currentUser.GetId();
 
-            var articleId = await this.articleService.AddAsync(
+            var articleId = await this.articlesService.AddAsync(
                    inputModel.Title,
                    inputModel.Content,
                    inputModel.CategoryName,
@@ -60,7 +60,7 @@
         [HttpGet]
         [Route(Id)]
         public async Task<ArticleDetailsResponseModel> Details([FromRoute] int id)
-            => await this.articleService.Details<ArticleDetailsResponseModel>(id);
+            => await this.articlesService.Details<ArticleDetailsResponseModel>(id);
 
         [HttpPut]
         [Authorize]
@@ -71,7 +71,7 @@
         {
             var userId = this.currentUser.GetId();
 
-            var result = await this.articleService.Update(
+            var result = await this.articlesService.Update(
                 id,
                 inputModel.Title,
                 inputModel.Content,
@@ -92,7 +92,7 @@
         {
             var userId = this.currentUser.GetId();
 
-            var result = await this.articleService.Delete(id, userId);
+            var result = await this.articlesService.Delete(id, userId);
 
             if (result.Failure)
             {
@@ -106,11 +106,11 @@
         [Authorize]
         [Route("Mine/Count")]
         public async Task<int> GetArticlesCountByCurrentUser() =>
-            await this.articleService.AllArticlesCountByUserId(this.User.GetId());
+            await this.articlesService.AllArticlesCountByUserId(this.User.GetId());
 
         [HttpGet]
         [Route("{ArticleId}/Comments")]
         public async Task<IEnumerable<CommentListingModel>> GetCommentByArticle([FromRoute] int articleId)
-            => await this.articleService.GetAllCommentsByArticleId<CommentListingModel>(articleId);
+            => await this.articlesService.GetAllCommentsByArticleId<CommentListingModel>(articleId);
     }
 }

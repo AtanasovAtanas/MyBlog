@@ -6,7 +6,7 @@
     using MyBlog.Server.Features.Articles.Models;
     using MyBlog.Server.Infrastructure.Services;
 
-    public interface IArticleService
+    public interface IArticlesService
     {
         Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId, int page, string filter);
 
