@@ -1,6 +1,4 @@
-﻿using MyBlog.Server.Infrastructure.Extensions;
-
-namespace MyBlog.Server.Features.Articles
+﻿namespace MyBlog.Server.Features.Articles
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -12,6 +10,7 @@ namespace MyBlog.Server.Features.Articles
     using MyBlog.Server.Data.Repositories.Contracts;
     using MyBlog.Server.Features.Articles.Models;
     using MyBlog.Server.Features.Categories;
+    using MyBlog.Server.Infrastructure.Extensions;
     using MyBlog.Server.Infrastructure.Mapping;
     using MyBlog.Server.Infrastructure.Services;
 
