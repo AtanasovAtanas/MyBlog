@@ -6,28 +6,32 @@ import getQueryParameter from "../../utils/queryParser";
 const Pagination = ({ articlesPerPage, totalAricles, baseUrl }) => {
 	const [activePage, setActivePage] = useState(1);
 	const [filter, setFilter] = useState("");
+	const [sortBy, setSortBy] = useState("");
 
 	const numberOfPages = Math.ceil(totalAricles / articlesPerPage);
 	const pages = Array.from(Array(numberOfPages).keys());
 
-	const location = useLocation();
+	const { search } = useLocation();
 
 	useEffect(() => {
-		const page = Number(getQueryParameter(location.search, "page"));
-
-		const filterQuery = Number(
-			getQueryParameter(location.search, "filter")
-		);
+		const page = Number(getQueryParameter(search, "page"));
+		const filterQuery = Number(getQueryParameter(search, "filter"));
+		const sortByQuery = getQueryParameter(search, "sortBy");
 
 		setFilter(filterQuery);
 		setActivePage(page ? page : 1);
-	}, [location]);
+		setSortBy(sortByQuery);
+	}, [search]);
 
 	const linkToUrl = (page) => {
 		let result = `/${baseUrl ? baseUrl : ""}`;
 
 		if (filter) {
 			result = result + `?filter=${filter}&`;
+		}
+
+		if (sortBy) {
+			result = result + `?sortBy=${sortBy}&`;
 		}
 
 		result = result + `?page=${page}`;

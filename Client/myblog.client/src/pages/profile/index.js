@@ -6,6 +6,7 @@ import articlesService from "../../services/articles";
 import Profile from "../../components/profile";
 import UserContext from "../../utils/context";
 import { useLocation } from "react-router-dom";
+import styles from "./index.module.css";
 
 const ProfilePage = () => {
 	const [articles, setArticles] = useState([]);
@@ -40,13 +41,15 @@ const ProfilePage = () => {
 				username={context.user.username}
 				articlesCount={articlesCount}
 			/>
-			{articles.length > 0 ? (
-				<Pagination
-					articlesPerPage="5"
-					totalAricles={articlesCount}
-					baseUrl="profile/"
-				/>
-			) : null}
+			<div className={styles.centered}>
+				{articles.length > 0 ? (
+					<Pagination
+						articlesPerPage="5"
+						totalAricles={articlesCount}
+						baseUrl="profile/"
+					/>
+				) : null}
+			</div>
 			<Articles articles={articles} />
 		</PageLayout>
 	);

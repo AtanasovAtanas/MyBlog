@@ -25,7 +25,8 @@
         public async Task<IEnumerable<ArticleSummaryDetailsResponseModel>> AllByName(
             [FromRoute] string categoryName,
             [FromQuery] int? page,
-            [FromQuery] string filter)
+            [FromQuery] string filter,
+            [FromQuery] string sortBy)
         {
             if (page == null)
             {
@@ -35,7 +36,8 @@
             return await this.categoriesService.AllByName<ArticleSummaryDetailsResponseModel>(
                  categoryName,
                  page.Value,
-                 filter);
+                 filter,
+                 sortBy);
         }
 
         [HttpGet]

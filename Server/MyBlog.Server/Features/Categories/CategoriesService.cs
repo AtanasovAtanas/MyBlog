@@ -1,6 +1,5 @@
 ﻿namespace MyBlog.Server.Features.Categories
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -8,6 +7,7 @@
     using Microsoft.EntityFrameworkCore;
     using MyBlog.Server.Data.Models;
     using MyBlog.Server.Data.Repositories.Contracts;
+    using MyBlog.Server.Infrastructure.Extensions;
     using MyBlog.Server.Infrastructure.Mapping;
 
     using static Constants;
@@ -30,7 +30,8 @@
         public async Task<IEnumerable<TModel>> AllByName<TModel>(
             string categoryName,
             int page,
-            string filter)
+            string filter,
+            string sortBy)
         {
             var query = this.categoriesRepository
                 .All()
@@ -45,10 +46,26 @@
                     a.Content.Contains(filter));
             }
 
+            if (string.IsNullOrEmpty(sortBy))
+            {
+                sortBy = "newest";
+            }
+
+            switch (sortBy)
+            {
+                case "newest":
+                    query = query.OrderByDescending(a => a.CreatedOn);
+                    break;
+                case "oldest":
+                    query = query.OrderBy(a => a.CreatedOn);
+                    break;
+                case "comments":
+                    query = query.OrderByDescending(a => a.Comments.Count());
+                    break;
+            }
+
             return await query
-                .OrderByDescending(a => a.CreatedOn)
-                .Skip((page - 1) * ArticlesPerPage)
-                .Take(ArticlesPerPage)
+                .Page(page, ArticlesPerPage)
                 .To<TModel>()
                 .ToListAsync();
         }

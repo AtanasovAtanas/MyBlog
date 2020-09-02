@@ -10,6 +10,7 @@
     using MyBlog.Server.Data.Repositories.Contracts;
     using MyBlog.Server.Features.Articles.Models;
     using MyBlog.Server.Features.Categories;
+    using MyBlog.Server.Infrastructure.Extensions;
     using MyBlog.Server.Infrastructure.Mapping;
     using MyBlog.Server.Infrastructure.Services;
 
@@ -45,8 +46,7 @@
 
             return await query
                    .OrderByDescending(a => a.CreatedOn)
-                   .Skip((page - 1) * ArticlesPerPage)
-                   .Take(ArticlesPerPage)
+                   .Page(page, ArticlesPerPage)
                    .To<TModel>()
                    .ToListAsync();
         }

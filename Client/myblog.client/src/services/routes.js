@@ -5,7 +5,7 @@ const VOTES_BASE_URL = BASE_URL + "/Votes";
 const COMMENTS_BASE_URL = BASE_URL + "/Comments";
 const CATEGORIES_BASE_URL = BASE_URL + "/Categories";
 
-const getArticlesByCategoryName = (categoryName, page, filter) => {
+const getArticlesByCategoryName = (categoryName, page, filter, sortBy) => {
 	let url = CATEGORIES_BASE_URL + "/" + categoryName;
 
 	if (page) {
@@ -13,7 +13,15 @@ const getArticlesByCategoryName = (categoryName, page, filter) => {
 	}
 
 	if (filter) {
-		url = url + `?filter=${filter}`;
+		url = url + `?filter=${filter}&`;
+	}
+
+	if (sortBy) {
+		url = url + `?sortBy=${sortBy}`;
+	}
+
+	if (url.endsWith("&")) {
+		url = url.substring(0, url.length - 1);
 	}
 
 	return url;
@@ -65,8 +73,8 @@ export const CommentRoutes = {
 
 export const CategoryRoutes = {
 	GET_CATEGORIES: CATEGORIES_BASE_URL,
-	GET_ARTICLES_BY_CATEGORY_NAME: (categoryName, page, filter) =>
-		getArticlesByCategoryName(categoryName, page, filter),
+	GET_ARTICLES_BY_CATEGORY_NAME: (categoryName, page, filter, sortBy) =>
+		getArticlesByCategoryName(categoryName, page, filter, sortBy),
 	GET_ARTICLES_COUNT_BY_CATEGORY_NAME: (categoryName, filter) =>
 		getArticlesCountByCategoryName(categoryName, filter),
 };
