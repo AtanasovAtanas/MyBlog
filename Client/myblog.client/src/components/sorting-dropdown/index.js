@@ -1,38 +1,29 @@
 import React from "react";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import getQueryParameter from "../../utils/queryParser";
-import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./index.module.css";
 
 const SortingDropdown = () => {
 	const { pathname, search } = useLocation();
-	const history = useHistory();
 
-	const handleClick = (event, sortStrategy) => {
-		event.preventDefault();
-
+	const linkTo = (sortStrategy) => {
 		const filter = getQueryParameter(search, "filter");
 
 		const baseLink = `${pathname}?sortBy=${sortStrategy}`;
-		const linkTo = filter ? `${baseLink}&filter=${filter}` : baseLink;
+		const result = filter ? `${baseLink}&filter=${filter}` : baseLink;
 
-		history.push(linkTo);
+		return result;
 	};
 
 	return (
-		<DropdownButton title="Sort by" className={styles.sort}>
-			<Dropdown.Item onClick={(event) => handleClick(event, "newest")}>
-				Newest
-			</Dropdown.Item>
-			<Dropdown.Item onClick={(event) => handleClick(event, "oldest")}>
-				Oldest
-			</Dropdown.Item>
-			<Dropdown.Item onClick={(event) => handleClick(event, "comments")}>
-				Comments
-			</Dropdown.Item>
-		</DropdownButton>
+		<div className={styles.dropdown}>
+			<button className={styles.dropbtn}>Sort by</button>
+			<div className={styles["dropdown-content"]}>
+				<Link to={linkTo("newest")}>Newest</Link>
+				<Link to={linkTo("oldest")}>Oldest</Link>
+				<Link to={linkTo("comments")}>Most comments</Link>
+			</div>
+		</div>
 	);
 };
 
