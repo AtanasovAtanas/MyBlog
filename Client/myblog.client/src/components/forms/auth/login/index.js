@@ -4,12 +4,12 @@ import Button from "../../../button";
 import { useHistory } from "react-router-dom";
 import styles from "../index.module.css";
 import auth from "../../../../services/auth";
-import UserContext from "../../../../utils/context";
+import { GlobalContext } from "../../../../context/context";
 
 const Login = () => {
 	const history = useHistory();
 
-	const context = useContext(UserContext);
+	const { login } = useContext(GlobalContext);
 
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
@@ -27,10 +27,7 @@ const Login = () => {
 		await auth.login(
 			body,
 			(obj) => {
-				context.user = {
-					userId: obj.userId,
-					username: obj.username,
-				};
+				login({ userId: obj.userId, username: obj.username });
 
 				document.cookie = `Bearer=${obj.token}`;
 

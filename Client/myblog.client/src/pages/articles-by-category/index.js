@@ -4,16 +4,16 @@ import PageLayout from "../layout";
 import Articles from "../../components/articles";
 import SortingDropdown from "../../components/sorting-dropdown";
 import Pagination from "../../components/pagination";
-import UserContext from "../../utils/context";
 import categoriesService from "../../services/categories";
 import getQueryParameter from "../../utils/queryParser";
 import styles from "./index.module.css";
+import { GlobalContext } from "../../context/context";
 
 const ArticlesByCategory = () => {
 	const [articles, setArticles] = useState([]);
 	const [articlesCount, setArticlesCount] = useState(0);
 
-	const context = useContext(UserContext);
+	const context = useContext(GlobalContext);
 	const { search } = useLocation();
 	const { categoryName } = useParams();
 

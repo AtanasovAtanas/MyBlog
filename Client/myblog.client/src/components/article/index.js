@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import UserContext from "../../utils/context";
 import moment from "moment";
 import styles from "./index.module.css";
 import Actions from "../actions";
@@ -9,6 +8,7 @@ import Vote from "../vote";
 import articlesService from "../../services/articles";
 import { FontAwesomeIcon as FontAwesome } from "@fortawesome/react-fontawesome";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
+import { GlobalContext } from "../../context/context";
 
 const Article = ({
 	articleId,
@@ -24,7 +24,7 @@ const Article = ({
 
 	const [isDeleted, setIsDeleted] = useState(false);
 
-	const context = useContext(UserContext);
+	const context = useContext(GlobalContext);
 	const currentUsername = context.user.username;
 
 	const history = useHistory();

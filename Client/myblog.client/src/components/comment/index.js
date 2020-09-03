@@ -4,8 +4,8 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import commentsService from "../../services/comments";
 import Actions from "../actions";
-import UserContext from "../../utils/context";
 import CommentForm from "../forms/comment";
+import { GlobalContext } from "../../context/context";
 
 const Comment = ({ id, articleId, initialContent, author, createdOn }) => {
 	const [replies, setReplies] = useState([]);
@@ -16,7 +16,7 @@ const Comment = ({ id, articleId, initialContent, author, createdOn }) => {
 	const [show, setShow] = useState(false);
 	const toggle = () => setShow(!show);
 
-	const context = useContext(UserContext);
+	const context = useContext(GlobalContext);
 
 	useEffect(() => {
 		const fetchReplies = async () => {

@@ -1,28 +1,8 @@
-import React, { useEffect, useState } from "react";
-import UserContext from "../../utils/context";
-import auth from "../../services/auth";
+import React from "react";
+import { GlobalProvider } from "../../context/context";
 
 const App = ({ children }) => {
-	const [user, setUser] = useState({ username: "", userId: "" });
-
-	useEffect(() => {
-		const fetchData = async () => {
-			await auth.getIdentityDetails(
-				(obj) => {
-					setUser({ userId: obj.userId, username: obj.username });
-				},
-				() => console.log()
-			);
-		};
-
-		fetchData();
-	}, []);
-
-	return (
-		<UserContext.Provider value={{ user: user }}>
-			{children}
-		</UserContext.Provider>
-	);
+	return <GlobalProvider>{children}</GlobalProvider>;
 };
 
 export default App;
