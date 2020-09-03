@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import tagsService from "../../services/tags";
 import styles from "./index.module.css";
 
 const InputTag = () => {
@@ -7,17 +8,16 @@ const InputTag = () => {
 	const [suggestions, setSuggestions] = useState([]);
 	const [filteredSuggestions, setFilteredSuggestions] = useState([]);
 
-	useEffect(
-		() =>
-			setSuggestions([
-				"tier 1",
-				"tier 2",
-				"tier 3",
-				"tier 4",
-				"official",
-			]),
-		[]
-	);
+	useEffect(() => {
+		const fetchData = async () => {
+			await tagsService.getAllTags(
+				(response) => setSuggestions(response),
+				() => console.log("failed fetching tags")
+			);
+		};
+
+		fetchData();
+	}, []);
 
 	const removeTag = (index) => {
 		const newTags = [...tags];
@@ -47,7 +47,11 @@ const InputTag = () => {
 		if (!val) {
 			setFilteredSuggestions([]);
 		} else {
-			setFilteredSuggestions(suggestions.filter((s) => s.includes(val)));
+			setFilteredSuggestions(
+				suggestions.filter((s) =>
+					s.name.toLowerCase().includes(val.toLowerCase())
+				)
+			);
 		}
 	};
 
@@ -78,7 +82,7 @@ const InputTag = () => {
 					{filteredSuggestions.map((suggestion) => {
 						return (
 							<li
-								key={suggestion}
+								key={suggestion.name}
 								onClick={(event) => {
 									setFilteredSuggestions([]);
 									setTags([
@@ -88,7 +92,7 @@ const InputTag = () => {
 									setTagInput("");
 								}}
 							>
-								{suggestion}
+								{suggestion.name}
 							</li>
 						);
 					})}
