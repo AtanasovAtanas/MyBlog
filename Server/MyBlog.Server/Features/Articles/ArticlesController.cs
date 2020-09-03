@@ -43,8 +43,8 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<InputArticleResponseModel>> Create(
-            [FromBody] CreateArticleRequestModel inputModel)
+        public async Task<ActionResult<ArticleInputResponseModel>> Create(
+            [FromBody] CreateRequestModel inputModel)
         {
             var userId = this.currentUser.GetId();
 
@@ -55,7 +55,7 @@
                    inputModel.Tags,
                    userId);
 
-            return new InputArticleResponseModel { Id = articleId };
+            return new ArticleInputResponseModel { Id = articleId };
         }
 
         [HttpGet]
@@ -66,16 +66,16 @@
         [HttpPut]
         [Authorize]
         [Route(Id)]
-        public async Task<ActionResult<InputArticleResponseModel>> Update(
+        public async Task<ActionResult<ArticleInputResponseModel>> Update(
             [FromRoute] int id,
-            [FromBody] InputArticleRequestModel inputModel)
+            [FromBody] ArticleInputRequestModel articleInputModel)
         {
             var userId = this.currentUser.GetId();
 
             var result = await this.articlesService.Update(
                 id,
-                inputModel.Title,
-                inputModel.Content,
+                articleInputModel.Title,
+                articleInputModel.Content,
                 userId);
 
             if (result.Failure)
@@ -83,7 +83,7 @@
                 return this.BadRequest(result.Error);
             }
 
-            return new InputArticleResponseModel { Id = id };
+            return new ArticleInputResponseModel { Id = id };
         }
 
         [HttpDelete]
