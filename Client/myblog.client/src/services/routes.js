@@ -4,6 +4,7 @@ const ARTICLES_BASE_URL = BASE_URL + "/Articles";
 const VOTES_BASE_URL = BASE_URL + "/Votes";
 const COMMENTS_BASE_URL = BASE_URL + "/Comments";
 const CATEGORIES_BASE_URL = BASE_URL + "/Categories";
+const TAGS_BASE_URL = BASE_URL + "/Tags";
 
 const getArticlesByCategoryName = (categoryName, page, filter, sortBy) => {
 	let url = CATEGORIES_BASE_URL + "/" + categoryName;
@@ -77,4 +78,8 @@ export const CategoryRoutes = {
 		getArticlesByCategoryName(categoryName, page, filter, sortBy),
 	GET_ARTICLES_COUNT_BY_CATEGORY_NAME: (categoryName, filter) =>
 		getArticlesCountByCategoryName(categoryName, filter),
+};
+
+export const TagRoutes = {
+	GET_TAGS: TAGS_BASE_URL,
 };
