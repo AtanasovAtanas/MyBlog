@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import tagsService from "../../services/tags";
 import styles from "./index.module.css";
 
-const InputTag = ({ tagsChangeHandler }) => {
+const InputTag = ({ tagsChangeHandler, initialTags }) => {
 	const [tags, setTags] = useState([]);
 	const [tagInput, setTagInput] = useState("");
 	const [suggestions, setSuggestions] = useState([]);
@@ -17,7 +17,8 @@ const InputTag = ({ tagsChangeHandler }) => {
 		};
 
 		fetchData();
-	}, []);
+		setTags(initialTags ? initialTags : []);
+	}, [initialTags]);
 
 	const removeTag = (index) => {
 		const newTags = [...tags];

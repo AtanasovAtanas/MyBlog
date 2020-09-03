@@ -1,31 +1,55 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import articlesService from "../../services/articles";
+import React, { useEffect, useState } from "react";
 import PageLayout from "../layout";
+import articlesService from "../../services/articles";
 import ArticleInputForm from "../../components/forms/article-input";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 
 const EditArticlePage = () => {
-	const [article, setArticle] = useState({});
+	const [initialModel, setInitialModel] = useState({});
 	const { id } = useParams();
+	const history = useHistory();
+	const location = useLocation();
 
 	useEffect(() => {
-		const fetchData = async () => {
-			await articlesService.getArticleById(
+		const fetchArticle = async () => {
+			articlesService.getArticleById(
 				id,
-				(data) => setArticle(data),
-				(e) => console.log(e)
+				(response) => {
+					setInitialModel({
+						title: response.title,
+						content: response.content,
+						tags: response.tags,
+					});
+				},
+				() => console.log("failed fetching article by id")
 			);
 		};
 
-		fetchData();
+		fetchArticle();
 	}, [id]);
+
+	const submitFormHandler = async (event, model) => {
+		event.preventDefault();
+
+		const body = {
+			title: model.title,
+			content: model.content,
+			tags: model.tags,
+		};
+
+		await articlesService.editArticle(
+			location.pathname.split("/").pop(),
+			body,
+			(response) => history.push(`/articles/${response.id}`),
+			() => console.log()
+		);
+	};
 
 	return (
 		<PageLayout>
 			<ArticleInputForm
-				mode="edit"
-				initialTitle={article.title}
-				initialContent={article.content}
+				submitFormHandler={submitFormHandler}
+				initialModel={initialModel}
 			/>
 		</PageLayout>
 	);
