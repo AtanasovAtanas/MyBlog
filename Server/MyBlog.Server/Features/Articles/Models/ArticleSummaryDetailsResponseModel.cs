@@ -22,6 +22,10 @@
                 {
                     options.MapFrom(a =>
                         a.Content.Substring(0, 1000) + "...");
+                })
+                .ForMember(x => x.Tags, options =>
+                {
+                    options.MapFrom(a => a.Tags.Select(t => t.Tag.Name).ToList());
                 });
         }
     }

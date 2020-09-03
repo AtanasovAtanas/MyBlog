@@ -1,4 +1,6 @@
-﻿namespace MyBlog.Server.Features.Articles.Models
+﻿using System.Collections.Generic;
+
+namespace MyBlog.Server.Features.Articles.Models
 {
     using System;
     using System.Linq;
@@ -23,6 +25,8 @@
 
         public int CommentsCount { get; set; }
 
+        public virtual IEnumerable<string> Tags { get; set; }
+
         public virtual void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Article, ArticleDetailsResponseModel>()
@@ -33,6 +37,10 @@
                 .ForMember(x => x.CommentsCount, options =>
                 {
                     options.MapFrom(a => a.Comments.Count(c => !c.IsDeleted));
+                })
+                .ForMember(x => x.Tags, options =>
+                {
+                    options.MapFrom(a => a.Tags.Select(t => t.Tag.Name).ToList());
                 });
         }
     }
