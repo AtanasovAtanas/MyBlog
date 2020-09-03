@@ -24,6 +24,7 @@
                 new CategoriesSeeder(),
                 new ArticlesSeeder(),
                 new CommentsSeeder(),
+                new TagsSeeder(),
             };
 
             foreach (var seeder in seeders)
