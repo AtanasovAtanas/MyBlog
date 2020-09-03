@@ -13,6 +13,7 @@ import { faComment } from "@fortawesome/free-solid-svg-icons";
 const Article = ({
 	articleId,
 	title,
+	tags,
 	description,
 	author,
 	createdOn,
@@ -50,10 +51,17 @@ const Article = ({
 							title
 						)}
 					</h3>
+					{tags ? (
+						<ul className={styles.tags}>
+							{tags.map((t) => (
+								<li className={styles.tag}>{t}</li>
+							))}
+						</ul>
+					) : null}
 					<div className={styles.description}>
 						{ReactHtmlParser(description)}
 					</div>
-					<div className={styles.audit}>
+					<div className={styles.actions}>
 						<span>
 							<Link to={detailsLink}>
 								<FontAwesome icon={faComment} />
