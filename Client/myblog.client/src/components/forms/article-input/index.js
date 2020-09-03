@@ -4,6 +4,7 @@ import Button from "../../button";
 import styles from "./index.module.css";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import articlesService from "../../../services/articles";
+import InputTag from "../../input-tag";
 
 const ArticleInputForm = ({ initialTitle, initialContent, mode }) => {
 	const [model, setModel] = useState({ title: "", content: "" });
@@ -88,6 +89,7 @@ const ArticleInputForm = ({ initialTitle, initialContent, mode }) => {
 						setModel({ ...model, content: c })
 					}
 				/>
+				<InputTag />
 				<Button text="Submit" />
 			</form>
 
