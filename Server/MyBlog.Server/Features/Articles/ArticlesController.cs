@@ -52,6 +52,7 @@
                    inputModel.Title,
                    inputModel.Content,
                    inputModel.CategoryName,
+                   inputModel.Tags,
                    userId);
 
             return new InputArticleResponseModel { Id = articleId };

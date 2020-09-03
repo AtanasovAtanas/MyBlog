@@ -1,5 +1,6 @@
 ﻿namespace MyBlog.Server.Features.Articles.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using static Data.Validation.Articles;
@@ -14,5 +15,7 @@
         [Required]
         [MinLength(ContentMinLength)]
         public string Content { get; set; }
+
+        public virtual IEnumerable<string> Tags { get; set; }
     }
 }

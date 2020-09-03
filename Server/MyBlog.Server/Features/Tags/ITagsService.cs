@@ -8,5 +8,7 @@
         Task<IEnumerable<TModel>> AllAsync<TModel>();
 
         Task<int> GetIdByNameAsync(string tagName);
+
+        Task<int> AddAsync(string tagName);
     }
 }

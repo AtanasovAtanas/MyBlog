@@ -24,11 +24,21 @@
                 .To<TModel>()
                 .ToListAsync();
 
-        public async Task<int> GetIdByNameAsync(string tagName) =>
-            await this.tagsRepository
+        public async Task<int> GetIdByNameAsync(string tagName)
+            => await this.tagsRepository
                 .All()
                 .Where(t => t.Name == tagName)
                 .Select(t => t.Id)
                 .SingleOrDefaultAsync();
+
+        public async Task<int> AddAsync(string tagName)
+        {
+            var tag = new Tag { Name = tagName };
+
+            await this.tagsRepository.AddAsync(tag);
+            await this.tagsRepository.SaveChangesAsync();
+
+            return tag.Id;
+        }
     }
 }

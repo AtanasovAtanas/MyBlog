@@ -12,7 +12,7 @@
 
         Task<IEnumerable<TModel>> GetAllCommentsByArticleId<TModel>(int articleId);
 
-        Task<int> AddAsync(string title, string content, string categoryName, string userId);
+        Task<int> AddAsync(string title, string content, string categoryName, IEnumerable<string> tags, string userId);
 
         Task<TModel> Details<TModel>(int id);
 

@@ -40,6 +40,6 @@
 
         public virtual IEnumerable<Comment> Comments { get; set; }
 
-        public virtual IEnumerable<ArticleTag> Tags { get; set; }
+        public virtual ICollection<ArticleTag> Tags { get; set; }
     }
 }

@@ -10,6 +10,7 @@
     using MyBlog.Server.Data.Repositories.Contracts;
     using MyBlog.Server.Features.Articles.Models;
     using MyBlog.Server.Features.Categories;
+    using MyBlog.Server.Features.Tags;
     using MyBlog.Server.Infrastructure.Extensions;
     using MyBlog.Server.Infrastructure.Mapping;
     using MyBlog.Server.Infrastructure.Services;
@@ -22,13 +23,16 @@
         private readonly HtmlSanitizer htmlSanitizer;
         private readonly IDeletableEntityRepository<Article> articlesRepository;
         private readonly ICategoriesService categoriesService;
+        private readonly ITagsService tagsService;
 
         public ArticlesService(
             IDeletableEntityRepository<Article> articlesRepository,
-            ICategoriesService categoriesService)
+            ICategoriesService categoriesService,
+            ITagsService tagsService)
         {
             this.articlesRepository = articlesRepository;
             this.categoriesService = categoriesService;
+            this.tagsService = tagsService;
 
             this.htmlSanitizer = new HtmlSanitizer();
         }
@@ -64,6 +68,7 @@
             string title,
             string content,
             string categoryName,
+            IEnumerable<string> tags,
             string userId)
         {
             var categoryId = await this.categoriesService.GetIdByName(categoryName);
@@ -75,6 +80,18 @@
                 AuthorId = userId,
                 CategoryId = categoryId,
             };
+
+            foreach (var tagName in tags)
+            {
+                var tagId = await this.tagsService.GetIdByNameAsync(tagName);
+
+                if (tagId == 0)
+                {
+                    tagId = await this.tagsService.AddAsync(tagName);
+                }
+
+                article.Tags.Add(new ArticleTag { TagId = tagId });
+            }
 
             await this.articlesRepository.AddAsync(article);
             await this.articlesRepository.SaveChangesAsync();
