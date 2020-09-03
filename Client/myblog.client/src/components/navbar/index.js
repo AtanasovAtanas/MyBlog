@@ -5,8 +5,8 @@ import getNavItems from "../../utils/navigation";
 import { GlobalContext } from "../../context/context";
 
 const Navigation = () => {
-	const { user, logout } = useContext(GlobalContext);
-	const navItems = getNavItems(user.isLoggedIn);
+	const { isLoggedIn, logout } = useContext(GlobalContext);
+	const navItems = getNavItems(isLoggedIn);
 
 	return (
 		<nav className={styles.navigation}>
@@ -20,7 +20,7 @@ const Navigation = () => {
 						/>
 					);
 				})}
-				{user.isLoggedIn ? (
+				{isLoggedIn ? (
 					<NavbarListItem href="#" text="Logout" onClick={logout} />
 				) : null}
 			</ul>

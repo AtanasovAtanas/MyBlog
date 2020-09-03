@@ -13,7 +13,7 @@ const ArticlesByCategory = () => {
 	const [articles, setArticles] = useState([]);
 	const [articlesCount, setArticlesCount] = useState(0);
 
-	const context = useContext(GlobalContext);
+	const { isLoggedIn } = useContext(GlobalContext);
 	const { search } = useLocation();
 	const { categoryName } = useParams();
 
@@ -50,7 +50,7 @@ const ArticlesByCategory = () => {
 		<PageLayout>
 			<div className={styles.container}>
 				<div>
-					{context.user.userId ? (
+					{isLoggedIn ? (
 						<Link to="Articles/Create" className={styles.submit}>
 							Create article
 						</Link>

@@ -14,7 +14,7 @@ const Register = () => {
 	const [errors, setErrors] = useState([]);
 
 	const history = useHistory();
-	const context = useContext(GlobalContext);
+	const { login } = useContext(GlobalContext);
 
 	const validate = (email, password, rePassword) => {
 		const validationErrors = [];
@@ -51,12 +51,10 @@ const Register = () => {
 		await auth.register(
 			body,
 			(response) => {
-				context.user = {
+				login({
 					userId: response.userId,
 					username: response.username,
-				};
-
-				document.cookie = `Bearer=${response.token}`;
+				});
 
 				history.push("/");
 			},

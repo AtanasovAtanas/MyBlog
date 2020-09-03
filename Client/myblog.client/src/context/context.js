@@ -3,7 +3,8 @@ import AppReducer from "./reducer";
 import auth from "../services/auth";
 
 const initialState = {
-	user: { userId: "", username: "", isLoggedIn: false },
+	user: { userId: "", username: "" },
+	isLoggedIn: false,
 };
 
 export const GlobalContext = createContext(initialState);
@@ -43,6 +44,7 @@ export const GlobalProvider = ({ children }) => {
 		<GlobalContext.Provider
 			value={{
 				user: state.user,
+				isLoggedIn: state.isLoggedIn,
 				login,
 				logout,
 				getCurrentUser,

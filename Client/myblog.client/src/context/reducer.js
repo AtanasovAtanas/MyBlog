@@ -5,8 +5,8 @@ export default (state, action) => {
 				...state,
 				user: {
 					...action.payload,
-					isLoggedIn: true,
 				},
+				isLoggedIn: true,
 			};
 		case "LOGOUT":
 			document.cookie = "Bearer= ;";
@@ -15,8 +15,8 @@ export default (state, action) => {
 				user: {
 					userId: "",
 					username: "",
-					isLoggedIn: false,
 				},
+				isLoggedIn: false,
 			};
 		default:
 			return state;

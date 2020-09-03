@@ -11,7 +11,7 @@ import { GlobalContext } from "../../context/context";
 const ProfilePage = () => {
 	const [articles, setArticles] = useState([]);
 	const [articlesCount, setArticlesCount] = useState(0);
-	const context = useContext(GlobalContext);
+	const { user } = useContext(GlobalContext);
 
 	const location = useLocation();
 
@@ -37,10 +37,7 @@ const ProfilePage = () => {
 
 	return (
 		<PageLayout>
-			<Profile
-				username={context.user.username}
-				articlesCount={articlesCount}
-			/>
+			<Profile username={user.username} articlesCount={articlesCount} />
 			<div className={styles.centered}>
 				{articles.length > 0 ? (
 					<Pagination

@@ -16,7 +16,7 @@ const Comment = ({ id, articleId, initialContent, author, createdOn }) => {
 	const [show, setShow] = useState(false);
 	const toggle = () => setShow(!show);
 
-	const context = useContext(GlobalContext);
+	const { user } = useContext(GlobalContext);
 
 	useEffect(() => {
 		const fetchReplies = async () => {
@@ -98,7 +98,7 @@ const Comment = ({ id, articleId, initialContent, author, createdOn }) => {
 							>
 								Reply
 							</Link>
-							{context.user.username === author ? (
+							{user.username === author ? (
 								<Actions
 									title="your comment"
 									deleteHandler={deleteHandler}

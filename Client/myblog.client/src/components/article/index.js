@@ -24,8 +24,8 @@ const Article = ({
 
 	const [isDeleted, setIsDeleted] = useState(false);
 
-	const context = useContext(GlobalContext);
-	const currentUsername = context.user.username;
+	const { user } = useContext(GlobalContext);
+	const currentUsername = user.username;
 
 	const history = useHistory();
 
