@@ -7,7 +7,7 @@ import articlesService from "../../../services/articles";
 import InputTag from "../../input-tag";
 
 const ArticleInputForm = ({ initialTitle, initialContent, mode }) => {
-	const [model, setModel] = useState({ title: "", content: "" });
+	const [model, setModel] = useState({ title: "", content: "", tags: [] });
 
 	const { categoryName } = useParams();
 
@@ -51,6 +51,7 @@ const ArticleInputForm = ({ initialTitle, initialContent, mode }) => {
 		const body = {
 			title: model.title,
 			content: model.content,
+			tags: model.tags,
 		};
 
 		if (mode === "create") {
@@ -69,6 +70,8 @@ const ArticleInputForm = ({ initialTitle, initialContent, mode }) => {
 			);
 		}
 	};
+
+	const tagsChangeHandler = (tags) => setModel({ ...model, tags: tags });
 
 	return (
 		<React.Fragment>
@@ -89,7 +92,7 @@ const ArticleInputForm = ({ initialTitle, initialContent, mode }) => {
 						setModel({ ...model, content: c })
 					}
 				/>
-				<InputTag />
+				<InputTag tagsChangeHandler={tagsChangeHandler} />
 				<Button text="Submit" />
 			</form>
 

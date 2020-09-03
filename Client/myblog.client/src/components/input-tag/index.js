@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import tagsService from "../../services/tags";
 import styles from "./index.module.css";
 
-const InputTag = () => {
+const InputTag = ({ tagsChangeHandler }) => {
 	const [tags, setTags] = useState([]);
 	const [tagInput, setTagInput] = useState("");
 	const [suggestions, setSuggestions] = useState([]);
@@ -29,11 +29,14 @@ const InputTag = () => {
 	const inputKeyDown = (event) => {
 		const val = event.target.value;
 		if (event.key === "Enter" && val) {
+			event.preventDefault();
 			if (tags.find((tag) => tag.toLowerCase() === val.toLowerCase())) {
 				return;
 			}
 
-			setTags([...tags, val]);
+			const newTags = [...tags, val];
+			setTags(newTags);
+			tagsChangeHandler(newTags);
 			setTagInput("");
 		} else if (event.key === "Backspace" && !val) {
 			removeTag(tags.length - 1);
