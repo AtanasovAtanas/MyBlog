@@ -17,6 +17,7 @@
     using MyBlog.Server.Features.Categories;
     using MyBlog.Server.Features.Comments;
     using MyBlog.Server.Features.Identity;
+    using MyBlog.Server.Features.Tags;
     using MyBlog.Server.Features.Votes;
     using MyBlog.Server.Infrastructure.Filters;
     using MyBlog.Server.Infrastructure.Services;
@@ -97,7 +98,8 @@
                 .AddTransient<IArticlesService, ArticlesService>()
                 .AddTransient<IVotesService, VotesService>()
                 .AddTransient<ICommentsService, CommentsService>()
-                .AddTransient<ICategoriesService, CategoriesService>();
+                .AddTransient<ICategoriesService, CategoriesService>()
+                .AddTransient<ITagsService, TagsService>();
 
         public static IServiceCollection AddSwagger(this IServiceCollection services)
             => services.AddSwaggerGen(c =>
