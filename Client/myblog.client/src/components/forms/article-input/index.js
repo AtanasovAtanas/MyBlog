@@ -71,7 +71,7 @@ const ArticleInputForm = ({ initialTitle, initialContent, mode }) => {
 		}
 	};
 
-	const tagsChangeHandler = (tags) => setModel({ ...model, tags: tags });
+	const tagsChangeHandler = (tags) => setModel({ ...model, tags });
 
 	return (
 		<React.Fragment>

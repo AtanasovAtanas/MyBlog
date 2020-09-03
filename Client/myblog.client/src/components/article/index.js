@@ -54,7 +54,9 @@ const Article = ({
 					{tags ? (
 						<ul className={styles.tags}>
 							{tags.map((t) => (
-								<li className={styles.tag}>{t}</li>
+								<li key={t} className={styles.tag}>
+									{t}
+								</li>
 							))}
 						</ul>
 					) : null}

@@ -26,6 +26,12 @@ const InputTag = ({ tagsChangeHandler }) => {
 		setTags(newTags);
 	};
 
+	const updateTags = (newTag) => {
+		const newTags = [...tags, newTag];
+		setTags(newTags);
+		tagsChangeHandler(newTags);
+	};
+
 	const inputKeyDown = (event) => {
 		const val = event.target.value;
 		if (event.key === "Enter" && val) {
@@ -34,9 +40,7 @@ const InputTag = ({ tagsChangeHandler }) => {
 				return;
 			}
 
-			const newTags = [...tags, val];
-			setTags(newTags);
-			tagsChangeHandler(newTags);
+			updateTags(tagInput);
 			setTagInput("");
 		} else if (event.key === "Backspace" && !val) {
 			removeTag(tags.length - 1);
@@ -87,11 +91,8 @@ const InputTag = ({ tagsChangeHandler }) => {
 							<li
 								key={suggestion.name}
 								onClick={(event) => {
+									updateTags(event.currentTarget.innerText);
 									setFilteredSuggestions([]);
-									setTags([
-										...tags,
-										event.currentTarget.innerText,
-									]);
 									setTagInput("");
 								}}
 							>
