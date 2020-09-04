@@ -21,13 +21,13 @@
             this.categoriesRepository = categoriesRepository;
         }
 
-        public async Task<IEnumerable<TModel>> All<TModel>() =>
+        public async Task<IEnumerable<TModel>> GetAllAsync<TModel>() =>
             await this.categoriesRepository
                 .All()
                 .To<TModel>()
                 .ToListAsync();
 
-        public async Task<IEnumerable<TModel>> AllByName<TModel>(
+        public async Task<IEnumerable<TModel>> GetAllByNameAsync<TModel>(
             string categoryName,
             int page,
             string filter,
@@ -70,7 +70,7 @@
                 .ToListAsync();
         }
 
-        public async Task<int> CountByName(string categoryName, string filter)
+        public async Task<int> GetCountByNameAsync(string categoryName, string filter)
         {
             var query = this.categoriesRepository
                 .All()
@@ -88,7 +88,7 @@
             return await query.CountAsync();
         }
 
-        public async Task<int> GetIdByName(string categoryName) =>
+        public async Task<int> GetIdByNameAsync(string categoryName) =>
             await this.categoriesRepository
                 .All()
                 .Where(c => c.Title.ToLower() == categoryName.ToLower())

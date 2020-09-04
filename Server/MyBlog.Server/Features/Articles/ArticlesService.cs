@@ -71,7 +71,7 @@
             IEnumerable<string> tags,
             string userId)
         {
-            var categoryId = await this.categoriesService.GetIdByName(categoryName);
+            var categoryId = await this.categoriesService.GetIdByNameAsync(categoryName);
 
             var article = new Article
             {
