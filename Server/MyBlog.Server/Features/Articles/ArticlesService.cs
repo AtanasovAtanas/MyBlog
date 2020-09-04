@@ -83,12 +83,7 @@
 
             foreach (var tagName in tags)
             {
-                var tagId = await this.tagsService.GetIdByNameAsync(tagName);
-
-                if (tagId == 0)
-                {
-                    tagId = await this.tagsService.AddAsync(tagName);
-                }
+                var tagId = await this.GetTagId(tagName);
 
                 article.Tags.Add(new ArticleTag { TagId = tagId });
             }
@@ -110,9 +105,15 @@
             int id,
             string title,
             string content,
+            IEnumerable<string> tags,
             string userId)
         {
-            var article = await this.articlesRepository.GetByIdAsync(id);
+            var article = await this.articlesRepository
+                .All()
+                .Where(a => a.Id == id)
+                .Include(a => a.Tags)
+                .ThenInclude(at => at.Tag)
+                .FirstOrDefaultAsync();
 
             if (article.AuthorId != userId)
             {
@@ -121,6 +122,8 @@
 
             article.Title = title;
             article.Content = this.htmlSanitizer.Sanitize(content);
+
+            await this.UpdateArticleTags(article, tags);
 
             this.articlesRepository.Update(article);
             await this.articlesRepository.SaveChangesAsync();
@@ -146,10 +149,45 @@
             return true;
         }
 
-        public async Task<int> AllArticlesCountByUserId(string userId) =>
-            await this.articlesRepository
+        public async Task<int> AllArticlesCountByUserId(string userId)
+            => await this.articlesRepository
                 .AllAsNoTracking()
                 .Where(a => a.AuthorId == userId)
                 .CountAsync();
+
+        private async Task UpdateArticleTags(Article article, IEnumerable<string> tags)
+        {
+            var tagsToBeRemoved = article
+                .Tags
+                .Where(at => !tags.Contains(at.Tag.Name))
+                .ToList();
+
+            foreach (var tag in tagsToBeRemoved)
+            {
+                article.Tags.Remove(tag);
+            }
+
+            foreach (var tagName in tags)
+            {
+                var tagId = await this.GetTagId(tagName);
+
+                if (article.Tags.All(at => at.TagId != tagId))
+                {
+                    article.Tags.Add(new ArticleTag { TagId = tagId });
+                }
+            }
+        }
+
+        private async Task<int> GetTagId(string tagName)
+        {
+            var tagId = await this.tagsService.GetIdByNameAsync(tagName);
+
+            if (tagId == 0)
+            {
+                tagId = await this.tagsService.AddAsync(tagName);
+            }
+
+            return tagId;
+        }
     }
 }

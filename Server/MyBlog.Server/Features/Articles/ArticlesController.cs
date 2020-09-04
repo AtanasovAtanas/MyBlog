@@ -76,6 +76,7 @@
                 id,
                 articleInputModel.Title,
                 articleInputModel.Content,
+                articleInputModel.Tags,
                 userId);
 
             if (result.Failure)

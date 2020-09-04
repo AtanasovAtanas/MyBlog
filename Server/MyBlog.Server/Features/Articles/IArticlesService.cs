@@ -16,7 +16,7 @@
 
         Task<TModel> Details<TModel>(int id);
 
-        Task<Result> Update(int id, string title, string content, string userId);
+        Task<Result> Update(int id, string title, string content, IEnumerable<string> tags, string userId);
 
         Task<Result> Delete(int id, string userId);
 
