@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import PageLayout from "../layout";
 import articlesService from "../../services/articles";
 import ArticleInputForm from "../../components/forms/article-input";
-import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const EditArticlePage = () => {
 	const [initialModel, setInitialModel] = useState({});
 	const { id } = useParams();
 	const history = useHistory();
-	const location = useLocation();
 
 	useEffect(() => {
 		const fetchArticle = async () => {
@@ -38,7 +37,7 @@ const EditArticlePage = () => {
 		};
 
 		await articlesService.editArticle(
-			location.pathname.split("/").pop(),
+			id,
 			body,
 			(response) => history.push(`/articles/${response.id}`),
 			() => console.log()
