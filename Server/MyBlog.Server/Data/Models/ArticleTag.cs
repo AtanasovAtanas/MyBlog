@@ -2,7 +2,7 @@
 {
     using MyBlog.Server.Data.Models.Base;
 
-    public class ArticleTag : DeletableEntity
+    public class ArticleTag
     {
         public int ArticleId { get; set; }
 
