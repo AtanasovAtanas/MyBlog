@@ -55,7 +55,7 @@
                    .ToListAsync();
         }
 
-        public async Task<IEnumerable<TModel>> GetAllCommentsByArticleId<TModel>(int articleId)
+        public async Task<IEnumerable<TModel>> GetAllCommentsByArticleIdAsync<TModel>(int articleId)
             => await this.articlesRepository
                 .All()
                 .Where(a => a.Id == articleId)
@@ -94,14 +94,14 @@
             return article.Id;
         }
 
-        public async Task<TModel> Details<TModel>(int id)
+        public async Task<TModel> DetailsAsync<TModel>(int id)
             => await this.articlesRepository
             .All()
             .Where(a => a.Id == id)
             .To<TModel>()
             .FirstOrDefaultAsync();
 
-        public async Task<Result> Update(
+        public async Task<Result> UpdateAsync(
             int id,
             string title,
             string content,
@@ -131,7 +131,7 @@
             return true;
         }
 
-        public async Task<Result> Delete(
+        public async Task<Result> DeleteAsync(
             int id,
             string userId)
         {
@@ -149,7 +149,7 @@
             return true;
         }
 
-        public async Task<int> AllArticlesCountByUserId(string userId)
+        public async Task<int> GetAllArticlesCountByUserIdAsync(string userId)
             => await this.articlesRepository
                 .AllAsNoTracking()
                 .Where(a => a.AuthorId == userId)

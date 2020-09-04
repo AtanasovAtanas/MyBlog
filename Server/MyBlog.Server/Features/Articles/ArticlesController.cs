@@ -61,7 +61,7 @@
         [HttpGet]
         [Route(Id)]
         public async Task<ArticleDetailsResponseModel> Details([FromRoute] int id)
-            => await this.articlesService.Details<ArticleDetailsResponseModel>(id);
+            => await this.articlesService.DetailsAsync<ArticleDetailsResponseModel>(id);
 
         [HttpPut]
         [Authorize]
@@ -72,7 +72,7 @@
         {
             var userId = this.currentUser.GetId();
 
-            var result = await this.articlesService.Update(
+            var result = await this.articlesService.UpdateAsync(
                 id,
                 articleInputModel.Title,
                 articleInputModel.Content,
@@ -94,7 +94,7 @@
         {
             var userId = this.currentUser.GetId();
 
-            var result = await this.articlesService.Delete(id, userId);
+            var result = await this.articlesService.DeleteAsync(id, userId);
 
             if (result.Failure)
             {
