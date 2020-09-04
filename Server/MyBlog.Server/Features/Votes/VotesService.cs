@@ -17,7 +17,7 @@
             this.votesRepository = votesRepository;
         }
 
-        public int GetVotes(int articleId) =>
+        public int GetVotesByArticleId(int articleId) =>
             this.votesRepository
                 .All()
                 .Where(v => v.ArticleId == articleId)
@@ -51,7 +51,7 @@
             }
         }
 
-        public async Task<UserVoteTypeResponseModel> GetUserVoteType(int articleId, string userId)
+        public async Task<UserVoteTypeResponseModel> GetUserVoteTypeAsync(int articleId, string userId)
         {
             var vote = await this.votesRepository
                 .All()
