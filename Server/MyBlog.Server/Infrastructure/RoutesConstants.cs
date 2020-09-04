@@ -16,8 +16,14 @@
             public const string CommentsByArticleId = "{ArticleId}/Comments";
         }
 
-        public const string Username = "{username}";
+        public class Categories
+        {
+            public const string CategoryName = "{CategoryName}";
 
+            public const string ArticlesCountByCategory = "{CategoryName}/Articles/Count";
+        }
+
+        public const string Username = "{username}";
 
         public const string Count = "Count";
     }
