@@ -24,7 +24,7 @@
             this.htmlSanitizer = new HtmlSanitizer();
         }
 
-        public async Task<IEnumerable<TModel>> GetAllRepliesByCommentId<TModel>(int commentId)
+        public async Task<IEnumerable<TModel>> GetAllRepliesByCommentIdAsync<TModel>(int commentId)
         {
             return await this.commentsRepository
                 .All()
@@ -35,7 +35,7 @@
                 .ToListAsync();
         }
 
-        public async Task<TModel> GetById<TModel>(int commentId) =>
+        public async Task<TModel> GetByIdAsync<TModel>(int commentId) =>
             await this.commentsRepository
                 .All()
                 .Where(c => c.Id == commentId)
@@ -58,7 +58,7 @@
             return comment.Id;
         }
 
-        public async Task<Result> Update(int commentId, string authorId, string content)
+        public async Task<Result> UpdateAsync(int commentId, string authorId, string content)
         {
             var comment = await this.commentsRepository.GetByIdAsync(commentId);
 
@@ -80,7 +80,7 @@
             return true;
         }
 
-        public async Task<Result> Delete(int commentId, string authorId)
+        public async Task<Result> DeleteAsync(int commentId, string authorId)
         {
             var comment = await this.commentsRepository.GetByIdAsync(commentId);
             if (comment == null)
