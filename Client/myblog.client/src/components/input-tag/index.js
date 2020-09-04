@@ -82,6 +82,7 @@ const InputTag = ({ tagsChangeHandler, initialTags }) => {
 				))}
 			</ul>
 			<input
+				placeholder="Tags"
 				value={tagInput}
 				onKeyDown={inputKeyDown}
 				onChange={onChange}

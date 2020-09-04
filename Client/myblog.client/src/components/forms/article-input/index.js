@@ -35,10 +35,12 @@ const ArticleInputForm = ({ submitFormHandler, initialModel }) => {
 						setModel({ ...model, content: c })
 					}
 				/>
-				<InputTag
-					tagsChangeHandler={tagsChangeHandler}
-					initialTags={model.tags}
-				/>
+				<div className={styles["form-styles"]}>
+					<InputTag
+						tagsChangeHandler={tagsChangeHandler}
+						initialTags={model.tags}
+					/>
+				</div>
 				<Button text="Submit" />
 			</form>
 		</React.Fragment>
