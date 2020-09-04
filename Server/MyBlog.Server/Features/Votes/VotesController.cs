@@ -8,7 +8,7 @@
     using MyBlog.Server.Features.Votes.Models;
     using MyBlog.Server.Infrastructure.Extensions;
 
-    using static MyBlog.Server.Infrastructure.WebConstants;
+    using static MyBlog.Server.Infrastructure.RoutesConstants.Common;
 
     public class VotesController : ApiController
     {
@@ -23,7 +23,7 @@
         [Route(Id)]
         public InputVoteResponseModel GetVotes(int id)
         {
-            var votesCount = this.votesService.GetVotes(articleId: id);
+            var votesCount = this.votesService.GetVotesByArticleId(articleId: id);
 
             return new InputVoteResponseModel { VotesCount = votesCount };
         }
@@ -42,6 +42,6 @@
         [HttpGet]
         public async Task<ActionResult<UserVoteTypeResponseModel>> GetUserVoteType(
             [FromQuery] int articleId) =>
-            await this.votesService.GetUserVoteType(articleId, this.User?.GetId());
+            await this.votesService.GetUserVoteTypeAsync(articleId, this.User?.GetId());
     }
 }

@@ -7,10 +7,10 @@
 
     public interface IVotesService
     {
-        int GetVotes(int articleId);
+        int GetVotesByArticleId(int articleId);
 
         Task VoteAsync(int articleId, string userId, VoteType voteType);
 
-        Task<UserVoteTypeResponseModel> GetUserVoteType(int articleId, string userId);
+        Task<UserVoteTypeResponseModel> GetUserVoteTypeAsync(int articleId, string userId);
     }
 }

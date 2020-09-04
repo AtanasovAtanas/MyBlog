@@ -5,7 +5,7 @@
 
     using static Data.Validation.Articles;
 
-    public class ArticleInputRequestModel
+    public class InputArticleRequestModel
     {
         [Required]
         [MaxLength(TitleMaxLength)]

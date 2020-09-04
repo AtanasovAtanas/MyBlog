@@ -7,6 +7,8 @@
     using MyBlog.Server.Features.Articles.Models;
     using MyBlog.Server.Features.Categories.Models;
 
+    using static MyBlog.Server.Infrastructure.RoutesConstants.Categories;
+
     public class CategoriesController : ApiController
     {
         private readonly ICategoriesService categoriesService;
@@ -18,10 +20,10 @@
 
         [HttpGet]
         public async Task<IEnumerable<CategoryListingModel>> All() =>
-            await this.categoriesService.All<CategoryListingModel>();
+            await this.categoriesService.GetAllAsync<CategoryListingModel>();
 
         [HttpGet]
-        [Route("{CategoryName}")]
+        [Route(CategoryName)]
         public async Task<IEnumerable<ArticleSummaryDetailsResponseModel>> AllByName(
             [FromRoute] string categoryName,
             [FromQuery] int? page,
@@ -33,7 +35,7 @@
                 page = 1;
             }
 
-            return await this.categoriesService.AllByName<ArticleSummaryDetailsResponseModel>(
+            return await this.categoriesService.GetAllByNameAsync<ArticleSummaryDetailsResponseModel>(
                  categoryName,
                  page.Value,
                  filter,
@@ -41,14 +43,14 @@
         }
 
         [HttpGet]
-        [Route("{CategoryName}/Articles/Count")]
-        public async Task<CountByNameResponseModel> CountByName(
+        [Route(ArticlesCountByCategory)]
+        public async Task<ArticlesCountByCategoryNameResponseModel> CountByName(
             [FromRoute] string categoryName,
             [FromQuery] string filter)
         {
-            var count = await this.categoriesService.CountByName(categoryName, filter);
+            var count = await this.categoriesService.GetArticlesCountByNameAsync(categoryName, filter);
 
-            return new CountByNameResponseModel { Count = count };
+            return new ArticlesCountByCategoryNameResponseModel { Count = count };
         }
     }
 }

@@ -5,13 +5,13 @@
 
     public interface ICategoriesService
     {
-        Task<IEnumerable<TModel>> All<TModel>();
+        Task<IEnumerable<TModel>> GetAllAsync<TModel>();
 
-        Task<IEnumerable<TModel>> AllByName<TModel>(
+        Task<IEnumerable<TModel>> GetAllByNameAsync<TModel>(
             string categoryName, int page, string filter, string sortBy);
 
-        Task<int> CountByName(string categoryName, string filter);
+        Task<int> GetArticlesCountByNameAsync(string categoryName, string filter);
 
-        Task<int> GetIdByName(string categoryName);
+        Task<int> GetIdByNameAsync(string categoryName);
     }
 }

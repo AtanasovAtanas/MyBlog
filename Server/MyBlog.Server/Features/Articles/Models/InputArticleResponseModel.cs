@@ -1,6 +1,6 @@
 ﻿namespace MyBlog.Server.Features.Articles.Models
 {
-    public class ArticleInputResponseModel
+    public class InputArticleResponseModel
     {
         public int Id { get; set; }
     }
