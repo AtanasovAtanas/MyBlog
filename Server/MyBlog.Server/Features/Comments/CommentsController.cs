@@ -23,7 +23,7 @@
         [Route(Id)]
         public async Task<IEnumerable<CommentListingModel>> GetRepliesByComment([FromRoute] int id)
         {
-            var result = await this.commentsService.GetAllRepliesByCommentId<CommentListingModel>(id);
+            var result = await this.commentsService.GetAllRepliesByCommentIdAsync<CommentListingModel>(id);
 
             return result;
         }
@@ -39,7 +39,7 @@
                    inputModel.Content,
                    this.User.GetId());
 
-            return await this.commentsService.GetById<CommentListingModel>(commentId);
+            return await this.commentsService.GetByIdAsync<CommentListingModel>(commentId);
         }
 
         [HttpPut]
@@ -51,7 +51,7 @@
         {
             var userId = this.User.GetId();
 
-            var result = await this.commentsService.Update(
+            var result = await this.commentsService.UpdateAsync(
                 id,
                 userId,
                 inputModel.Content);
@@ -71,7 +71,7 @@
         {
             var userId = this.User.GetId();
 
-            var result = await this.commentsService.Delete(id, userId);
+            var result = await this.commentsService.DeleteAsync(id, userId);
 
             if (result.Failure)
             {
