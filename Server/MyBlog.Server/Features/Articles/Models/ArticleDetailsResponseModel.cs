@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace MyBlog.Server.Features.Articles.Models
+﻿namespace MyBlog.Server.Features.Articles.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using AutoMapper;
