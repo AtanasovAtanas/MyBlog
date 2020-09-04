@@ -24,6 +24,7 @@ const InputTag = ({ tagsChangeHandler, initialTags }) => {
 		const newTags = [...tags];
 		newTags.splice(index, 1);
 
+		tagsChangeHandler(newTags);
 		setTags(newTags);
 	};
 
