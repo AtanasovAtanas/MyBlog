@@ -11,7 +11,7 @@
     using MyBlog.Server.Infrastructure.Extensions;
     using MyBlog.Server.Infrastructure.Services;
 
-    using static Infrastructure.WebConstants;
+    using static Infrastructure.RoutesConstants.Articles;
 
     public class ArticlesController : ApiController
     {
@@ -28,7 +28,7 @@
 
         [HttpGet]
         [Authorize]
-        [Route(WebConstants.Mine)]
+        [Route(MineArticles)]
         public async Task<IEnumerable<ArticleSummaryDetailsResponseModel>> Mine(
             [FromQuery] int? page, [FromQuery] string filter)
         {
@@ -106,13 +106,13 @@
 
         [HttpGet]
         [Authorize]
-        [Route("Mine/Count")]
+        [Route(MineArticlesCount)]
         public async Task<int> GetArticlesCountByCurrentUser() =>
-            await this.articlesService.AllArticlesCountByUserId(this.User.GetId());
+            await this.articlesService.GetAllArticlesCountByUserIdAsync(this.User.GetId());
 
         [HttpGet]
-        [Route("{ArticleId}/Comments")]
+        [Route(CommentsByArticleId)]
         public async Task<IEnumerable<CommentListingModel>> GetCommentByArticle([FromRoute] int articleId)
-            => await this.articlesService.GetAllCommentsByArticleId<CommentListingModel>(articleId);
+            => await this.articlesService.GetAllCommentsByArticleIdAsync<CommentListingModel>(articleId);
     }
 }

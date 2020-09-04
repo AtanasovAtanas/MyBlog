@@ -8,7 +8,7 @@
     using MyBlog.Server.Features.Votes.Models;
     using MyBlog.Server.Infrastructure.Extensions;
 
-    using static MyBlog.Server.Infrastructure.WebConstants;
+    using static MyBlog.Server.Infrastructure.RoutesConstants;
 
     public class VotesController : ApiController
     {
