@@ -2,10 +2,13 @@
 {
     public class RoutesConstants
     {
-        public class Articles
+        public class Common
         {
             public const string Id = "{id}";
+        }
 
+        public class Articles
+        {
             public const string MineArticles = "Mine";
 
             public const string MineArticlesCount = "Mine/Count";
