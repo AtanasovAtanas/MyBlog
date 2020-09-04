@@ -18,6 +18,8 @@
 	  <Compile Remove="Data\Migrations\20200827073722_CategoryAddUniqueConstraint.Designer.cs" />
 	  <Compile Remove="Data\Migrations\20200827082000_AddCategoryImageColumn.cs" />
 	  <Compile Remove="Data\Migrations\20200827082000_AddCategoryImageColumn.Designer.cs" />
+	  <Compile Remove="Data\Migrations\20200902061401_AddTagsTables.cs" />
+	  <Compile Remove="Data\Migrations\20200902061401_AddTagsTables.Designer.cs" />
 	</ItemGroup>
 	<ItemGroup>
         <AdditionalFiles Include="..\stylecop.json" />

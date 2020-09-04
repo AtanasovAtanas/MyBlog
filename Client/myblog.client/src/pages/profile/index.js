@@ -4,14 +4,14 @@ import Pagination from "../../components/pagination";
 import PageLayout from "../../pages/layout";
 import articlesService from "../../services/articles";
 import Profile from "../../components/profile";
-import UserContext from "../../utils/context";
 import { useLocation } from "react-router-dom";
 import styles from "./index.module.css";
+import { GlobalContext } from "../../context/context";
 
 const ProfilePage = () => {
 	const [articles, setArticles] = useState([]);
 	const [articlesCount, setArticlesCount] = useState(0);
-	const context = useContext(UserContext);
+	const { user } = useContext(GlobalContext);
 
 	const location = useLocation();
 
@@ -37,10 +37,7 @@ const ProfilePage = () => {
 
 	return (
 		<PageLayout>
-			<Profile
-				username={context.user.username}
-				articlesCount={articlesCount}
-			/>
+			<Profile username={user.username} articlesCount={articlesCount} />
 			<div className={styles.centered}>
 				{articles.length > 0 ? (
 					<Pagination

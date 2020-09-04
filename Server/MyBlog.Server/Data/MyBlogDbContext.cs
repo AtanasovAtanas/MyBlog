@@ -30,6 +30,10 @@
 
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<Tag> Tags { get; set; }
+
+        public DbSet<ArticleTag> ArticlesTags { get; set; }
+
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             this.ApplyAuditInformation();
@@ -55,6 +59,10 @@
             builder.ApplyConfiguration(new CommentConfiguration());
 
             builder.ApplyConfiguration(new CategoryConfiguration());
+
+            builder.ApplyConfiguration(new TagConfiguration());
+
+            builder.ApplyConfiguration(new ArticleTagConfiguration());
 
             base.OnModelCreating(builder);
         }

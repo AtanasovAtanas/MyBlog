@@ -15,14 +15,14 @@
 
     public class ArticlesController : ApiController
     {
-        private readonly IArticleService articleService;
+        private readonly IArticlesService articlesService;
         private readonly ICurrentUserService currentUser;
 
         public ArticlesController(
-            IArticleService articleService,
+            IArticlesService articlesService,
             ICurrentUserService currentUser)
         {
-            this.articleService = articleService;
+            this.articlesService = articlesService;
             this.currentUser = currentUser;
         }
 
@@ -36,45 +36,47 @@
             var userId = this.User.GetId();
 
             var result =
-               await this.articleService.AllByUserId<ArticleSummaryDetailsResponseModel>(userId, page.Value, filter);
+               await this.articlesService.AllByUserId<ArticleSummaryDetailsResponseModel>(userId, page.Value, filter);
 
             return result;
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<InputArticleResponseModel>> Create(
-            [FromBody] CreateArticleRequestModel inputModel)
+        public async Task<ActionResult<ArticleInputResponseModel>> Create(
+            [FromBody] CreateRequestModel inputModel)
         {
             var userId = this.currentUser.GetId();
 
-            var articleId = await this.articleService.AddAsync(
+            var articleId = await this.articlesService.AddAsync(
                    inputModel.Title,
                    inputModel.Content,
                    inputModel.CategoryName,
+                   inputModel.Tags,
                    userId);
 
-            return new InputArticleResponseModel { Id = articleId };
+            return new ArticleInputResponseModel { Id = articleId };
         }
 
         [HttpGet]
         [Route(Id)]
         public async Task<ArticleDetailsResponseModel> Details([FromRoute] int id)
-            => await this.articleService.Details<ArticleDetailsResponseModel>(id);
+            => await this.articlesService.Details<ArticleDetailsResponseModel>(id);
 
         [HttpPut]
         [Authorize]
         [Route(Id)]
-        public async Task<ActionResult<InputArticleResponseModel>> Update(
+        public async Task<ActionResult<ArticleInputResponseModel>> Update(
             [FromRoute] int id,
-            [FromBody] InputArticleRequestModel inputModel)
+            [FromBody] ArticleInputRequestModel articleInputModel)
         {
             var userId = this.currentUser.GetId();
 
-            var result = await this.articleService.Update(
+            var result = await this.articlesService.Update(
                 id,
-                inputModel.Title,
-                inputModel.Content,
+                articleInputModel.Title,
+                articleInputModel.Content,
+                articleInputModel.Tags,
                 userId);
 
             if (result.Failure)
@@ -82,7 +84,7 @@
                 return this.BadRequest(result.Error);
             }
 
-            return new InputArticleResponseModel { Id = id };
+            return new ArticleInputResponseModel { Id = id };
         }
 
         [HttpDelete]
@@ -92,7 +94,7 @@
         {
             var userId = this.currentUser.GetId();
 
-            var result = await this.articleService.Delete(id, userId);
+            var result = await this.articlesService.Delete(id, userId);
 
             if (result.Failure)
             {
@@ -106,11 +108,11 @@
         [Authorize]
         [Route("Mine/Count")]
         public async Task<int> GetArticlesCountByCurrentUser() =>
-            await this.articleService.AllArticlesCountByUserId(this.User.GetId());
+            await this.articlesService.AllArticlesCountByUserId(this.User.GetId());
 
         [HttpGet]
         [Route("{ArticleId}/Comments")]
         public async Task<IEnumerable<CommentListingModel>> GetCommentByArticle([FromRoute] int articleId)
-            => await this.articleService.GetAllCommentsByArticleId<CommentListingModel>(articleId);
+            => await this.articlesService.GetAllCommentsByArticleId<CommentListingModel>(articleId);
     }
 }

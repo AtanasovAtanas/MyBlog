@@ -2,76 +2,23 @@ import React, { useState, useEffect } from "react";
 import Editor from "../../editor";
 import Button from "../../button";
 import styles from "./index.module.css";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import articlesService from "../../../services/articles";
+import InputTag from "../../input-tag";
 
-const ArticleInputForm = ({ initialTitle, initialContent, mode }) => {
-	const [model, setModel] = useState({ title: "", content: "" });
-
-	const { categoryName } = useParams();
-
-	const history = useHistory();
-	const location = useLocation();
+const ArticleInputForm = ({ submitFormHandler, initialModel }) => {
+	const [model, setModel] = useState({});
 
 	useEffect(() => {
-		setModel({ title: initialTitle, content: initialContent });
-	}, [initialTitle, initialContent]);
+		setModel(initialModel);
+	}, [initialModel]);
 
-	const [errors, setErrors] = useState([]);
-
-	const validate = (title, content) => {
-		const validationErrors = [];
-
-		if (!title) {
-			validationErrors.push("Title is required.");
-		}
-
-		if (title.length > 60) {
-			validationErrors.push("Title must be with a maximum length of 60.");
-		}
-
-		if (!content) {
-			validationErrors.push("Content is required.");
-		}
-
-		return validationErrors;
-	};
-
-	const handleFormSubmit = async (event) => {
-		event.preventDefault();
-
-		const validationErrors = validate(model.title, model.content);
-
-		if (validationErrors.length > 0) {
-			setErrors(validationErrors);
-			return;
-		}
-
-		const body = {
-			title: model.title,
-			content: model.content,
-		};
-
-		if (mode === "create") {
-			body.categoryName = categoryName;
-			await articlesService.createArticle(
-				body,
-				(response) => history.push(`/articles/${response.id}`),
-				() => console.log()
-			);
-		} else if (mode === "edit") {
-			await articlesService.editArticle(
-				location.pathname.split("/").pop(),
-				body,
-				(response) => history.push(`/articles/${response.id}`),
-				() => console.log()
-			);
-		}
-	};
+	const tagsChangeHandler = (tags) => setModel({ ...model, tags });
 
 	return (
 		<React.Fragment>
-			<form className={styles["form-styles"]} onSubmit={handleFormSubmit}>
+			<form
+				className={styles["form-styles"]}
+				onSubmit={(event) => submitFormHandler(event, model)}
+			>
 				<input
 					placeholder="Title"
 					value={model.title}
@@ -88,16 +35,14 @@ const ArticleInputForm = ({ initialTitle, initialContent, mode }) => {
 						setModel({ ...model, content: c })
 					}
 				/>
+				<div className={styles["form-styles"]}>
+					<InputTag
+						tagsChangeHandler={tagsChangeHandler}
+						initialTags={model.tags}
+					/>
+				</div>
 				<Button text="Submit" />
 			</form>
-
-			<div className={styles.error}>
-				<ul>
-					{errors.map((error, index) => (
-						<li key={index}>{error}</li>
-					))}
-				</ul>
-			</div>
 		</React.Fragment>
 	);
 };

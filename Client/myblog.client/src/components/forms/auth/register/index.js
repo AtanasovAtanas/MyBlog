@@ -4,7 +4,7 @@ import Button from "../../../button";
 import styles from "../index.module.css";
 import auth from "../../../../services/auth";
 import { useHistory } from "react-router-dom";
-import UserContext from "../../../../utils/context";
+import { GlobalContext } from "../../../../context/context";
 
 const Register = () => {
 	const [username, setUsername] = useState("");
@@ -14,7 +14,7 @@ const Register = () => {
 	const [errors, setErrors] = useState([]);
 
 	const history = useHistory();
-	const context = useContext(UserContext);
+	const { login } = useContext(GlobalContext);
 
 	const validate = (email, password, rePassword) => {
 		const validationErrors = [];
@@ -51,12 +51,10 @@ const Register = () => {
 		await auth.register(
 			body,
 			(response) => {
-				context.user = {
+				login({
 					userId: response.userId,
 					username: response.username,
-				};
-
-				document.cookie = `Bearer=${response.token}`;
+				});
 
 				history.push("/");
 			},

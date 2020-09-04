@@ -1,9 +1,8 @@
-const getNavItems = (username) => {
-	if (username) {
+const getNavItems = (isLoggedIn) => {
+	if (isLoggedIn) {
 		return [
 			{ href: "/", text: "Home" },
 			{ href: "/profile", text: "Profile" },
-			{ href: "/logout", text: "Logout" },
 		];
 	} else {
 		return [

@@ -13,6 +13,7 @@
         {
             this.Votes = new HashSet<Vote>();
             this.Comments = new HashSet<Comment>();
+            this.Tags = new HashSet<ArticleTag>();
         }
 
         [Key]
@@ -38,5 +39,7 @@
         public virtual IEnumerable<Vote> Votes { get; set; }
 
         public virtual IEnumerable<Comment> Comments { get; set; }
+
+        public virtual ICollection<ArticleTag> Tags { get; set; }
     }
 }

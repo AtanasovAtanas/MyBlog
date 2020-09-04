@@ -28,6 +28,7 @@ const ArticleDetailsPage = () => {
 				<Article
 					articleId={id}
 					title={article.title}
+					tags={article.tags}
 					description={article.content}
 					author={article.authorUsername}
 					createdOn={article.createdOn}

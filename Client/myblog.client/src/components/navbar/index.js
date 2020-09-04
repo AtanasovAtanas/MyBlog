@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import NavbarListItem from "./list-item";
 import styles from "./index.module.css";
 import getNavItems from "../../utils/navigation";
-import UserContext from "../../utils/context";
+import { GlobalContext } from "../../context/context";
 
 const Navigation = () => {
-	const context = useContext(UserContext);
-	const navItems = getNavItems(context.user.username);
+	const { isLoggedIn, logout } = useContext(GlobalContext);
+	const navItems = getNavItems(isLoggedIn);
 
 	return (
 		<nav className={styles.navigation}>
@@ -20,6 +20,9 @@ const Navigation = () => {
 						/>
 					);
 				})}
+				{isLoggedIn ? (
+					<NavbarListItem href="#" text="Logout" onClick={logout} />
+				) : null}
 			</ul>
 		</nav>
 	);
