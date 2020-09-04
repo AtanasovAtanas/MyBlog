@@ -70,7 +70,7 @@
                 .ToListAsync();
         }
 
-        public async Task<int> GetCountByNameAsync(string categoryName, string filter)
+        public async Task<int> GetArticlesCountByNameAsync(string categoryName, string filter)
         {
             var query = this.categoriesRepository
                 .All()

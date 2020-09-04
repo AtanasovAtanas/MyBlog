@@ -10,7 +10,7 @@
         Task<IEnumerable<TModel>> GetAllByNameAsync<TModel>(
             string categoryName, int page, string filter, string sortBy);
 
-        Task<int> GetCountByNameAsync(string categoryName, string filter);
+        Task<int> GetArticlesCountByNameAsync(string categoryName, string filter);
 
         Task<int> GetIdByNameAsync(string categoryName);
     }

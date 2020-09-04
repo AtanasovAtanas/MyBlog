@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class CreateRequestModel : ArticleInputRequestModel
+    public class CreateInputArticleRequestModel : InputArticleRequestModel
     {
         [Required]
         public string CategoryName { get; set; }

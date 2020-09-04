@@ -44,13 +44,13 @@
 
         [HttpGet]
         [Route(ArticlesCountByCategory)]
-        public async Task<CountByNameResponseModel> CountByName(
+        public async Task<ArticlesCountByCategoryNameResponseModel> CountByName(
             [FromRoute] string categoryName,
             [FromQuery] string filter)
         {
-            var count = await this.categoriesService.GetCountByNameAsync(categoryName, filter);
+            var count = await this.categoriesService.GetArticlesCountByNameAsync(categoryName, filter);
 
-            return new CountByNameResponseModel { Count = count };
+            return new ArticlesCountByCategoryNameResponseModel { Count = count };
         }
     }
 }
