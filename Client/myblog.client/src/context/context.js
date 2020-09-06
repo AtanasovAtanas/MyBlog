@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from "react";
+import * as DispatchTypes from "./constants";
 import AppReducer from "./reducer";
 import auth from "../services/auth";
 
@@ -14,7 +15,7 @@ export const GlobalProvider = ({ children }) => {
 
 	function login(user) {
 		dispatch({
-			type: "LOGIN",
+			type: DispatchTypes.LOGIN,
 			payload: user,
 		});
 	}
@@ -23,7 +24,7 @@ export const GlobalProvider = ({ children }) => {
 		await auth.getIdentityDetails(
 			(response) =>
 				dispatch({
-					type: "LOGIN",
+					type: DispatchTypes.LOGIN,
 					payload: {
 						userId: response.userId,
 						username: response.username,
@@ -35,7 +36,7 @@ export const GlobalProvider = ({ children }) => {
 
 	function logout() {
 		dispatch({
-			type: "LOGOUT",
+			type: DispatchTypes.LOGOUT,
 			payload: null,
 		});
 	}

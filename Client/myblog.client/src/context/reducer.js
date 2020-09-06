@@ -1,6 +1,8 @@
+import * as DispatchTypes from "./constants";
+
 export default (state, action) => {
 	switch (action.type) {
-		case "LOGIN":
+		case DispatchTypes.LOGIN:
 			return {
 				...state,
 				user: {
@@ -8,7 +10,7 @@ export default (state, action) => {
 				},
 				isLoggedIn: true,
 			};
-		case "LOGOUT":
+		case DispatchTypes.LOGOUT:
 			document.cookie = "Bearer= ;";
 			return {
 				...state,
