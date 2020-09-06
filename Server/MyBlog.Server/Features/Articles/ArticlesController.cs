@@ -62,7 +62,7 @@
         [HttpGet]
         [Route(Id)]
         public async Task<ArticleDetailsResponseModel> Details([FromRoute] int id)
-            => await this.articlesService.DetailsAsync<ArticleDetailsResponseModel>(id);
+            => await this.articlesService.DetailsAsync(id);
 
         [HttpPut]
         [Authorize]

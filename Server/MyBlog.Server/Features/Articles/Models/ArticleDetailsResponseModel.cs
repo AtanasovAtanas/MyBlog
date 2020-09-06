@@ -6,6 +6,7 @@
 
     using AutoMapper;
     using MyBlog.Server.Data.Models;
+    using MyBlog.Server.Features.Comments.Models;
     using MyBlog.Server.Infrastructure.Mapping;
 
     public class ArticleDetailsResponseModel : IMapFrom<Article>, IHaveCustomMappings
@@ -22,7 +23,7 @@
 
         public int Votes { get; set; }
 
-        public int CommentsCount { get; set; }
+        public virtual IEnumerable<CommentListingModel> Comments { get; set; }
 
         public virtual IEnumerable<string> Tags { get; set; }
 
@@ -33,14 +34,12 @@
                 {
                     options.MapFrom(a => a.Votes.Sum(v => (int)v.Type));
                 })
-                .ForMember(x => x.CommentsCount, options =>
-                {
-                    options.MapFrom(a => a.Comments.Count(c => !c.IsDeleted));
-                })
                 .ForMember(x => x.Tags, options =>
                 {
                     options.MapFrom(a => a.Tags.Select(t => t.Tag.Name).ToList());
-                });
+                })
+                .ForMember(
+                    x => x.Comments, options => options.Ignore());
         }
     }
 }
