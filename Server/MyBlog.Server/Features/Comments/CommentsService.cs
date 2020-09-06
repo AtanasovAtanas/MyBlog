@@ -35,6 +35,25 @@
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<CommentListingModel>> GetAllCommentsWithRepliesByArticleId(int articleId)
+        {
+            var comments = await this.commentsRepository
+                .All()
+                .Where(c => c.ArticleId == articleId)
+                .To<CommentListingModel>()
+                .ToListAsync();
+
+            foreach (var comment in comments)
+            {
+                var parent = comments
+                    .FirstOrDefault(c => c.Id == comment.ParentId);
+
+                parent?.Replies.Add(comment);
+            }
+
+            return comments;
+        }
+
         public async Task<TModel> GetByIdAsync<TModel>(int commentId) =>
             await this.commentsRepository
                 .All()

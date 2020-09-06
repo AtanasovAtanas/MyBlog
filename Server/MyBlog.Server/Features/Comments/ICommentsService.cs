@@ -10,6 +10,8 @@
     {
         Task<IEnumerable<TModel>> GetAllRepliesByCommentIdAsync<TModel>(int commentId);
 
+        Task<IEnumerable<CommentListingModel>> GetAllCommentsWithRepliesByArticleId(int articleId);
+
         Task<TModel> GetByIdAsync<TModel>(int commentId);
 
         Task<int> CreateAsync(int articleId, int? parentId, string content, string authorId);
