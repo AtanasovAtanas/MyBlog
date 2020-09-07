@@ -51,6 +51,10 @@
                 parent?.Replies.Add(comment);
             }
 
+            comments = comments
+                .Where(c => c.ParentId == null)
+                .ToList();
+
             return comments;
         }
 
