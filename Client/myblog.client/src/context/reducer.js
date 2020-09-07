@@ -20,6 +20,11 @@ export default (state, action) => {
 				},
 				isLoggedIn: false,
 			};
+		case DispatchTypes.FETCH_ARTICLE_BY_ID:
+			return {
+				...state,
+				article: action.payload,
+			};
 		default:
 			return state;
 	}
