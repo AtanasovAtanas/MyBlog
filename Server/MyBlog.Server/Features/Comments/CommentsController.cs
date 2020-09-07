@@ -19,15 +19,6 @@
             this.commentsService = commentsService;
         }
 
-        [HttpGet]
-        [Route(Id)]
-        public async Task<IEnumerable<CommentListingModel>> GetRepliesByComment([FromRoute] int id)
-        {
-            var result = await this.commentsService.GetAllRepliesByCommentIdAsync<CommentListingModel>(id);
-
-            return result;
-        }
-
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<CommentListingModel>> CreateComment(

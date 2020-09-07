@@ -61,15 +61,6 @@
                    .ToListAsync();
         }
 
-        public async Task<IEnumerable<TModel>> GetAllCommentsByArticleIdAsync<TModel>(int articleId)
-            => await this.articlesRepository
-                .All()
-                .Where(a => a.Id == articleId)
-                .SelectMany(a => a.Comments)
-                .Where(c => c.ParentId == null && !c.IsDeleted)
-                .To<TModel>()
-                .ToListAsync();
-
         public async Task<int> AddAsync(
             string title,
             string content,

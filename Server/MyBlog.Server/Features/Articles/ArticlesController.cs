@@ -110,10 +110,5 @@
         [Route(MineArticlesCount)]
         public async Task<int> GetArticlesCountByCurrentUser() =>
             await this.articlesService.GetAllArticlesCountByUserIdAsync(this.User.GetId());
-
-        [HttpGet]
-        [Route(CommentsByArticleId)]
-        public async Task<IEnumerable<CommentListingModel>> GetCommentByArticle([FromRoute] int articleId)
-            => await this.articlesService.GetAllCommentsByArticleIdAsync<CommentListingModel>(articleId);
     }
 }

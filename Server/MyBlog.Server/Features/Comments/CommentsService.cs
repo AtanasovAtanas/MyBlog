@@ -24,17 +24,6 @@
             this.htmlSanitizer = new HtmlSanitizer();
         }
 
-        public async Task<IEnumerable<TModel>> GetAllRepliesByCommentIdAsync<TModel>(int commentId)
-        {
-            return await this.commentsRepository
-                .All()
-                .Where(c => c.Id == commentId)
-                .SelectMany(c => c.Replies)
-                .Where(r => !r.IsDeleted)
-                .To<TModel>()
-                .ToListAsync();
-        }
-
         public async Task<IEnumerable<CommentListingModel>> GetAllCommentsWithRepliesByArticleId(int articleId)
         {
             var comments = await this.commentsRepository

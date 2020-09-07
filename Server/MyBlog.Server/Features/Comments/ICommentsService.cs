@@ -8,8 +8,6 @@
 
     public interface ICommentsService
     {
-        Task<IEnumerable<TModel>> GetAllRepliesByCommentIdAsync<TModel>(int commentId);
-
         Task<IEnumerable<CommentListingModel>> GetAllCommentsWithRepliesByArticleId(int articleId);
 
         Task<TModel> GetByIdAsync<TModel>(int commentId);
