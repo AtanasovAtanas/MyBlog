@@ -7,41 +7,38 @@ import Actions from "../actions";
 import CommentForm from "../forms/comment";
 import { GlobalContext } from "../../context/context";
 
-const Comment = ({ id, articleId, initialContent, author, createdOn }) => {
+const Comment = ({
+	id,
+	articleId,
+	initialContent,
+	author,
+	createdOn,
+	initialReplies,
+}) => {
 	const [replies, setReplies] = useState([]);
-	const [isDeleted, setIsDeleted] = useState(false);
-	const [isEdit, setIsEdit] = useState(false);
-	const [content, setContent] = useState("");
+	const [isEditEnabled, setIsEditEnabled] = useState(false);
+	const [content, setContent] = useState(initialContent);
 
-	const [show, setShow] = useState(false);
-	const toggle = () => setShow(!show);
+	const [showReplyForm, setShowReplyForm] = useState(false);
+	const toggle = () => setShowReplyForm(!showReplyForm);
 
-	const { user } = useContext(GlobalContext);
+	const { user, refreshArticle } = useContext(GlobalContext);
 
 	useEffect(() => {
-		const fetchReplies = async () => {
-			await commentsService.getRepliesByCommentId(
-				id,
-				(response) => setReplies(response),
-				() => console.log("failed fetching comment replies")
-			);
-		};
-
-		fetchReplies();
-		setContent(initialContent);
-	}, [id, initialContent]);
+		setReplies(initialReplies);
+	}, [initialReplies]);
 
 	const addReplyHandler = async (replyContent) => {
 		const body = {
-			articleId: articleId,
+			articleId: +articleId,
 			parentId: id,
 			content: replyContent,
 		};
 
 		await commentsService.postReply(
 			body,
-			(response) => {
-				setReplies([...replies, response]);
+			() => {
+				refreshArticle(+articleId);
 				toggle();
 			},
 			() => console.log("failed to reply")
@@ -51,7 +48,7 @@ const Comment = ({ id, articleId, initialContent, author, createdOn }) => {
 	const deleteHandler = async () => {
 		await commentsService.deleteComment(
 			id,
-			() => setIsDeleted(true),
+			() => refreshArticle(+articleId),
 			() => console.log("failed deleting comment")
 		);
 	};
@@ -62,7 +59,7 @@ const Comment = ({ id, articleId, initialContent, author, createdOn }) => {
 			{ content: updatedContent },
 			() => {
 				setContent(updatedContent);
-				setIsEdit(!isEdit);
+				setIsEditEnabled(!isEditEnabled);
 			},
 			() => console.log("update procedure has failed")
 		);
@@ -70,53 +67,51 @@ const Comment = ({ id, articleId, initialContent, author, createdOn }) => {
 
 	return (
 		<React.Fragment>
-			{isDeleted ? null : (
-				<div className={styles.comment}>
-					<div className={styles.content}>
-						<Link to="#" className={styles.author}>
-							{author}
-						</Link>
-						<div className={styles.metadata}>
-							<span className={styles.date}>
-								{moment(createdOn).format("LLL")}
-							</span>
-						</div>
-						{isEdit ? (
-							<CommentForm
-								text={content}
-								buttonText="Edit"
-								formSubmitHandler={editHandler}
-							/>
-						) : (
-							<div className={styles.text}>{content}</div>
-						)}
-						<div className={styles.actions}>
-							<Link
-								to="#"
-								onClick={toggle}
-								className={styles.reply}
-							>
-								Reply
-							</Link>
-							{user.username === author ? (
-								<Actions
-									title="your comment"
-									deleteHandler={deleteHandler}
-									editHandler={() => setIsEdit(!isEdit)}
-								/>
-							) : null}
-						</div>
+			<div className={styles.comment}>
+				<div className={styles.content}>
+					<Link to="#" className={styles.author}>
+						{author}
+					</Link>
+					<div className={styles.metadata}>
+						<span className={styles.date}>
+							{moment(createdOn).format("LLL")}
+						</span>
 					</div>
-					{show ? (
+					{isEditEnabled ? (
 						<CommentForm
-							formSubmitHandler={(content) =>
-								addReplyHandler(content)
-							}
-							buttonText="Add reply"
+							text={content}
+							buttonText="Edit"
+							formSubmitHandler={editHandler}
 						/>
-					) : null}
-					<div className={styles.comments}>
-						{replies.map((reply) => (
+					) : (
+						<div className={styles.text}>{content}</div>
+					)}
+					<div className={styles.actions}>
+						<Link to="#" onClick={toggle} className={styles.reply}>
+							Reply
+						</Link>
+						{user.username === author ? (
+							<Actions
+								title="your comment"
+								deleteHandler={deleteHandler}
+								editHandler={() =>
+									setIsEditEnabled(!isEditEnabled)
+								}
+							/>
+						) : null}
+					</div>
+				</div>
+				{showReplyForm ? (
+					<CommentForm
+						formSubmitHandler={(content) =>
+							addReplyHandler(content)
+						}
+						buttonText="Add reply"
+					/>
+				) : null}
+				<div className={styles.comments}>
+					{replies &&
+						replies.map((reply) => (
 							<Comment
 								key={reply.id}
 								articleId={articleId}
@@ -124,11 +119,11 @@ const Comment = ({ id, articleId, initialContent, author, createdOn }) => {
 								initialContent={reply.content}
 								author={reply.authorUsername}
 								createdOn={reply.createdOn}
+								initialReplies={reply.replies}
 							/>
 						))}
-					</div>
 				</div>
-			)}
+			</div>
 		</React.Fragment>
 	);
 };
