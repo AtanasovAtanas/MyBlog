@@ -10,6 +10,8 @@
     using MyBlog.Server.Data.Repositories.Contracts;
     using MyBlog.Server.Features.Articles.Models;
     using MyBlog.Server.Features.Categories;
+    using MyBlog.Server.Features.Comments;
+    using MyBlog.Server.Features.Comments.Models;
     using MyBlog.Server.Features.Tags;
     using MyBlog.Server.Infrastructure.Extensions;
     using MyBlog.Server.Infrastructure.Mapping;
@@ -24,15 +26,19 @@
         private readonly IDeletableEntityRepository<Article> articlesRepository;
         private readonly ICategoriesService categoriesService;
         private readonly ITagsService tagsService;
+        private readonly ICommentsService commentsService;
 
         public ArticlesService(
             IDeletableEntityRepository<Article> articlesRepository,
             ICategoriesService categoriesService,
-            ITagsService tagsService)
+            ITagsService tagsService,
+            ICommentsService commentsService)
         {
             this.articlesRepository = articlesRepository;
+
             this.categoriesService = categoriesService;
             this.tagsService = tagsService;
+            this.commentsService = commentsService;
 
             this.htmlSanitizer = new HtmlSanitizer();
         }
@@ -55,15 +61,6 @@
                    .ToListAsync();
         }
 
-        public async Task<IEnumerable<TModel>> GetAllCommentsByArticleIdAsync<TModel>(int articleId)
-            => await this.articlesRepository
-                .All()
-                .Where(a => a.Id == articleId)
-                .SelectMany(a => a.Comments)
-                .Where(c => c.ParentId == null && !c.IsDeleted)
-                .To<TModel>()
-                .ToListAsync();
-
         public async Task<int> AddAsync(
             string title,
             string content,
@@ -83,7 +80,7 @@
 
             foreach (var tagName in tags)
             {
-                var tagId = await this.GetTagId(tagName);
+                var tagId = await this.GetTagIdOrCreate(tagName);
 
                 article.Tags.Add(new ArticleTag { TagId = tagId });
             }
@@ -94,12 +91,21 @@
             return article.Id;
         }
 
-        public async Task<TModel> DetailsAsync<TModel>(int id)
-            => await this.articlesRepository
-            .All()
-            .Where(a => a.Id == id)
-            .To<TModel>()
-            .FirstOrDefaultAsync();
+        public async Task<ArticleDetailsResponseModel> DetailsAsync(int id)
+        {
+            var article = await this.articlesRepository
+                .All()
+                .Where(a => a.Id == id)
+                .To<ArticleDetailsResponseModel>()
+                .FirstOrDefaultAsync();
+
+            var articleComments =
+                await this.commentsService.GetAllCommentsWithRepliesByArticleId(id);
+
+            article.Comments = articleComments;
+
+            return article;
+        }
 
         public async Task<Result> UpdateAsync(
             int id,
@@ -169,7 +175,7 @@
 
             foreach (var tagName in tags)
             {
-                var tagId = await this.GetTagId(tagName);
+                var tagId = await this.GetTagIdOrCreate(tagName);
 
                 if (article.Tags.All(at => at.TagId != tagId))
                 {
@@ -178,7 +184,7 @@
             }
         }
 
-        private async Task<int> GetTagId(string tagName)
+        private async Task<int> GetTagIdOrCreate(string tagName)
         {
             var tagId = await this.tagsService.GetIdByNameAsync(tagName);
 

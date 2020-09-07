@@ -10,11 +10,9 @@
     {
         Task<IEnumerable<TModel>> AllByUserId<TModel>(string userId, int page, string filter);
 
-        Task<IEnumerable<TModel>> GetAllCommentsByArticleIdAsync<TModel>(int articleId);
-
         Task<int> AddAsync(string title, string content, string categoryName, IEnumerable<string> tags, string userId);
 
-        Task<TModel> DetailsAsync<TModel>(int id);
+        Task<ArticleDetailsResponseModel> DetailsAsync(int id);
 
         Task<Result> UpdateAsync(int id, string title, string content, IEnumerable<string> tags, string userId);
 

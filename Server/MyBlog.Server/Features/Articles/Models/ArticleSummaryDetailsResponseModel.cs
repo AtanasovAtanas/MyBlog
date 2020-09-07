@@ -1,13 +1,32 @@
 ﻿namespace MyBlog.Server.Features.Articles.Models
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using AutoMapper;
     using MyBlog.Server.Data.Models;
+    using MyBlog.Server.Infrastructure.Mapping;
 
-    public class ArticleSummaryDetailsResponseModel : ArticleDetailsResponseModel
+    public class ArticleSummaryDetailsResponseModel : IMapFrom<Article>, IHaveCustomMappings
     {
-        public override void CreateMappings(IProfileExpression configuration)
+        public int Id { get; set; }
+
+        public string Title { get; set; }
+
+        public string Content { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public string AuthorUsername { get; set; }
+
+        public int Votes { get; set; }
+
+        public int CommentsCount { get; set; }
+
+        public virtual IEnumerable<string> Tags { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Article, ArticleSummaryDetailsResponseModel>()
                 .ForMember(x => x.Votes, options =>

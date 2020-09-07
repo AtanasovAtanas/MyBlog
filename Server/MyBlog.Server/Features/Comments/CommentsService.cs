@@ -24,15 +24,27 @@
             this.htmlSanitizer = new HtmlSanitizer();
         }
 
-        public async Task<IEnumerable<TModel>> GetAllRepliesByCommentIdAsync<TModel>(int commentId)
+        public async Task<IEnumerable<CommentListingModel>> GetAllCommentsWithRepliesByArticleId(int articleId)
         {
-            return await this.commentsRepository
+            var comments = await this.commentsRepository
                 .All()
-                .Where(c => c.Id == commentId)
-                .SelectMany(c => c.Replies)
-                .Where(r => !r.IsDeleted)
-                .To<TModel>()
+                .Where(c => c.ArticleId == articleId)
+                .To<CommentListingModel>()
                 .ToListAsync();
+
+            foreach (var comment in comments)
+            {
+                var parent = comments
+                    .FirstOrDefault(c => c.Id == comment.ParentId);
+
+                parent?.Replies.Add(comment);
+            }
+
+            comments = comments
+                .Where(c => c.ParentId == null)
+                .ToList();
+
+            return comments;
         }
 
         public async Task<TModel> GetByIdAsync<TModel>(int commentId) =>

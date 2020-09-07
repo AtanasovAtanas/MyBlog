@@ -1,9 +1,12 @@
 import React, { createContext, useReducer } from "react";
+import * as DispatchTypes from "./constants";
 import AppReducer from "./reducer";
 import auth from "../services/auth";
+import articlesService from "../services/articles";
 
 const initialState = {
 	user: { userId: "", username: "" },
+	article: {},
 	isLoggedIn: false,
 };
 
@@ -14,8 +17,15 @@ export const GlobalProvider = ({ children }) => {
 
 	function login(user) {
 		dispatch({
-			type: "LOGIN",
+			type: DispatchTypes.LOGIN,
 			payload: user,
+		});
+	}
+
+	function logout() {
+		dispatch({
+			type: DispatchTypes.LOGOUT,
+			payload: null,
 		});
 	}
 
@@ -23,7 +33,7 @@ export const GlobalProvider = ({ children }) => {
 		await auth.getIdentityDetails(
 			(response) =>
 				dispatch({
-					type: "LOGIN",
+					type: DispatchTypes.LOGIN,
 					payload: {
 						userId: response.userId,
 						username: response.username,
@@ -33,11 +43,16 @@ export const GlobalProvider = ({ children }) => {
 		);
 	}
 
-	function logout() {
-		dispatch({
-			type: "LOGOUT",
-			payload: null,
-		});
+	async function refreshArticle(id) {
+		await articlesService.getArticleById(
+			id,
+			(response) =>
+				dispatch({
+					type: DispatchTypes.FETCH_ARTICLE_BY_ID,
+					payload: response,
+				}),
+			() => console.log(`failed fetching article ${id}`)
+		);
 	}
 
 	return (
@@ -48,6 +63,8 @@ export const GlobalProvider = ({ children }) => {
 				login,
 				logout,
 				getCurrentUser,
+				article: state.article,
+				refreshArticle,
 			}}
 		>
 			{children}

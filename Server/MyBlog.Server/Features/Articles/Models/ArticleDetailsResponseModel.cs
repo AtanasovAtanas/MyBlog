@@ -6,6 +6,7 @@
 
     using AutoMapper;
     using MyBlog.Server.Data.Models;
+    using MyBlog.Server.Features.Comments.Models;
     using MyBlog.Server.Infrastructure.Mapping;
 
     public class ArticleDetailsResponseModel : IMapFrom<Article>, IHaveCustomMappings
@@ -24,6 +25,8 @@
 
         public int CommentsCount { get; set; }
 
+        public virtual IEnumerable<CommentListingModel> Comments { get; set; }
+
         public virtual IEnumerable<string> Tags { get; set; }
 
         public virtual void CreateMappings(IProfileExpression configuration)
@@ -40,7 +43,9 @@
                 .ForMember(x => x.Tags, options =>
                 {
                     options.MapFrom(a => a.Tags.Select(t => t.Tag.Name).ToList());
-                });
+                })
+                .ForMember(
+                    x => x.Comments, options => options.Ignore());
         }
     }
 }
