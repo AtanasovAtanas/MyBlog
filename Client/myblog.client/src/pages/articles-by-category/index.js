@@ -56,7 +56,6 @@ const ArticlesByCategory = () => {
 						</Link>
 					) : null}
 				</div>
-				<SortingDropdown />
 				{articles.length > 0 ? (
 					<Pagination
 						articlesPerPage={5}
@@ -64,6 +63,7 @@ const ArticlesByCategory = () => {
 						baseUrl={`${categoryName}/Articles`}
 					/>
 				) : null}
+				<SortingDropdown />
 			</div>
 			<Articles articles={articles} />
 		</PageLayout>
