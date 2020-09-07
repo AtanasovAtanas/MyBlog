@@ -23,6 +23,8 @@
 
         public int Votes { get; set; }
 
+        public int CommentsCount { get; set; }
+
         public virtual IEnumerable<CommentListingModel> Comments { get; set; }
 
         public virtual IEnumerable<string> Tags { get; set; }
@@ -33,6 +35,10 @@
                 .ForMember(x => x.Votes, options =>
                 {
                     options.MapFrom(a => a.Votes.Sum(v => (int)v.Type));
+                })
+                .ForMember(x => x.CommentsCount, options =>
+                {
+                    options.MapFrom(a => a.Comments.Count(c => !c.IsDeleted));
                 })
                 .ForMember(x => x.Tags, options =>
                 {
