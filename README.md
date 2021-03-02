@@ -1,1 +1,1 @@
-# Blog System (NET Core WEB API + React)
+# Blog System (NET Core WEB API & React)
